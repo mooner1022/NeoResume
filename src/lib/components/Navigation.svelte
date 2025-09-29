@@ -29,7 +29,7 @@
 		<div class="flex justify-between items-center h-16">
 			<!-- Logo placeholder -->
 			<a href="{base}/" class="flex items-center space-x-2" onclick={closeMobileMenu}>
-				<img src="{PfLogo}" alt="profile logo" class="w-8 h-8 rounded transition-colors duration-200"/>
+				<img src={PfLogo} alt="profile logo" class="w-8 h-8 rounded transition-colors duration-200"/>
 				<span class="font-bold text-xl text-gray-900 dark:text-white">mooner</span>
 			</a>
 
