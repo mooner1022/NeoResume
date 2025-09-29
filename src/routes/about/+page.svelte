@@ -107,7 +107,7 @@
 </script>
 
 <svelte:head>
-	<title>About - mooner1022</title>
+	<title>About - mooner</title>
 	<meta name="description" content="Learn more about mooner1022 - education, interests, and journey as a software engineer" />
 </svelte:head>
 
@@ -138,7 +138,7 @@
 				<!-- Bio -->
 				<div class="flex-1 text-center lg:text-left">
 					<h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-						Hello, I'm mooner1022
+						Hello, I'm Minki Moon (mooner)
 					</h2>
 					<div class="prose prose-gray dark:prose-invert max-w-none">
 						<p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">

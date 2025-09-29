@@ -73,7 +73,7 @@
 </script>
 
 <svelte:head>
-	<title>Experience - mooner1022</title>
+	<title>Experience - mooner</title>
 	<meta name="description" content="8 years of professional software development experience in backend and Android development" />
 </svelte:head>
 

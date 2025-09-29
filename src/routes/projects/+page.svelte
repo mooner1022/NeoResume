@@ -53,7 +53,7 @@
 </script>
 
 <svelte:head>
-	<title>Projects - mooner1022</title>
+	<title>Projects - mooner</title>
 	<meta name="description" content="Open source projects and Android applications by mooner1022" />
 </svelte:head>
 

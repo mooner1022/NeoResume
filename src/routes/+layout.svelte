@@ -6,11 +6,11 @@
 </script>
 
 <svelte:head>
-	<title>NeoResume - Software Engineer Portfolio</title>
+	<title>mooner</title>
 	<meta name="description" content="Backend and Android software engineer with 8 years of experience" />
 	<meta name="keywords" content="software engineer, backend developer, android developer, portfolio" />
 	<meta name="author" content="mooner1022" />
-	<meta property="og:title" content="NeoResume - Software Engineer Portfolio" />
+	<meta property="og:title" content="mooner" />
 	<meta property="og:description" content="Backend and Android software engineer with 8 years of experience" />
 	<meta property="og:type" content="website" />
 	<link rel="preconnect" href="https://fonts.googleapis.com">

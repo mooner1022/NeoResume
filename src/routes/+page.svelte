@@ -22,7 +22,7 @@
 </script>
 
 <svelte:head>
-	<title>mooner1022</title>
+	<title>mooner</title>
 	<meta name="description" content="Software engineer with 8 years of experience in backend and Android development. Explore my projects and technical expertise." />
 </svelte:head>
 

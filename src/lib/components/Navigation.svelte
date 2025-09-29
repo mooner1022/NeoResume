@@ -3,6 +3,7 @@
 	import { base } from '$app/paths';
 	import { theme } from '$lib/stores/theme';
 	import ThemeToggle from './ThemeToggle.svelte';
+	import PfLogo from '$lib/assets/pf_logo.png';
 
 	const navItems = [
 		{ href: `${base}/`, label: 'Home' },
@@ -28,8 +29,8 @@
 		<div class="flex justify-between items-center h-16">
 			<!-- Logo placeholder -->
 			<a href="{base}/" class="flex items-center space-x-2" onclick={closeMobileMenu}>
-				<div class="w-8 h-8 bg-gray-800 dark:bg-gray-200 rounded transition-colors duration-200"></div>
-				<span class="font-bold text-xl text-gray-900 dark:text-white">NeoResume</span>
+				<img src="{PfLogo}" alt="profile logo" class="w-8 h-8 rounded transition-colors duration-200"/>
+				<span class="font-bold text-xl text-gray-900 dark:text-white">mooner</span>
 			</a>
 
 			<!-- Desktop Navigation -->
@@ -59,7 +60,7 @@
 			<!-- Mobile menu button -->
 			<div class="md:hidden flex items-center space-x-2">
 				<a
-					href="https://github.com/username/repository-name"
+					href="https://github.com/mooner1022/NeoResume"
 					target="_blank"
 					rel="noopener noreferrer"
 					class="p-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200"

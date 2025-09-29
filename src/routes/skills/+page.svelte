@@ -76,7 +76,7 @@
 </script>
 
 <svelte:head>
-	<title>Skills - mooner1022</title>
+	<title>Skills - mooner</title>
 	<meta name="description" content="Technical skills and expertise in backend development, Android, databases, and more" />
 </svelte:head>
 
