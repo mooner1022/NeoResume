@@ -44,7 +44,7 @@
 				{/each}
 				<div class="flex items-center space-x-3">
 					<a
-						href="https://github.com/username/repository-name"
+						href="https://github.com/mooner1022/NeoResume"
 						target="_blank"
 						rel="noopener noreferrer"
 						class="p-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md"
