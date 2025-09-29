@@ -19,6 +19,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Sync files and prepare
+        run: pnpm run prepare
+
       - name: Build
         env:
           BASE_PATH: '/NeoResume'
