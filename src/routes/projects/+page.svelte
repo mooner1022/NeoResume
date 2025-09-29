@@ -32,7 +32,7 @@
 		technologies: ['Kotlin', 'Android', 'Ktor', 'Redis', 'PostgreSQL', 'Traefik Load Balancing'],
 		playStoreUrl: 'https://play.google.com/store/apps/details?id=com.temp.hanriv.moonm',
 		sourceUrl: '#',
-		downloads: '4.6K+',
+		downloads: '46.3K+',
 		rating: 4.85,
 		reviews: 273
 	};

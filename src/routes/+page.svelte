@@ -151,7 +151,7 @@
 						</svg>
 						<span class="text-sm text-gray-600 dark:text-gray-400">4.85 (273 reviews)</span>
 					</div>
-					<span class="text-sm text-gray-600 dark:text-gray-400">4.6K+ downloads</span>
+					<span class="text-sm text-gray-600 dark:text-gray-400">46.3K+ downloads</span>
 				</div>
 
 				<div class="flex flex-wrap gap-2 justify-center mb-8">
