@@ -267,7 +267,7 @@
 
 		<div class="mt-12">
 			<a
-				href="{base}/experience"
+				href="{base}/about"
 				class="inline-flex items-center bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-8 py-3 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors font-medium"
 			>
 				View Full Experience
