@@ -2,7 +2,7 @@
 export const profile = {
 	name: { ko: '문민기', en: 'Minki Moon' },
 	handle: 'mooner',
-	email: 'mooner@mooner.dev',
+	email: 'siwol@mooner.dev',
 	discord: 'mooner.dev',
 	github: { label: 'github.com/mooner1022', href: 'https://github.com/mooner1022' },
 	base: 'Ansan, KR',
