@@ -15,6 +15,10 @@ pnpm build      # build/ 에 정적 파일 생성
 pnpm preview    # build/ 미리보기 (다시 빌드하면 재시작해야 새 파일을 찾는다)
 ```
 
+## 배포
+
+`main`에 푸시하면 `.github/workflows/deploy.yml`이 검사·빌드 후 GitHub Pages로 올린다. 사용자 지정 도메인 `mooner.dev`는 저장소의 Pages 설정에 있다.
+
 ## 내용 고치기
 
 마크업은 건드리지 않고 `src/lib/content/`만 고친다.
