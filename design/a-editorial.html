@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>홍길동 — Backend & Android Engineer · A. Editorial</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --paper: #F6F4EF;
+    --ink: #1A1916;
+    --ink-2: #56524A;
+    --ink-3: #6E695F;
+    --rule: #DCD7CC;
+    --accent: #B0441C;
+    --serif: "Instrument Serif", "Times New Roman", serif;
+    --sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    --mono: "JetBrains Mono", "Pretendard Variable", Pretendard, ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 16px/1.7 var(--sans);
+    letter-spacing: -0.005em;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+  ::selection { background: var(--ink); color: var(--paper); }
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  ul { list-style: none; }
+  time, .num { font-variant-numeric: tabular-nums; }
+  .mono { font-family: var(--mono); font-size: 12px; letter-spacing: 0; }
+
+  .page { max-width: 1160px; margin: 0 auto; padding: 0 56px; }
+
+  /* ── Masthead ───────────────────────────── */
+  .topbar {
+    display: flex; justify-content: space-between; gap: 24px;
+    padding: 22px 0 18px;
+    border-bottom: 1px solid var(--ink);
+    color: var(--ink-2);
+    text-transform: uppercase;
+  }
+  .hero {
+    display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 40px;
+    padding: 72px 0 40px;
+  }
+  .name {
+    font: 400 clamp(72px, 12vw, 172px)/0.86 var(--serif);
+    letter-spacing: -0.025em;
+    margin-left: -0.04em; /* optical alignment of the G */
+  }
+  .name em { font-style: italic; }
+  .hero-meta { text-align: right; padding-bottom: 14px; }
+  .hero-meta .kname { font-size: 20px; font-weight: 600; letter-spacing: 0.02em; }
+  .hero-meta .role { color: var(--ink-2); margin-top: 2px; }
+  .status {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 18px; padding: 5px 12px 5px 10px;
+    border: 1px solid var(--rule); border-radius: 999px;
+    font-size: 13px; color: var(--ink-2);
+  }
+  .status .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px rgba(176, 68, 28, .14); }
+
+  .intro {
+    display: grid; grid-template-columns: 220px 1fr; gap: 40px;
+    padding: 36px 0 64px;
+    border-top: 1px solid var(--rule);
+  }
+  .lede {
+    font-size: 23px; line-height: 1.6; letter-spacing: -0.018em;
+    max-width: 30em; text-wrap: pretty;
+  }
+  .lede::first-letter { color: var(--accent); }
+  .contact { display: flex; flex-direction: column; gap: 4px; padding-top: 7px; }
+  .contact a { display: inline-flex; gap: 6px; color: var(--ink-2); transition: color .2s; }
+  .contact a:hover { color: var(--ink); }
+  .contact a .arr { display: inline-block; transition: transform .25s cubic-bezier(.2,.7,.3,1); color: var(--ink-3); }
+  .contact a:hover .arr { transform: translate(2px, -2px); color: var(--accent); }
+
+  /* ── Sections ───────────────────────────── */
+  .sec {
+    display: grid; grid-template-columns: 220px 1fr; gap: 40px;
+    padding: 40px 0 64px;
+    border-top: 1px solid var(--ink);
+  }
+  .sec-head { position: sticky; top: 28px; align-self: start; }
+  .sec-no { color: var(--ink-3); display: block; margin-bottom: 10px; }
+  .sec-head h2 { font-weight: 400; display: flex; flex-direction: column; }
+  .sec-head .serif { font: italic 400 34px/1 var(--serif); letter-spacing: -0.01em; }
+  .sec-head .ko { font-size: 13px; color: var(--ink-2); margin-top: 8px; letter-spacing: 0.08em; }
+
+  .job + .job { margin-top: 44px; padding-top: 44px; border-top: 1px solid var(--rule); }
+  .job-head { display: grid; grid-template-columns: 1fr auto; column-gap: 24px; align-items: baseline; margin-bottom: 14px; }
+  .job-head h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
+  .job-head .role { color: var(--ink-2); grid-column: 1; }
+  .job-head .period { grid-column: 2; grid-row: 1; color: var(--ink-3); }
+
+  .points li { position: relative; padding-left: 22px; max-width: 64ch; color: var(--ink); text-wrap: pretty; }
+  .points li + li { margin-top: 6px; }
+  .points li::before { content: "—"; position: absolute; left: 0; color: var(--ink-3); }
+  .metric { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .metric .to { color: var(--accent); font-weight: 400; margin: 0 .15em; }
+
+  .stack { margin-top: 16px; color: var(--ink-3); }
+  .stack span + span::before { content: " / "; color: var(--rule); }
+
+  /* projects */
+  .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+  .project { padding: 4px 28px 8px 0; }
+  .project + .project { padding-left: 28px; border-left: 1px solid var(--rule); }
+  .project .kind { color: var(--ink-3); text-transform: uppercase; }
+  .project h3 { margin: 10px 0 8px; font: 400 28px/1.1 var(--serif); letter-spacing: -0.01em; }
+  .project h3 a { display: inline-flex; gap: 6px; }
+  .project h3 .arr { font: 400 14px var(--sans); color: var(--ink-3); transition: transform .25s cubic-bezier(.2,.7,.3,1), color .2s; }
+  .project h3 a:hover .arr { transform: translate(2px, -2px); color: var(--accent); }
+  .project p:not(.mono) { color: var(--ink-2); font-size: 15px; text-wrap: pretty; }
+  .project .meta { margin-top: 14px; color: var(--ink-3); }
+
+  /* skills */
+  .skills > div { display: grid; grid-template-columns: 160px 1fr; gap: 24px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+  .skills > div:first-child { padding-top: 0; }
+  .skills dt { font: italic 400 22px/1.2 var(--serif); }
+  .skills dd { color: var(--ink-2); padding-top: 2px; }
+  .skills dd span + span::before { content: ", "; }
+
+  /* rows (education / etc) */
+  .rows li { display: grid; grid-template-columns: 1fr auto; gap: 24px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+  .rows li:first-child { padding-top: 0; }
+  .rows .what b { font-weight: 600; }
+  .rows .what span { color: var(--ink-2); }
+  .rows .tag { color: var(--ink-3); margin-right: 10px; text-transform: uppercase; }
+  .rows time { color: var(--ink-3); }
+
+  /* colophon */
+  .colophon {
+    display: flex; justify-content: space-between; gap: 24px;
+    padding: 20px 0 40px; border-top: 1px solid var(--ink);
+    color: var(--ink-3);
+  }
+  .colophon a:hover { color: var(--accent); }
+
+  @media (max-width: 860px) {
+    .page { padding: 0 22px; }
+    .topbar span:nth-child(2) { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 48px 0 28px; gap: 20px; }
+    .hero-meta { text-align: left; }
+    .intro, .sec { grid-template-columns: 1fr; gap: 20px; }
+    .lede { font-size: 19px; }
+    .sec-head { position: static; display: flex; align-items: baseline; gap: 12px; }
+    .sec-head h2 { flex-direction: row; align-items: baseline; gap: 10px; }
+    .sec-head .ko { margin-top: 0; }
+    .job-head { grid-template-columns: 1fr; }
+    .job-head .period { grid-column: 1; grid-row: auto; margin-top: 2px; }
+    .projects { grid-template-columns: 1fr; }
+    .project, .project + .project { padding: 20px 0; border-left: 0; border-top: 1px solid var(--rule); }
+    .project:first-child { border-top: 0; padding-top: 0; }
+    .skills > div { grid-template-columns: 1fr; gap: 4px; }
+    .rows li { grid-template-columns: 1fr; gap: 2px; }
+    .colophon { flex-direction: column; gap: 6px; }
+  }
+
+  @media print {
+    @page { size: A4; margin: 14mm 14mm 16mm; }
+    body { background: #fff; font-size: 10.5pt; }
+    .page { max-width: none; padding: 0; }
+    .hero { padding: 28px 0 18px; }
+    .name { font-size: 72pt; }
+    .intro { padding: 18px 0 28px; }
+    .lede { font-size: 14pt; }
+    .sec { padding: 20px 0 28px; break-inside: auto; }
+    .sec-head { position: static; }
+    .job, .project, .rows li { break-inside: avoid; }
+    .status .dot { box-shadow: none; }
+    .colophon a[href="#top"] { display: none; }
+  }
+</style>
+</head>
+<body id="top">
+<div class="page">
+
+  <header>
+    <div class="topbar mono">
+      <span>Résumé — 이력서</span>
+      <span>Seoul, KR · 37.5665° N, 126.9780° E</span>
+      <span>Updated <time datetime="2026-09">2026.09</time></span>
+    </div>
+
+    <div class="hero">
+      <h1 class="name">Gildong <em>Hong</em></h1>
+      <div class="hero-meta">
+        <p class="kname">홍길동</p>
+        <p class="role">Backend &amp; Android Engineer</p>
+        <p class="status"><span class="dot"></span>새로운 기회에 열려 있어요</p>
+      </div>
+    </div>
+
+    <div class="intro">
+      <ul class="contact">
+        <li><a href="mailto:hello@example.com">hello@example.com</a></li>
+        <li><a href="https://github.com/gildong">github.com/gildong <span class="arr">↗</span></a></li>
+        <li><a href="https://gildong.dev">gildong.dev <span class="arr">↗</span></a></li>
+        <li><a href="tel:+821000000000" class="num">010-0000-0000</a></li>
+      </ul>
+      <p class="lede">사용자가 느끼는 속도와 서버가 버티는 무게를 함께 고민하는 엔지니어입니다. Kotlin을 공용어 삼아 Spring 기반 백엔드와 Android 클라이언트를 넘나들며, 측정 가능한 개선을 만드는 일을 좋아합니다.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="sec" id="experience">
+      <div class="sec-head">
+        <span class="sec-no mono">01</span>
+        <h2><span class="serif">Experience</span><span class="ko">경력</span></h2>
+      </div>
+      <div>
+        <article class="job">
+          <div class="job-head">
+            <h3>예시 테크</h3>
+            <p class="period mono"><time datetime="2023-03">2023.03</time> — 현재</p>
+            <p class="role">Backend Engineer · 결제플랫폼팀</p>
+          </div>
+          <ul class="points">
+            <li>모놀리식 결제 시스템의 MSA 전환을 주도하여 주문 API p99 레이턴시를 <span class="metric">820ms<span class="to">→</span>180ms</span>로 단축</li>
+            <li>Kafka 기반 이벤트 파이프라인을 설계·운영, 일 <span class="metric">1,200만 건</span>의 결제 이벤트를 유실 없이 처리</li>
+            <li>SLO와 장애 대응 런북을 도입해 월간 장애 시간 <span class="metric">63%</span> 감소</li>
+          </ul>
+          <p class="stack mono"><span>Kotlin</span><span>Spring Boot</span><span>Kafka</span><span>PostgreSQL</span><span>Redis</span><span>AWS</span></p>
+        </article>
+
+        <article class="job">
+          <div class="job-head">
+            <h3>샘플 모빌리티</h3>
+            <p class="period mono"><time datetime="2021-01">2021.01</time> — <time datetime="2023-02">2023.02</time></p>
+            <p class="role">Android Engineer · 드라이버앱팀</p>
+          </div>
+          <ul class="points">
+            <li>XML 뷰를 Jetpack Compose로 점진 전환하여 신규 화면 개발 리드타임 약 <span class="metric">40%</span> 단축</li>
+            <li>단일 모듈을 기능별 멀티 모듈로 재구성해 클린 빌드 시간 <span class="metric">6분<span class="to">→</span>2분</span></li>
+            <li>ANR·크래시 추적 체계를 정비해 크래시 프리 세션 <span class="metric">99.2%<span class="to">→</span>99.8%</span></li>
+          </ul>
+          <p class="stack mono"><span>Kotlin</span><span>Jetpack Compose</span><span>Coroutines</span><span>Hilt</span><span>Room</span></p>
+        </article>
+
+        <article class="job">
+          <div class="job-head">
+            <h3>플레이스홀더 랩</h3>
+            <p class="period mono"><time datetime="2020-07">2020.07</time> — <time datetime="2020-12">2020.12</time></p>
+            <p class="role">Software Engineer Intern</p>
+          </div>
+          <ul class="points">
+            <li>Spring Boot·React 기반 사내 운영 백오피스를 개발해 수작업 정산 업무 주 <span class="metric">8시간</span> 절감</li>
+          </ul>
+          <p class="stack mono"><span>Java</span><span>Spring Boot</span><span>MySQL</span><span>React</span></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="sec" id="projects">
+      <div class="sec-head">
+        <span class="sec-no mono">02</span>
+        <h2><span class="serif">Selected Work</span><span class="ko">프로젝트</span></h2>
+      </div>
+      <div class="projects">
+        <article class="project">
+          <p class="kind mono">Open Source</p>
+          <h3><a href="#">kotlin-ratelimit <span class="arr">↗</span></a></h3>
+          <p>Redis와 Lua 스크립트 기반의 분산 레이트 리미터. Spring Boot Starter로 한 줄 설정을 지원합니다.</p>
+          <p class="meta mono">★ 1.2k · Kotlin · Redis</p>
+        </article>
+        <article class="project">
+          <p class="kind mono">Side Project</p>
+          <h3><a href="#">Driftnote <span class="arr">↗</span></a></h3>
+          <p>오프라인 우선 마크다운 노트 앱. Room과 WorkManager로 충돌 없는 동기화를 구현했습니다.</p>
+          <p class="meta mono">10k+ installs · Android · Compose</p>
+        </article>
+        <article class="project">
+          <p class="kind mono">Internal Tool</p>
+          <h3><a href="#">deploy-lens <span class="arr">↗</span></a></h3>
+          <p>흩어진 사내 배포 현황을 한 화면에 모은 경량 대시보드. 배포 확인 시간을 크게 줄였습니다.</p>
+          <p class="meta mono">Ktor · PostgreSQL</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="sec" id="skills">
+      <div class="sec-head">
+        <span class="sec-no mono">03</span>
+        <h2><span class="serif">Toolbox</span><span class="ko">기술</span></h2>
+      </div>
+      <dl class="skills">
+        <div><dt>Backend</dt><dd><span>Kotlin</span><span>Java</span><span>Spring Boot</span><span>JPA</span><span>gRPC</span><span>Kafka</span><span>Redis</span></dd></div>
+        <div><dt>Android</dt><dd><span>Jetpack Compose</span><span>Coroutines·Flow</span><span>Hilt</span><span>Room</span><span>WorkManager</span></dd></div>
+        <div><dt>Infra &amp; Data</dt><dd><span>PostgreSQL</span><span>MySQL</span><span>AWS (ECS·RDS·SQS)</span><span>Docker</span><span>Kubernetes</span><span>GitHub Actions</span></dd></div>
+      </dl>
+    </section>
+
+    <section class="sec" id="education">
+      <div class="sec-head">
+        <span class="sec-no mono">04</span>
+        <h2><span class="serif">Education</span><span class="ko">학력</span></h2>
+      </div>
+      <ul class="rows">
+        <li><p class="what"><b>예시대학교</b> <span>컴퓨터공학과 학사</span></p><p class="mono"><time datetime="2014-03">2014.03</time> — <time datetime="2020-02">2020.02</time></p></li>
+      </ul>
+    </section>
+
+    <section class="sec" id="etc">
+      <div class="sec-head">
+        <span class="sec-no mono">05</span>
+        <h2><span class="serif">Elsewhere</span><span class="ko">활동 · 자격</span></h2>
+      </div>
+      <ul class="rows">
+        <li><p class="what"><span class="tag mono">Talk</span><b>“Compose 마이그레이션, 1년의 회고”</b> <span>예시 안드로이드 밋업</span></p><p class="mono"><time datetime="2022-11">2022.11</time></p></li>
+        <li><p class="what"><span class="tag mono">OSS</span><b>Spring 공식 문서 한국어 번역</b> <span>기여자</span></p><p class="mono"><time datetime="2021">2021</time> —</p></li>
+        <li><p class="what"><span class="tag mono">Cert</span><b>정보처리기사</b> <span>한국산업인력공단</span></p><p class="mono"><time datetime="2019-08">2019.08</time></p></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="colophon mono">
+    <span>Set in Instrument Serif, Pretendard &amp; JetBrains Mono.</span>
+    <span>© 2026 홍길동 · <a href="#top">Back to top ↑</a></span>
+  </footer>
+
+</div>
+</body>
+</html>

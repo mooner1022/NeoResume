@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>홍길동 — Backend & Android Engineer · C. Mono Dark</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --bg: #0C0D0F;
+    --surface: #131519;
+    --text: #E7E7E4;
+    --text-2: #A2A7AD;
+    --text-3: #7D838A;
+    --line: #22252A;
+    --line-2: #2E3238;
+    --accent: #3DDC84; /* Android green, used sparingly */
+    --sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    --mono: "JetBrains Mono", "Pretendard Variable", Pretendard, ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; scroll-padding-top: 48px; }
+  body {
+    background: var(--bg); color: var(--text);
+    font: 400 15px/1.7 var(--sans);
+    letter-spacing: -0.005em;
+    word-break: keep-all; overflow-wrap: break-word;
+  }
+  /* faint top glow — the only decoration on the page */
+  body::before {
+    content: ""; position: fixed; inset: 0 0 auto; height: 360px; pointer-events: none;
+    background: radial-gradient(60% 100% at 20% 0%, rgba(61, 220, 132, .06), transparent 70%);
+  }
+  ::selection { background: rgba(61, 220, 132, .28); color: #fff; }
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+  ul, ol { list-style: none; }
+  .mono { font-family: var(--mono); font-size: 12.5px; letter-spacing: -0.01em; }
+  time { font-variant-numeric: tabular-nums; }
+
+  .layout { position: relative; display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 80px; max-width: 1180px; margin: 0 auto; padding: 0 48px; }
+
+  /* ── Sidebar ────────────────────────────── */
+  .side { position: sticky; top: 0; height: 100vh; padding: 72px 0 40px; display: flex; flex-direction: column; }
+  .side .name { font-size: 26px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.2; }
+  .side .name span { display: block; font: 400 13px var(--mono); color: var(--text-3); letter-spacing: 0; margin-top: 6px; }
+  .side .role { margin-top: 18px; color: var(--text-2); }
+  .side .role b { color: var(--text); font-weight: 500; }
+
+  .status { display: inline-flex; align-items: center; gap: 10px; margin-top: 22px; padding: 6px 12px; border: 1px solid var(--line-2); border-radius: 6px; background: var(--surface); color: var(--text-2); }
+  .pulse { position: relative; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+  .pulse::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--accent); animation: ping 2.4s cubic-bezier(0, 0, .2, 1) infinite; }
+  @keyframes ping { 75%, 100% { transform: scale(2.6); opacity: 0; } }
+
+  .toc { margin-top: 48px; }
+  .toc a { display: flex; align-items: center; gap: 14px; padding: 6px 0; color: var(--text-3); transition: color .2s; }
+  .toc a .bar { width: 16px; height: 1px; background: var(--line-2); transition: width .3s cubic-bezier(.2,.7,.3,1), background .3s; }
+  .toc a:hover { color: var(--text-2); }
+  .toc a.active { color: var(--text); }
+  .toc a.active .bar { width: 36px; background: var(--accent); }
+
+  .contact { margin-top: auto; display: grid; gap: 6px; }
+  .contact a { display: flex; justify-content: space-between; color: var(--text-2); transition: color .2s; }
+  .contact a span:first-child { color: var(--text-3); }
+  .contact a:hover { color: var(--accent); }
+
+  /* ── Content ────────────────────────────── */
+  main { padding: 72px 0 96px; min-width: 0; }
+  .about { font-size: 18px; line-height: 1.75; color: var(--text-2); max-width: 36em; text-wrap: pretty; }
+  .about b { color: var(--text); font-weight: 500; }
+
+  .sec { margin-top: 88px; }
+  .sec-title { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; color: var(--text-3); }
+  .sec-title h2 { font: 500 12.5px var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-2); }
+  .sec-title::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  /* commit-graph timeline */
+  .timeline { position: relative; }
+  .timeline::before { content: ""; position: absolute; left: 5px; top: 10px; bottom: 16px; width: 1px; background: linear-gradient(var(--accent) 0 64px, var(--line-2) 64px); }
+  .job { position: relative; padding-left: 36px; }
+  .job + .job { margin-top: 44px; }
+  .job::before { content: ""; position: absolute; left: 0; top: 7px; width: 11px; height: 11px; border-radius: 50%; border: 1px solid var(--text-3); background: var(--bg); }
+  .job.current::before { border-color: var(--accent); background: var(--accent); box-shadow: 0 0 0 4px rgba(61, 220, 132, .12); }
+  .job-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  .job h3 { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
+  .job h3 .at { color: var(--text-3); font-weight: 400; margin: 0 6px; }
+  .job h3 .org { color: var(--text-2); font-weight: 500; }
+  .job .period { color: var(--text-3); white-space: nowrap; }
+  .job .period .now { color: var(--accent); }
+  .job ul { margin-top: 12px; }
+  .job li { position: relative; padding-left: 18px; color: var(--text-2); text-wrap: pretty; }
+  .job li + li { margin-top: 6px; }
+  .job li::before { content: "›"; position: absolute; left: 2px; color: var(--text-3); font-family: var(--mono); }
+  .job li b { color: var(--text); font-weight: 500; font-variant-numeric: tabular-nums; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+  .job .tags li + li { margin-top: 0; }
+  .job .tags li::before { content: none; }
+  .job .tags li { padding: 2px 8px; border: 1px solid var(--line-2); border-radius: 4px; color: var(--text-2); font: 400 11.5px/1.6 var(--mono); }
+
+  /* projects */
+  .projects { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .project { display: block; position: relative; padding: 20px 20px 18px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); transition: border-color .25s, transform .25s cubic-bezier(.2,.7,.3,1); }
+  .project:hover { border-color: var(--line-2); transform: translateY(-2px); }
+  .project:hover .arr { color: var(--accent); transform: translate(2px, -2px); }
+  .project .top { display: flex; justify-content: space-between; color: var(--text-3); }
+  .project .arr { transition: transform .25s cubic-bezier(.2,.7,.3,1), color .2s; }
+  .project h3 { margin-top: 14px; font: 600 15px var(--mono); letter-spacing: -0.02em; }
+  .project p { margin-top: 6px; color: var(--text-2); font-size: 14px; text-wrap: pretty; }
+  .project .meta { margin-top: 16px; color: var(--text-3); }
+  .project.wide { grid-column: span 2; }
+
+  /* skills as key: value */
+  .skills { display: grid; gap: 10px; font-family: var(--mono); font-size: 13px; }
+  .skills div { display: grid; grid-template-columns: 120px 1fr; gap: 16px; }
+  .skills dt { color: var(--text-3); }
+  .skills dt::after { content: ":"; }
+  .skills dd { color: var(--text); }
+  .skills dd span + span::before { content: ", "; color: var(--text-3); }
+
+  .rows li { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px dashed var(--line-2); }
+  .rows li:first-child { padding-top: 0; }
+  .rows .what { color: var(--text-2); }
+  .rows .what b { color: var(--text); font-weight: 500; }
+  .rows .kind { display: inline-block; width: 44px; color: var(--text-3); }
+  .rows time { color: var(--text-3); white-space: nowrap; }
+
+  footer { margin-top: 96px; padding-top: 20px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; color: var(--text-3); }
+  kbd { font: 500 11px var(--mono); padding: 1px 6px; border: 1px solid var(--line-2); border-bottom-width: 2px; border-radius: 4px; color: var(--text-2); background: var(--surface); }
+
+  @media (max-width: 960px) {
+    .layout { grid-template-columns: 1fr; gap: 0; padding: 0 22px; }
+    .side { position: static; height: auto; padding: 48px 0 0; }
+    .toc { display: none; }
+    .contact { margin-top: 28px; }
+    main { padding-top: 40px; }
+    .about { font-size: 16.5px; }
+    .sec { margin-top: 64px; }
+    .projects { grid-template-columns: 1fr; }
+    .project.wide { grid-column: auto; }
+    .skills div { grid-template-columns: 1fr; gap: 0; }
+    .rows li { flex-direction: column; gap: 2px; }
+    footer { flex-direction: column; gap: 4px; }
+    footer .kb { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { .pulse::after { animation: none; } * { transition: none !important; } }
+
+  /* print → light, ink-friendly */
+  @media print {
+    @page { size: A4; margin: 14mm; }
+    :root { --bg: #fff; --surface: #fff; --text: #111; --text-2: #333; --text-3: #666; --line: #ddd; --line-2: #ccc; --accent: #1a8f50; }
+    body { font-size: 9.5pt; }
+    body::before, .toc, .pulse::after, footer .kb { display: none; }
+    .layout { display: block; padding: 0; max-width: none; }
+    .side { position: static; height: auto; padding: 0; }
+    .contact { margin-top: 16px; grid-template-columns: repeat(3, auto); justify-content: start; column-gap: 28px; }
+    main { padding: 24px 0 0; }
+    .sec { margin-top: 32px; }
+    .job, .project, .rows li { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="side">
+    <h1 class="name">홍길동<span>gildong.hong</span></h1>
+    <p class="role"><b>Backend</b> &amp; <b>Android</b> Engineer<br>Kotlin · Spring · Jetpack Compose</p>
+    <p class="status mono"><span class="pulse"></span>open to work — 2026.10~</p>
+
+    <nav class="toc mono" aria-label="목차">
+      <a href="#about" class="active"><span class="bar"></span>소개</a>
+      <a href="#experience"><span class="bar"></span>경력</a>
+      <a href="#projects"><span class="bar"></span>프로젝트</a>
+      <a href="#skills"><span class="bar"></span>기술</a>
+      <a href="#etc"><span class="bar"></span>학력 · 활동</a>
+    </nav>
+
+    <div class="contact mono">
+      <a href="mailto:hello@example.com"><span>mail</span><span>hello@example.com</span></a>
+      <a href="https://github.com/gildong"><span>github</span><span>@gildong ↗</span></a>
+      <a href="https://gildong.dev"><span>blog</span><span>gildong.dev ↗</span></a>
+    </div>
+  </aside>
+
+  <main>
+    <section id="about" data-spy>
+      <p class="about">사용자가 느끼는 <b>속도</b>와 서버가 버티는 <b>무게</b>를 함께 고민하는 엔지니어입니다. Kotlin을 공용어 삼아 Spring 기반 백엔드와 Android 클라이언트를 넘나들며, 측정 가능한 개선을 만드는 일을 좋아합니다.</p>
+    </section>
+
+    <section id="experience" class="sec" data-spy>
+      <div class="sec-title"><span class="mono">01</span><h2>Experience</h2></div>
+      <ol class="timeline">
+        <li class="job current">
+          <div class="job-head">
+            <h3>Backend Engineer<span class="at">@</span><span class="org">예시 테크</span></h3>
+            <p class="period mono"><time datetime="2023-03">2023.03</time> → <span class="now">now</span></p>
+          </div>
+          <ul>
+            <li>모놀리식 결제 시스템의 MSA 전환을 주도하여 주문 API p99 레이턴시를 <b>820ms → 180ms</b>로 단축</li>
+            <li>Kafka 기반 이벤트 파이프라인을 설계·운영, 일 <b>1,200만 건</b>의 결제 이벤트를 유실 없이 처리</li>
+            <li>SLO와 장애 대응 런북을 도입해 월간 장애 시간 <b>63%</b> 감소</li>
+          </ul>
+          <ul class="tags"><li>Kotlin</li><li>Spring Boot</li><li>Kafka</li><li>PostgreSQL</li><li>Redis</li><li>AWS</li></ul>
+        </li>
+        <li class="job">
+          <div class="job-head">
+            <h3>Android Engineer<span class="at">@</span><span class="org">샘플 모빌리티</span></h3>
+            <p class="period mono"><time datetime="2021-01">2021.01</time> → <time datetime="2023-02">2023.02</time></p>
+          </div>
+          <ul>
+            <li>XML 뷰를 Jetpack Compose로 점진 전환하여 신규 화면 개발 리드타임 약 <b>40%</b> 단축</li>
+            <li>단일 모듈을 기능별 멀티 모듈로 재구성해 클린 빌드 시간 <b>6분 → 2분</b></li>
+            <li>ANR·크래시 추적 체계를 정비해 크래시 프리 세션 <b>99.2% → 99.8%</b></li>
+          </ul>
+          <ul class="tags"><li>Kotlin</li><li>Jetpack Compose</li><li>Coroutines</li><li>Hilt</li><li>Room</li></ul>
+        </li>
+        <li class="job">
+          <div class="job-head">
+            <h3>SWE Intern<span class="at">@</span><span class="org">플레이스홀더 랩</span></h3>
+            <p class="period mono"><time datetime="2020-07">2020.07</time> → <time datetime="2020-12">2020.12</time></p>
+          </div>
+          <ul>
+            <li>Spring Boot·React 기반 사내 운영 백오피스를 개발해 수작업 정산 업무 주 <b>8시간</b> 절감</li>
+          </ul>
+          <ul class="tags"><li>Java</li><li>Spring Boot</li><li>MySQL</li><li>React</li></ul>
+        </li>
+      </ol>
+    </section>
+
+    <section id="projects" class="sec" data-spy>
+      <div class="sec-title"><span class="mono">02</span><h2>Projects</h2></div>
+      <div class="projects">
+        <a class="project wide" href="#">
+          <p class="top mono"><span>open-source</span><span class="arr">↗</span></p>
+          <h3>kotlin-ratelimit</h3>
+          <p>Redis와 Lua 스크립트 기반의 분산 레이트 리미터. Spring Boot Starter로 한 줄 설정을 지원합니다.</p>
+          <p class="meta mono">★ 1.2k &nbsp;·&nbsp; kotlin &nbsp;·&nbsp; redis</p>
+        </a>
+        <a class="project" href="#">
+          <p class="top mono"><span>side-project</span><span class="arr">↗</span></p>
+          <h3>Driftnote</h3>
+          <p>오프라인 우선 마크다운 노트 앱. Room과 WorkManager로 충돌 없는 동기화를 구현했습니다.</p>
+          <p class="meta mono">10k+ installs &nbsp;·&nbsp; compose</p>
+        </a>
+        <a class="project" href="#">
+          <p class="top mono"><span>internal-tool</span><span class="arr">↗</span></p>
+          <h3>deploy-lens</h3>
+          <p>흩어진 사내 배포 현황을 한 화면에 모은 경량 대시보드입니다.</p>
+          <p class="meta mono">ktor &nbsp;·&nbsp; postgresql</p>
+        </a>
+      </div>
+    </section>
+
+    <section id="skills" class="sec" data-spy>
+      <div class="sec-title"><span class="mono">03</span><h2>Stack</h2></div>
+      <dl class="skills">
+        <div><dt>backend</dt><dd><span>Kotlin</span><span>Java</span><span>Spring Boot</span><span>JPA</span><span>gRPC</span><span>Kafka</span><span>Redis</span></dd></div>
+        <div><dt>android</dt><dd><span>Jetpack Compose</span><span>Coroutines/Flow</span><span>Hilt</span><span>Room</span><span>WorkManager</span></dd></div>
+        <div><dt>infra</dt><dd><span>PostgreSQL</span><span>MySQL</span><span>AWS(ECS/RDS/SQS)</span><span>Docker</span><span>Kubernetes</span><span>GitHub Actions</span></dd></div>
+      </dl>
+    </section>
+
+    <section id="etc" class="sec" data-spy>
+      <div class="sec-title"><span class="mono">04</span><h2>Education &amp; Elsewhere</h2></div>
+      <ul class="rows">
+        <li><p class="what"><span class="kind mono">edu</span><b>예시대학교</b> 컴퓨터공학과 학사</p><time class="mono">2014.03 → 2020.02</time></li>
+        <li><p class="what"><span class="kind mono">talk</span><b>“Compose 마이그레이션, 1년의 회고”</b> 예시 안드로이드 밋업</p><time class="mono">2022.11</time></li>
+        <li><p class="what"><span class="kind mono">oss</span><b>Spring 공식 문서 한국어 번역</b> 기여자</p><time class="mono">2021 →</time></li>
+        <li><p class="what"><span class="kind mono">cert</span><b>정보처리기사</b> 한국산업인력공단</p><time class="mono">2019.08</time></li>
+      </ul>
+    </section>
+
+    <footer class="mono">
+      <span>© 2026 홍길동 · last deploy 2026.09.26</span>
+      <span class="kb"><kbd>⌘</kbd> <kbd>P</kbd> 로 PDF 저장</span>
+    </footer>
+  </main>
+</div>
+
+<script>
+  // scroll-spy for the sidebar index
+  const links = new Map([...document.querySelectorAll('.toc a')].map(a => [a.hash.slice(1), a]));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      links.forEach(a => a.classList.remove('active'));
+      links.get(e.target.id)?.classList.add('active');
+    });
+  }, { rootMargin: '-35% 0px -60% 0px' });
+  document.querySelectorAll('[data-spy]').forEach(s => io.observe(s));
+</script>
+</body>
+</html>

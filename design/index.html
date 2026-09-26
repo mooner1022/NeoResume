@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resume — 디자인 시안</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #FAFAF9; color: #161616; font: 400 15px/1.6 "Pretendard Variable", Pretendard, system-ui, sans-serif; letter-spacing: -0.01em; word-break: keep-all; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 72px 40px; }
+  h1 { font-size: 15px; font-weight: 600; }
+  header p { color: #6A6A6A; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 40px 28px; margin-top: 48px; }
+  .shot { display: block; aspect-ratio: 16 / 11; overflow: hidden; border-radius: 10px; box-shadow: 0 0 0 1px rgba(0,0,0,.08); background: #fff; }
+  .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform .6s cubic-bezier(.2,.7,.3,1); }
+  .item:hover .shot img { transform: scale(1.02); }
+  .meta { display: flex; justify-content: space-between; gap: 12px; margin-top: 14px; }
+  .meta b { font-weight: 600; }
+  .meta span { color: #6A6A6A; font-size: 13px; }
+  .item p { color: #6A6A6A; margin-top: 4px; text-wrap: pretty; }
+  h2 { font-size: 13px; font-weight: 600; color: #6A6A6A; margin-top: 72px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,.08); }
+  h2 + .grid { margin-top: 28px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Resume · 디자인 시안</h1>
+    <p>같은 플레이스홀더 내용(레이아웃에 맞게 일부 표현만 조정), 서로 다른 방향. 시안을 클릭하면 실제 페이지가 열립니다.</p>
+  </header>
+  <h2>Round 2 — 레퍼런스(heavyrain39 portfolio) 재해석</h2>
+  <div class="grid">
+    <a class="item" href="f-telemetry.html"><div class="shot"><img src="screenshots/f-telemetry-desktop.png" alt=""></div><div class="meta"><b>F. Telemetry — 실제 내용 적용</b><span>KO/EN · light/dark</span></div><p>문민기 실제 이력 반영(resume-demo + mooner.dev). 계기판 히어로(REST/SSE/Cache), 다이아몬드 타임라인, 프로젝트 스펙 프리뷰, now.log.</p></a>
+    <a class="item" href="g-spec-sheet.html"><div class="shot"><img src="screenshots/g-spec-sheet-desktop.png" alt=""></div><div class="meta"><b>G. Spec Sheet</b><span>static · resume-first</span></div><p>F와 같은 시각 언어를 정적으로. 지표 스트립, 스티키 섹션 라벨, 인쇄 친화적 밀도.</p></a>
+  </div>
+  <h2>Round 1</h2>
+  <div class="grid">
+    <a class="item" href="a-editorial.html"><div class="shot"><img src="screenshots/a-editorial-desktop.png" alt=""></div><div class="meta"><b>A. Editorial</b><span>warm paper · serif</span></div><p>잡지 같은 타이포그래피. 거대한 세리프 이름, 좌측 스티키 섹션 라벨, 콜로폰 푸터.</p></a>
+    <a class="item" href="b-swiss-grid.html"><div class="shot"><img src="screenshots/b-swiss-grid-desktop.png" alt=""></div><div class="meta"><b>B. Swiss Grid</b><span>12-col · orange</span></div><p>엄격한 그리드와 굵은 헤드라인. 경력마다 핵심 지표를 크게 배치. G 키로 그리드 표시.</p></a>
+    <a class="item" href="c-mono-dark.html"><div class="shot"><img src="screenshots/c-mono-dark-desktop.png" alt=""></div><div class="meta"><b>C. Mono Dark</b><span>dark · Android green</span></div><p>개발자 톤의 다크 테마. 커밋 그래프형 타임라인, 스크롤 연동 사이드 목차.</p></a>
+    <a class="item" href="d-soft-bento.html"><div class="shot"><img src="screenshots/d-soft-bento-desktop.png" alt=""></div><div class="meta"><b>D. Soft Bento</b><span>cards · auto dark</span></div><p>부드러운 카드와 벤토 헤더. 경력 비율 바, 시스템 다크 모드 자동 대응.</p></a>
+    <a class="item" href="e-compact-column.html"><div class="shot"><img src="screenshots/e-compact-column-desktop.png" alt=""></div><div class="meta"><b>E. Compact Column</b><span>narrow · quiet</span></div><p>좁은 단일 컬럼, 색 대신 명도로만 위계. 호버 시 형제 항목 디밍, 서울 실시간 시계.</p></a>
+  </div>
+</div>
+</body>
+</html>

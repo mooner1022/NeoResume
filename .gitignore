@@ -1,0 +1,7 @@
+# 12MB 번들 원본 — 내용은 design/f-telemetry.html에 옮겨져 있음
+resume-demo.html
+
+node_modules/
+.svelte-kit/
+build/
+.DS_Store

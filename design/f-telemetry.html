@@ -1,0 +1,1042 @@
+<!doctype html>
+<html lang="ko" data-lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>문민기 Minki Moon — Backend & Android Developer</title>
+<meta name="description" content="백엔드 · 안드로이드 개발자 문민기(mooner)의 이력서. Kotlin · Ktor · Jetpack Compose.">
+<script>
+  // apply theme + language before first paint
+  (() => {
+    const d = document.documentElement;
+    const t = localStorage.getItem('theme');
+    d.classList.toggle('dark', t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches);
+    const l = localStorage.getItem('lang') || 'ko';
+    d.dataset.lang = l; d.lang = l;
+    d.classList.add('js');
+  })();
+</script>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wdth,wght@75..112.5,100..800&display=swap">
+<style>
+  :root {
+    --paper: #F1F1EC;
+    --ink: #151515;
+    --ink-2: #55554F;
+    --ink-3: #6A6A64;
+    --ink-4: rgba(21, 21, 21, .22);   /* decorative only */
+    --rule: rgba(21, 21, 21, .1);
+    --tint: rgba(21, 21, 21, .035);
+    --signal: #17A35B;
+    --sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    --wide: "Archivo", "Pretendard Variable", Pretendard, sans-serif;
+    --mono: "Martian Mono", "Pretendard Variable", Pretendard, ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease: cubic-bezier(.2, .7, .3, 1);
+  }
+  .dark {
+    --paper: #121312;
+    --ink: #EDEDE8;
+    --ink-2: #ABABA5;
+    --ink-3: #8C8C86;
+    --ink-4: rgba(237, 237, 232, .2);
+    --rule: rgba(237, 237, 232, .1);
+    --tint: rgba(237, 237, 232, .03);
+    --signal: #3DDC84;
+  }
+
+  /* language switch: every bilingual pair carries data-l */
+  html[data-lang="ko"] [data-l="en"], html[data-lang="en"] [data-l="ko"] { display: none !important; }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font: 400 16px/1.7 var(--sans);
+    letter-spacing: -0.01em;
+    word-break: keep-all; overflow-wrap: break-word;
+    transition: background-color .35s, color .35s;
+  }
+  ::selection { background: var(--ink); color: var(--paper); }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  :focus-visible { outline: 1px solid var(--signal); outline-offset: 3px; }
+  ul, ol { list-style: none; }
+  time, .num { font-variant-numeric: tabular-nums; }
+
+  .mono { font-family: var(--mono); font-stretch: 87.5%; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .lc { text-transform: none; }
+  .wide { font-family: var(--wide); font-stretch: 125%; letter-spacing: -0.02em; }
+  .container { max-width: 1240px; margin: 0 auto; padding: 0 48px; }
+
+  /* dot field — fades out below the hero */
+  .field {
+    position: absolute; inset: 0 0 auto; height: 110vh; pointer-events: none; z-index: 0;
+    background-image: radial-gradient(var(--ink-4) 1px, transparent 1.2px);
+    background-size: 28px 28px; background-position: -14px -14px;
+    mask-image: linear-gradient(#000 30%, transparent 95%);
+    opacity: .55;
+  }
+
+  /* corner brackets — shared by instrument, preview panel, hover state */
+  .corners, .bracket::before {
+    --c: var(--ink-3); --l: 14px;
+    background:
+      linear-gradient(var(--c), var(--c)) top left / var(--l) 1px,
+      linear-gradient(var(--c), var(--c)) top left / 1px var(--l),
+      linear-gradient(var(--c), var(--c)) top right / var(--l) 1px,
+      linear-gradient(var(--c), var(--c)) top right / 1px var(--l),
+      linear-gradient(var(--c), var(--c)) bottom left / var(--l) 1px,
+      linear-gradient(var(--c), var(--c)) bottom left / 1px var(--l),
+      linear-gradient(var(--c), var(--c)) bottom right / var(--l) 1px,
+      linear-gradient(var(--c), var(--c)) bottom right / 1px var(--l);
+    background-repeat: no-repeat;
+  }
+  .corners { position: absolute; inset: 0; pointer-events: none; }
+  .bracket { position: relative; }
+  .bracket::before {
+    content: ""; position: absolute; inset: -18px -20px; pointer-events: none; --l: 10px;
+    opacity: 0; transform: scale(1.015); transition: opacity .3s, transform .45s var(--ease);
+  }
+  .bracket:hover::before, .bracket.active::before { opacity: 1; transform: none; }
+
+  /* ── Top bar ────────────────────────────── */
+  .topbar { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 28px 0; color: var(--ink-3); }
+  .topbar .build { display: inline-flex; align-items: center; gap: 10px; }
+  .ticks { display: inline-flex; gap: 2px; }
+  .ticks i { width: 3px; height: 9px; background: var(--ink-3); opacity: .9; }
+  .ticks i:nth-child(n+5) { opacity: .25; }
+  .switches { display: inline-flex; gap: 28px; }
+  .toggle { display: inline-flex; gap: 8px; }
+  .toggle button { color: var(--ink-3); letter-spacing: inherit; text-transform: inherit; font: inherit; transition: color .2s; }
+  .toggle button:hover { color: var(--ink-2); }
+  .toggle button[aria-pressed="true"] { color: var(--ink); font-weight: 600; }
+  .toggle span { opacity: .5; }
+
+  /* ── Hero ───────────────────────────────── */
+  .hero { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 72px; align-items: center; min-height: min(72vh, 700px); padding: 24px 0 88px; }
+  .who .label { display: flex; justify-content: space-between; color: var(--ink-3); margin-bottom: 22px; }
+  .name { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; line-height: 1; }
+  .name .ko { font-size: 68px; font-weight: 800; letter-spacing: -0.045em; }
+  .name .en { font-size: 30px; font-weight: 500; color: var(--ink-4); }
+  .name .handle { font-size: 11px; color: var(--ink-3); }
+  .tagline { margin-top: 26px; font-size: 22px; font-weight: 600; letter-spacing: -0.03em; min-height: 1.5em; }
+  .caret { display: inline-block; width: .5em; height: 1.05em; margin-left: 3px; vertical-align: -0.16em; background: var(--signal); animation: blink 1.05s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .intro { margin-top: 14px; color: var(--ink-2); max-width: 31em; text-wrap: pretty; }
+  .intro b { color: var(--ink); font-weight: 600; }
+
+  .spec { margin-top: 30px; display: grid; grid-template-columns: 92px 1fr; row-gap: 7px; border-top: 1px solid var(--rule); padding-top: 18px; }
+  .spec dt { color: var(--ink-3); }
+  .spec dd { color: var(--ink); text-transform: none; letter-spacing: 0.02em; }
+  .spec .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--signal); margin-right: 8px; vertical-align: 1px; }
+  .spec dd i { font-style: normal; color: var(--ink-4); margin: 0 6px; }
+
+  .links { display: flex; gap: 22px; margin-top: 26px; flex-wrap: wrap; }
+  .links a { position: relative; color: var(--ink-2); padding-bottom: 3px; transition: color .2s; }
+  .links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform: scaleX(.25); transform-origin: left; opacity: .5; transition: transform .35s var(--ease), opacity .2s; }
+  .links a:hover { color: var(--ink); }
+  .links a:hover::after { transform: none; opacity: 1; }
+
+  /* instrument panel */
+  .instrument { position: relative; padding: 22px 24px 20px; color: var(--ink-3); }
+  .inst-head { display: flex; justify-content: space-between; gap: 16px; }
+  .inst-head .live { display: inline-flex; align-items: center; gap: 8px; color: var(--ink-2); }
+  .inst-head .live i, .pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--signal); animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 50% { opacity: .3; } }
+  .flow { display: block; width: 100%; height: auto; margin: 10px 0 6px; cursor: crosshair; overflow: visible; }
+  .flow .wire { fill: none; stroke: var(--ink-4); stroke-width: 1; stroke-dasharray: 3 5; }
+  .flow .wire-hot { fill: none; stroke: var(--ink-3); stroke-width: 1; stroke-dasharray: 3 5; animation: dash 1.2s linear infinite; opacity: 0; transition: opacity .3s; }
+  @keyframes dash { to { stroke-dashoffset: -16; } }
+  .flow .outline { fill: none; stroke: var(--ink); stroke-width: 1.1; transition: stroke .15s; }
+  .flow .outline.hit { stroke: var(--signal); }
+  .flow .faint { fill: none; stroke: var(--ink-4); stroke-width: 1; }
+  .flow .led { fill: var(--ink-4); transition: fill .15s; }
+  .flow .led.on { fill: var(--signal); }
+  .flow text { font-family: var(--mono); font-stretch: 87.5%; font-size: 9.5px; letter-spacing: .08em; fill: var(--ink-3); }
+  .flow text.strong { fill: var(--ink); font-weight: 600; }
+  .flow .pkt { fill: var(--ink); }
+  .flow .pkt.res { fill: none; stroke: var(--signal); stroke-width: 1.4; }
+  .flow .pkt.evt { fill: var(--signal); }
+
+  .readouts { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--rule); }
+  .readouts > div { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--rule); }
+  .readouts > div:nth-child(odd) { padding-right: 20px; border-right: 1px solid var(--rule); }
+  .readouts > div:nth-child(even) { padding-left: 20px; }
+  .readouts .v { color: var(--ink); font-weight: 600; }
+  .readouts .v.sig { color: var(--signal); }
+  .seg { display: inline-flex; gap: 12px; }
+  .seg button { font: inherit; letter-spacing: inherit; text-transform: inherit; color: var(--ink-4); transition: color .2s; }
+  .seg button:hover { color: var(--ink-3); }
+  .seg button[aria-pressed="true"] { color: var(--ink); font-weight: 600; }
+  .loadbar { width: 84px; height: 3px; background: var(--rule); position: relative; overflow: hidden; }
+  .loadbar i { position: absolute; inset: 0 auto 0 0; width: 10%; background: var(--ink); transition: width .3s; }
+  .spark { width: 84px; height: 16px; }
+  .spark polyline { fill: none; stroke: var(--ink); stroke-width: 1; }
+  .hint { display: flex; justify-content: space-between; gap: 16px; margin-top: 12px; color: var(--ink-4); font-size: 9.5px; }
+
+  /* ── Sections ───────────────────────────── */
+  /* hairline aligned to the content edge, not the padded box */
+  .sec { padding-block: 96px 40px; background: linear-gradient(var(--rule), var(--rule)) 50% 0 / calc(100% - 96px) 1px no-repeat; }
+  .cmd { color: var(--ink-3); margin-bottom: 14px; letter-spacing: .02em; }
+  .cmd b { color: var(--signal); font-weight: 500; }
+  .sec-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 56px; }
+  .sec-head h2 { display: flex; align-items: flex-start; gap: 10px; font-size: 40px; font-weight: 650; line-height: 1; }
+  .sec-head h2 sup { font: 500 10px/1 var(--mono); font-stretch: 87.5%; letter-spacing: .06em; color: var(--ink-3); padding-top: 2px; }
+  .sec-head .ko { display: block; margin-top: 12px; color: var(--ink-3); }
+  .sec-head .meta { display: inline-flex; align-items: center; gap: 8px; color: var(--ink-3); text-align: right; letter-spacing: .14em; }
+
+  .two { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 40px; }
+
+  /* reveal on scroll */
+  .js .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+  .js .reveal.in { opacity: 1; transform: none; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 6px 16px; color: var(--ink-3); }
+
+  /* about */
+  .aside-kv { display: grid; grid-template-columns: 64px 1fr; row-gap: 6px; color: var(--ink-3); align-self: start; }
+  .aside-kv dd { color: var(--ink); text-transform: none; letter-spacing: .02em; }
+  .prose { max-width: 64ch; }
+  .prose p { color: var(--ink-2); text-wrap: pretty; }
+  .prose p + p { margin-top: 14px; }
+  .prose p:first-child { font-size: 19px; line-height: 1.65; color: var(--ink); letter-spacing: -0.02em; }
+  .prose b { color: var(--ink); font-weight: 600; }
+
+  /* experience — diamond timeline */
+  .job + .job { margin-top: 56px; }
+  .job .when { color: var(--ink-3); line-height: 1.9; }
+  .job .when b { display: block; color: var(--ink); font-weight: 600; }
+  .job .body { position: relative; padding-left: 36px; }
+  .job .body::before { content: ""; position: absolute; left: 0; top: 14px; bottom: -70px; width: 1px; background: var(--rule); }
+  .job:last-child .body::before { bottom: 0; background: linear-gradient(var(--rule), transparent); }
+  .job .body::after { content: ""; position: absolute; left: -4.5px; top: 9px; width: 9px; height: 9px; border: 1px solid var(--ink-3); background: var(--paper); transform: rotate(45deg); }
+  .job.now .body::after { border-color: var(--signal); background: var(--signal); box-shadow: 0 0 0 4px color-mix(in srgb, var(--signal) 16%, transparent); }
+  .job h3 { font-size: 23px; font-weight: 700; letter-spacing: -0.035em; line-height: 1.3; }
+  .job .role { color: var(--ink-2); margin-top: 2px; }
+  .job .tags { margin: 12px 0 0; }
+  .job ul { margin-top: 14px; }
+  .job li { position: relative; padding-left: 20px; color: var(--ink-2); max-width: 64ch; text-wrap: pretty; }
+  .job li + li { margin-top: 6px; }
+  .job li::before { content: ""; position: absolute; left: 0; top: .78em; width: 8px; height: 1px; background: var(--ink-3); }
+  .job li b { color: var(--ink); font-weight: 600; white-space: nowrap; }
+
+  /* projects — list + spec preview */
+  .work { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 56px; align-items: start; }
+  .plist > li + li { border-top: 1px solid var(--rule); }
+  .prow { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; column-gap: 16px; padding: 22px 16px 22px 12px; cursor: default; transition: background .25s; outline-offset: -1px; }
+  .prow.active { background: var(--tint); }
+  .prow .idx { color: var(--ink-3); padding-top: 7px; }
+  .prow h3 { font-size: 20px; font-weight: 650; line-height: 1.3; }
+  .prow h3 small { font: 400 15px var(--sans); letter-spacing: -0.01em; color: var(--ink-2); margin-left: 10px; font-stretch: 100%; }
+  .prow .yr { color: var(--ink-3); text-align: right; padding-top: 7px; white-space: nowrap; }
+  .prow .yr span { display: block; margin-top: 4px; color: var(--ink-3); opacity: .8; }
+  .prow .desc { grid-column: 2 / -1; margin-top: 8px; color: var(--ink-2); font-size: 15px; text-wrap: pretty; max-width: 62ch; }
+  .prow .tags { grid-column: 2 / -1; margin-top: 12px; }
+  .prow .tags .sig { color: var(--signal); }
+  .prow .arr { display: inline-block; margin-left: 8px; color: var(--ink-3); opacity: 0; transform: translateX(-4px); transition: all .3s var(--ease); font-family: var(--sans); font-size: 15px; }
+  .prow.active .arr { opacity: 1; transform: none; }
+
+  .preview { position: sticky; top: 32px; padding: 20px 22px 22px; }
+  .preview .head { display: flex; justify-content: space-between; color: var(--ink-3); }
+  .preview .thumb { margin: 16px 0 18px; aspect-ratio: 16 / 9; border: 1px solid var(--rule); background: var(--tint); display: grid; place-items: center; overflow: hidden; }
+  .preview .thumb svg { width: 64%; height: auto; overflow: visible; }
+  .card { display: none; }
+  .card.show { display: block; }
+  .card.show.anim { animation: swap .45s var(--ease); }
+  @keyframes swap { from { opacity: 0; transform: translateY(6px); } }
+  .card h4 { font-size: 16px; font-weight: 600; letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px; }
+  .card h4::before { content: ""; width: 3px; height: 1em; background: var(--signal); }
+  .card dl { display: grid; grid-template-columns: 84px 1fr; row-gap: 8px; margin-top: 14px; }
+  .card dt { color: var(--ink-3); padding-top: 2px; }
+  .card dd { font-size: 14px; color: var(--ink); }
+  .card .go { display: flex; gap: 18px; margin-top: 18px; padding-top: 14px; border-top: 1px dashed var(--rule); }
+  .card .go a { color: var(--ink); border-bottom: 1px solid var(--ink-4); padding-bottom: 2px; transition: border-color .2s; }
+  .card .go a:hover { border-color: var(--ink); }
+  .thumb .o { fill: none; stroke: var(--ink); stroke-width: 1.1; }
+  .thumb .f { fill: var(--ink); }
+  .thumb .g { fill: var(--ink-4); }
+  .thumb .s { fill: var(--signal); }
+  .thumb .ss { fill: none; stroke: var(--signal); stroke-width: 1.2; }
+  .thumb .d { fill: none; stroke: var(--ink-3); stroke-width: 1; stroke-dasharray: 2 3; }
+  .thumb text { font-family: var(--mono); font-stretch: 87.5%; font-size: 8px; letter-spacing: .06em; fill: var(--ink-3); }
+  .thumb text.big { font-family: var(--wide); font-stretch: 125%; font-size: 26px; font-weight: 600; fill: var(--ink); letter-spacing: -0.02em; }
+
+  .oss { margin-top: 64px; }
+  .oss h3 { display: flex; justify-content: space-between; color: var(--ink-3); font-weight: 400; padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
+  .oss ul { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 40px; }
+  .oss li a { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+  .oss li b { font-weight: 600; letter-spacing: -0.02em; }
+  .oss li .star { color: var(--ink-3); }
+  .oss li span:last-child { grid-column: 1 / -1; color: var(--ink-2); font-size: 14px; }
+  .oss li a:hover b { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+
+  /* toolkit */
+  .toolkit { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); }
+  .toolkit > div { padding: 20px 24px 28px 0; }
+  .toolkit > div:not(:nth-child(4n+1)) { padding-left: 24px; border-left: 1px solid var(--rule); }
+  .toolkit > div:nth-child(n+5) { border-top: 1px solid var(--rule); }
+  .toolkit h3 { display: flex; justify-content: space-between; color: var(--ink-3); font-weight: 400; margin-bottom: 14px; }
+  .toolkit li { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--rule); }
+  .toolkit li:last-child { border-bottom: 0; }
+  .toolkit li span { color: var(--signal); }
+
+  /* education */
+  .rows li { display: grid; grid-template-columns: 220px 1fr; gap: 40px; padding: 22px 0; border-bottom: 1px solid var(--rule); }
+  .rows li:first-child { border-top: 1px solid var(--rule); }
+  .rows time { color: var(--ink-3); padding-top: 3px; }
+  .rows b { font-weight: 650; letter-spacing: -0.025em; font-size: 18px; }
+  .rows .muted { color: var(--ink-2); }
+  .rows .note { margin-top: 6px; color: var(--ink-3); font-size: 14px; }
+  .journey { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 18px; max-width: 640px; }
+  .journey li { display: block; position: relative; padding: 18px 12px 0 0; border: 0 !important; background: linear-gradient(var(--ink-4), var(--ink-4)) 0 4px / 100% 1px no-repeat; }
+  .journey li:last-child { background-size: 30% 1px; }
+  .journey li::before { content: ""; position: absolute; left: 0; top: 0; width: 8px; height: 8px; border: 1px solid var(--ink-3); background: var(--paper); transform: rotate(45deg); }
+  .journey li:last-child::before { border-color: var(--signal); background: var(--signal); }
+  .journey .y { color: var(--ink); font-weight: 600; }
+  .journey p { margin-top: 2px; font-size: 13.5px; color: var(--ink-2); }
+
+  /* now.log */
+  .log li { display: grid; grid-template-columns: 220px 1fr; gap: 40px; padding: 14px 0; border-bottom: 1px dashed var(--rule); }
+  .log li:first-child { padding-top: 0; }
+  .log .k { color: var(--ink-3); display: flex; gap: 14px; padding-top: 3px; }
+  .log .k i { font-style: normal; color: var(--ink-4); }
+  .log p { color: var(--ink); }
+  .log p + p { color: var(--ink-3); font-size: 14px; }
+
+  /* ── Inverted contact panel ─────────────── */
+  .panel { margin: 120px 16px 16px; border-radius: 28px; background: var(--ink); color: var(--paper); }
+  .panel .container { padding-top: 28px; padding-bottom: 36px; }
+  .status { display: flex; justify-content: space-between; gap: 16px; opacity: .6; }
+  .status .on { display: inline-flex; align-items: center; gap: 8px; }
+  .status .on i { width: 6px; height: 6px; border-radius: 50%; background: var(--signal); }
+  .panel-body { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 72px; padding: 104px 0 120px; }
+  .panel .cmd { color: inherit; opacity: .5; }
+  .panel h2 { display: flex; align-items: flex-start; gap: 10px; font-size: 40px; font-weight: 650; line-height: 1; }
+  .panel h2 sup { font: 500 10px/1 var(--mono); font-stretch: 87.5%; letter-spacing: .06em; opacity: .6; padding-top: 2px; }
+  .panel .kv { margin-top: 28px; display: grid; grid-template-columns: 80px 1fr; row-gap: 8px; opacity: .65; }
+  .panel .kv dd { text-transform: none; letter-spacing: .02em; }
+  .panel .say { font-size: 30px; font-weight: 700; letter-spacing: -0.04em; line-height: 1.35; text-wrap: balance; }
+  .panel .say + p { margin-top: 10px; opacity: .6; }
+  .mailrow { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 40px; }
+  .panel .mail { display: inline-flex; align-items: center; gap: 14px; font-size: clamp(26px, 3.4vw, 44px); font-weight: 600; line-height: 1.1; padding-bottom: 8px; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .5s var(--ease); }
+  .panel .mail:hover { background-size: 100% 1px; }
+  .panel .mail span { font-family: var(--sans); font-size: .6em; opacity: .6; transition: transform .3s var(--ease); }
+  .panel .mail:hover span { transform: translate(4px, -4px); opacity: 1; }
+  .copy { border: 1px solid currentColor; border-radius: 999px; padding: 5px 12px; opacity: .55; transition: opacity .2s; font: inherit; letter-spacing: inherit; }
+  .copy:hover { opacity: 1; }
+  .copy.done { opacity: 1; color: var(--signal); }
+  .alt { margin-top: 32px; display: grid; gap: 8px; }
+  .alt a { display: grid; grid-template-columns: 56px 36px 1fr; align-items: center; opacity: .6; transition: opacity .2s; }
+  .alt a:hover { opacity: 1; }
+  .alt a i { font-style: normal; opacity: .6; }
+  .alt a span:last-child { text-transform: none; letter-spacing: .02em; }
+  .panel .ps { margin-top: 28px; opacity: .45; }
+  .panel footer { display: flex; justify-content: space-between; gap: 16px; opacity: .4; }
+
+  @media (max-width: 960px) {
+    .container { padding: 0 20px; }
+    .topbar .build .rev { display: none; }
+    .switches { gap: 16px; }
+    .hero { grid-template-columns: 1fr; gap: 48px; min-height: 0; padding: 16px 0 64px; }
+    .name .ko { font-size: 52px; }
+    .name .en { font-size: 22px; }
+    .tagline { font-size: 19px; }
+    .instrument { padding: 18px 16px 16px; }
+    .readouts { grid-template-columns: 1fr; }
+    .readouts > div:nth-child(odd) { padding-right: 0; border-right: 0; }
+    .readouts > div:nth-child(even) { padding-left: 0; }
+    .hint span:last-child { display: none; }
+    .inst-head > span:last-child { display: none; }
+    .sec { padding-block: 64px 24px; background-size: calc(100% - 40px) 1px; }
+    .sec-head { flex-direction: column; align-items: flex-start; margin-bottom: 36px; gap: 10px; }
+    .sec-head h2 { font-size: 30px; }
+    .two, .rows li, .log li { grid-template-columns: 1fr; gap: 12px; }
+    .log li { gap: 4px; }
+    .prose p:first-child { font-size: 17px; }
+    .job .when b { display: inline; margin-right: 8px; }
+    .job .when { padding-left: 36px; }
+    .job .body::before { top: -30px; }
+    .job .body::after { top: -24px; }
+    .job + .job { margin-top: 48px; }
+    .work { grid-template-columns: 1fr; }
+    .preview { display: none; }
+    .prow { grid-template-columns: 32px 1fr; padding: 20px 0; }
+    .prow .yr { grid-column: 2; text-align: left; padding-top: 4px; }
+    .prow .yr span { display: inline; margin-left: 8px; }
+    .prow h3 small { display: block; margin-left: 0; }
+    .prow.active { background: none; }
+    .oss ul { grid-template-columns: 1fr; }
+    .toolkit { grid-template-columns: 1fr 1fr; }
+    .toolkit > div, .toolkit > div:not(:nth-child(4n+1)) { padding: 18px 12px 18px 0; border-left: 0; border-top: 1px solid var(--rule); }
+    .toolkit > div:nth-child(even) { padding-left: 14px; border-left: 1px solid var(--rule); }
+    .toolkit > div:nth-child(-n+2) { border-top: 0; }
+    .journey { grid-template-columns: 1fr 1fr; row-gap: 20px; }
+    .panel { margin: 80px 8px 8px; border-radius: 22px; }
+    .panel-body { grid-template-columns: 1fr; gap: 40px; padding: 64px 0 72px; }
+    .panel h2 { font-size: 30px; }
+    .panel .say { font-size: 23px; }
+    .status span:nth-child(2) { display: none; }
+    .panel footer { flex-direction: column; gap: 4px; }
+    .bracket::before { inset: -12px -10px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .caret, .inst-head .live i, .pulse, .flow .wire-hot { animation: none; }
+    .js .reveal { opacity: 1; transform: none; transition: none; }
+    .card.show.anim { animation: none; }
+  }
+  @media print {
+    @page { size: A4; margin: 14mm; }
+    :root, .dark { --paper: #fff; --ink: #111; --ink-2: #333; --ink-3: #666; --ink-4: #bbb; --rule: #ddd; --signal: #17A35B; }
+    body { font-size: 9.5pt; }
+    .field, .instrument, .switches, .caret, .hint, .preview, .copy, .cmd { display: none !important; }
+    .container { max-width: none; padding: 0; }
+    .hero { display: block; min-height: 0; padding: 0 0 20px; }
+    .sec { padding-block: 24px 8px; }
+    .sec-head { margin-bottom: 18px; }
+    .js .reveal { opacity: 1; transform: none; }
+    .job, .prow, .rows li, .log li { break-inside: avoid; }
+    .work { display: block; }
+    .panel { margin: 24px 0 0; border: 1px solid #ddd; background: #fff; color: #111; }
+    .panel-body { padding: 24px 0; }
+  }
+</style>
+</head>
+<body>
+<div class="field" aria-hidden="true"></div>
+
+<div class="container">
+  <header class="topbar mono">
+    <span class="build">mooner / Resume <span class="rev">· Rev 9.0 · 2026.09</span> <span class="ticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span></span>
+    <span class="switches">
+      <span class="toggle" role="group" aria-label="언어 / Language">
+        <button type="button" data-set-lang="ko">KO</button><span>/</span><button type="button" data-set-lang="en">EN</button>
+      </span>
+      <span class="toggle" role="group" aria-label="테마 / Theme">
+        <button type="button" data-theme="light">Light</button><span>/</span><button type="button" data-theme="dark">Dark</button>
+      </span>
+    </span>
+  </header>
+
+  <section class="hero">
+    <div class="who">
+      <p class="label mono"><span>Profile — 01</span><span>Ansan · UTC+09</span></p>
+      <h1 class="name"><span class="ko">문민기</span><span class="en wide">Minki Moon</span><span class="handle mono lc">@mooner</span></h1>
+      <p class="tagline">
+        <span class="typed" data-l="ko" lang="ko">서버와 앱, 양 끝을 잇는 개발자.</span><span class="typed" data-l="en" lang="en">Bridging the server and the app, end to end.</span><span class="caret" aria-hidden="true"></span>
+      </p>
+      <p class="intro" data-l="ko" lang="ko">한양대학교 ERICA 컴퓨터공학과에 재학 중인 <b>백엔드 · 안드로이드 개발자</b>입니다. 2016년 독학으로 시작해 Java와 Kotlin으로 백엔드 시스템을, Jetpack Compose로 안드로이드 앱을 만듭니다.</p>
+      <p class="intro" data-l="en" lang="en">A <b>backend &amp; Android developer</b> studying Computer Engineering at Hanyang University (ERICA). Self-taught since 2016 — building backend systems in Java / Kotlin and Android apps with Jetpack Compose.</p>
+      <dl class="spec mono">
+        <dt>Role</dt><dd>Backend · Android Developer</dd>
+        <dt>Stack</dt><dd>Kotlin · Ktor · Jetpack Compose</dd>
+        <dt>Track</dt><dd><span class="num">8+ yrs</span><i>/</i><span class="num">★ 57</span><i>/</i><span class="num">46.3K+ installs</span></dd>
+        <dt>Status</dt><dd><span class="dot"></span><span data-l="ko">배우고, 만들고, 기여하는 중</span><span data-l="en">learning · building · contributing</span></dd>
+      </dl>
+      <nav class="links mono">
+        <a href="mailto:mooner@mooner.dev">Email</a>
+        <a href="https://github.com/mooner1022">GitHub ↗</a>
+        <a href="https://mooner.dev">mooner.dev ↗</a>
+      </nav>
+    </div>
+
+    <figure class="instrument" aria-label="클라이언트와 서버 사이 요청 흐름을 보여주는 장식용 패널">
+      <span class="corners" aria-hidden="true"></span>
+      <figcaption class="inst-head mono"><span class="live"><i></i>Trace / Live</span><span>37.2970N 126.8350E · ap-northeast-2</span></figcaption>
+      <svg class="flow" id="flow" viewBox="0 0 560 250" role="img" aria-label="Android 클라이언트에서 Redis를 거쳐 Ktor 서버로 요청이 오가는 애니메이션">
+        <g transform="translate(40 70)">
+          <rect class="outline" x="0" y="0" width="54" height="96" rx="10"/>
+          <rect class="faint" x="6" y="12" width="42" height="66" rx="2"/>
+          <line class="outline" x1="22" y1="6" x2="32" y2="6"/>
+          <circle class="led" id="led-c" cx="27" cy="87" r="2.6"/>
+        </g>
+        <text x="40" y="192" class="strong">CLIENT</text><text x="40" y="206">ANDROID</text>
+        <g transform="translate(456 72)">
+          <rect class="outline" x="0" y="0" width="64" height="24" rx="3"/>
+          <rect class="outline" x="0" y="34" width="64" height="24" rx="3"/>
+          <rect class="outline" x="0" y="68" width="64" height="24" rx="3"/>
+          <circle class="led" id="led-s0" cx="52" cy="12" r="2.6"/><circle class="led" id="led-s1" cx="52" cy="46" r="2.6"/><circle class="led" id="led-s2" cx="52" cy="80" r="2.6"/>
+          <line class="faint" x1="9" y1="12" x2="34" y2="12"/><line class="faint" x1="9" y1="46" x2="34" y2="46"/><line class="faint" x1="9" y1="80" x2="34" y2="80"/>
+        </g>
+        <text x="456" y="192" class="strong">SERVER</text><text x="456" y="206">KTOR · POSTGRES</text>
+        <g transform="translate(278 118)"><rect class="outline" id="cache" x="-9" y="-9" width="18" height="18" transform="rotate(45)"/></g>
+        <text x="278" y="148" text-anchor="middle" class="strong">CACHE</text><text x="278" y="161" text-anchor="middle">REDIS</text>
+        <path class="wire" d="M100 118 L 266 118 M290 118 L 450 118"/>
+        <path id="route" d="M100 118 L 450 118" fill="none" stroke="none"/>
+        <path class="wire-hot" id="wire-hot" d="M100 118 L 450 118"/>
+        <g id="pkts"></g>
+      </svg>
+      <div class="readouts mono">
+        <div><span>Protocol</span><span class="seg" id="proto"><button type="button" aria-pressed="true" data-p="rest">REST</button><button type="button" aria-pressed="false" data-p="sse">SSE</button><button type="button" aria-pressed="false" data-p="cache">Cache</button></span></div>
+        <div><span>Latency <span class="lc">p99</span></span><span class="v"><span id="lat" class="num">142</span><span class="lc">ms</span></span></div>
+        <div><span>Load</span><span class="loadbar"><i id="load"></i></span></div>
+        <div><span>Trend</span><svg class="spark" viewBox="0 0 84 16" preserveAspectRatio="none"><polyline id="spark" points="0,8 84,8"/></svg></div>
+        <div><span>Requests OK</span><span class="v sig num" id="ok">000</span></div>
+        <div><span>Cache hit</span><span class="v num" id="hit">0%</span></div>
+      </div>
+      <p class="hint mono"><span data-l="ko">클릭 → 요청 전송 · 1–3 → 프로토콜</span><span data-l="en">Click → send · 1–3 → protocol</span><span>Decorative — not real data</span></p>
+    </figure>
+  </section>
+</div>
+
+<main>
+  <!-- 01 about -->
+  <section class="sec container reveal" id="about">
+    <p class="cmd mono lc"><b>mooner</b>:~/resume $ whoami</p>
+    <div class="sec-head">
+      <div><h2 class="wide">About<sup>01</sup></h2><span class="ko mono">소개</span></div>
+      <p class="meta mono">Since 2016 — Self-taught</p>
+    </div>
+    <div class="two">
+      <dl class="aside-kv mono">
+        <dt>Base</dt><dd>Ansan, KR</dd>
+        <dt>Lang</dt><dd>ko, en</dd>
+        <dt>Off</dt><dd data-l="ko">3D 프린팅 · 모델링</dd><dd data-l="en">3D printing · CAD</dd>
+      </dl>
+      <div class="prose" data-l="ko" lang="ko">
+        <p>한양대학교 ERICA 컴퓨터공학과에 재학 중인 평범한(그런 척하는) 학부생. 프로그래밍은 2016년부터 독학으로 시작해 올해로 8년째입니다.</p>
+        <p><b>Java와 Kotlin</b>을 주축으로 백엔드 시스템을, <b>Jetpack Compose</b>로 안드로이드 앱을 만듭니다. 깨끗하고 유지보수 가능한 코드와 확장 가능한 시스템 설계에 관심이 많아요.</p>
+        <p>군 복무를 마치고 2026년 2학기부터 한양대학교 ERICA로 복학해 학업을 이어가는 중입니다. 그 외 시간엔 백엔드/사이드 프로젝트를 건드립니다.</p>
+        <p>화면 밖에서는 3D 프린팅과 모델링을 합니다. 예전엔 프린터를 직접 설계해 만들고 고쳐 쓰다가, 지금은 Bambu Lab X2D에 맡기고 Fusion 360으로 그리는 쪽에 더 시간을 씁니다.</p>
+      </div>
+      <div class="prose" data-l="en" lang="en">
+        <p>Ordinary undergrad at Hanyang University (ERICA), majoring in Computer Engineering. Self-taught since 2016 — 8 years in and still hungry.</p>
+        <p>Builds robust backend systems in <b>Java / Kotlin</b> and crafts Android apps with <b>Jetpack Compose</b>. Chasing clean, maintainable code and systems that actually scale.</p>
+        <p>Back at Hanyang ERICA since the second semester of 2026 after finishing military service — classes by day, backend and side projects the rest of the time.</p>
+        <p>Away from the screen: 3D printing and modeling. Used to design, build, and maintain a printer from scratch; these days a Bambu Lab X2D handles the printing and Fusion 360 gets most of the attention.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 experience -->
+  <section class="sec container reveal" id="experience">
+    <p class="cmd mono lc"><b>mooner</b>:~/resume $ git log --author=mooner</p>
+    <div class="sec-head">
+      <div><h2 class="wide">Experience<sup>06</sup></h2><span class="ko mono">경력</span></div>
+      <p class="meta mono">8 yrs — Since 2016</p>
+    </div>
+
+    <article class="job two now">
+      <p class="when mono"><b>2026 Fall — Now</b>@ Ansan · E/01</p>
+      <div class="body">
+        <h3>한양대학교 ERICA</h3>
+        <p class="role"><span data-l="ko">컴퓨터공학과 · 복학</span><span data-l="en">Computer Engineering · returned from leave</span></p>
+        <ul data-l="ko" lang="ko">
+          <li>군 휴학을 마치고 2026년 2학기부터 복학해 학업을 이어가는 중</li>
+          <li>학업과 병행해 <b>AMOA</b> 백엔드 및 <b>AGORA</b> 사이드 프로젝트를 개발 중</li>
+        </ul>
+        <ul data-l="en" lang="en">
+          <li>Returned from military leave for the 2026 fall semester</li>
+          <li>Building the <b>AMOA</b> backend and the <b>AGORA</b> side project alongside coursework</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="job two">
+      <p class="when mono"><b>2024 — 2026</b>@ Korea · E/02</p>
+      <div class="body">
+        <h3>ROK Air Force</h3>
+        <p class="role"><span data-l="ko">정보체계관리 특기병</span><span data-l="en">IT Systems Management Specialist</span></p>
+        <ul data-l="ko" lang="ko">
+          <li>군 정보 시스템의 운영 및 유지보수 업무를 수행</li>
+          <li>근무 외 시간을 활용해 오픈소스 프로젝트와 개인 서비스를 지속적으로 관리</li>
+          <li>제한된 환경에서 집중력 있게 작업하는 방식을 몸에 익힘</li>
+        </ul>
+        <ul data-l="en" lang="en">
+          <li>Operated and maintained internal military information systems</li>
+          <li>Kept open-source projects and personal services alive during off-hours</li>
+          <li>Learned to ship focused work within tight operational constraints</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="job two now">
+      <p class="when mono"><b>2022 — Now</b>@ Remote · E/03</p>
+      <div class="body">
+        <h3>Project StarLight</h3>
+        <p class="role"><span data-l="ko">오픈소스 · 메인테이너</span><span data-l="en">Open Source · Maintainer</span></p>
+        <p class="tags mono"><span>Kotlin</span><span>Android</span><span>Plugin API</span></p>
+        <ul data-l="ko" lang="ko">
+          <li>Kotlin 기반 플러그인 구조의 안드로이드 자동응답 프레임워크를 설계·개발</li>
+          <li>크로스-메신저 통합과 확장 가능한 스크립팅 API를 제공</li>
+          <li>GitHub <b>★ 46</b>, <b>1,500+ 다운로드</b> — 플러그인 생태계와 이슈 대응을 지속 유지</li>
+        </ul>
+        <ul data-l="en" lang="en">
+          <li>Designed a plugin-based Android auto-reply framework in Kotlin</li>
+          <li>Cross-messenger integration with an extensible scripting API</li>
+          <li><b>★ 46</b> on GitHub, <b>1,500+ downloads</b> — maintaining the plugin ecosystem and issues</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="job two">
+      <p class="when mono"><b>2020</b>@ Korea · E/04</p>
+      <div class="body">
+        <h3>IT Company</h3>
+        <p class="role"><span data-l="ko">인턴십 · 백엔드</span><span data-l="en">Software Intern · Backend</span></p>
+        <ul data-l="ko" lang="ko">
+          <li>2개월간 실무 환경에서 백엔드 개발에 참여</li>
+          <li>팀 단위의 협업 · 코드 리뷰 · 배포 프로세스를 처음 경험</li>
+        </ul>
+        <ul data-l="en" lang="en">
+          <li>Two-month internship contributing to a production backend codebase</li>
+          <li>First hands-on experience with code review, team workflow, and deployment pipelines</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="job two now">
+      <p class="when mono"><b>2018 — Now</b>@ Seoul · E/05</p>
+      <div class="body">
+        <h3>지금 한강은｡</h3>
+        <p class="role"><span data-l="ko">개인 서비스 · 기획 · 풀스택</span><span data-l="en">Personal Service · Creator &amp; Full-stack</span></p>
+        <p class="tags mono"><span>Kotlin</span><span>Ktor</span><span>Redis</span><span>Traefik</span></p>
+        <ul data-l="ko" lang="ko">
+          <li>한강 수온을 실시간으로 보여주는 안드로이드 앱 기획·개발·배포</li>
+          <li>Ktor 백엔드 + Redis 캐싱으로 트래픽 급증에도 안정적인 응답 유지</li>
+          <li>Google Play <b>46,300+ 다운로드</b>, 평점 <b>4.85</b> (리뷰 273) 달성</li>
+        </ul>
+        <ul data-l="en" lang="en">
+          <li>Designed, built, and shipped an Android app for real-time Han River water temperature</li>
+          <li>Ktor backend + Redis caching — stable responses under viral traffic spikes</li>
+          <li><b>46,300+ downloads</b> and <b>4.85 ★</b> (273 reviews) on Google Play</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="job two">
+      <p class="when mono"><b>2017</b>@ — · E/06</p>
+      <div class="body">
+        <h3>Indie Android</h3>
+        <p class="role"><span data-l="ko">1인 개발자</span><span data-l="en">Solo Android Developer</span></p>
+        <ul data-l="ko" lang="ko">
+          <li>첫 안드로이드 앱을 Google Play에 출시 — 2017년, 열일곱의 작은 성취</li>
+          <li>이후 StarLight를 포함한 여러 개인 프로젝트로 이어짐</li>
+        </ul>
+        <ul data-l="en" lang="en">
+          <li>Shipped first Android app on Google Play in 2017, at age 17</li>
+          <li>Paved the way to later projects including Project StarLight</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <!-- 03 projects -->
+  <section class="sec container reveal" id="projects">
+    <p class="cmd mono lc"><b>mooner</b>:~/resume $ ls ./projects</p>
+    <div class="sec-head">
+      <div><h2 class="wide">Projects<sup>05</sup></h2><span class="ko mono">프로젝트</span></div>
+      <p class="meta mono">Backend / Android / OSS</p>
+    </div>
+
+    <div class="work">
+      <ol class="plist">
+        <li class="prow bracket active" data-p="amoa" tabindex="0">
+          <span class="idx mono">01</span>
+          <h3 class="wide">AMOA<span class="arr">→</span><small data-l="ko">하이브리드 검색 백엔드</small><small data-l="en">Hybrid-search backend</small></h3>
+          <p class="yr mono">2026 —<span>Backend · Ongoing</span></p>
+          <p class="desc" data-l="ko">Kotlin + Ktor + PostgreSQL, 헥사고날 아키텍처. pgvector 기반 하이브리드 검색(ANN + 키워드 CTE, RRF 재랭킹)과 outbox 패턴 임베딩 인덱싱 파이프라인.</p>
+          <p class="desc" data-l="en">Kotlin + Ktor + PostgreSQL on a hexagonal architecture. pgvector hybrid search (ANN + keyword CTE, RRF reranking) with an outbox-pattern embedding pipeline.</p>
+          <p class="tags mono"><span>Ktor</span><span>pgvector</span><span>AWS EC2</span><span>Terraform</span><span>GitHub Actions</span></p>
+        </li>
+        <li class="prow bracket" data-p="agora" tabindex="0">
+          <span class="idx mono">02</span>
+          <h3 class="wide">AGORA<span class="arr">→</span><small data-l="ko">멀티에이전트 의사결정 시스템</small><small data-l="en">Multi-agent decision system</small></h3>
+          <p class="yr mono">2026<span>Side · Demoed</span></p>
+          <p class="desc" data-l="ko">CTO · CCO/CMO · Decision Manager 에이전트가 라운드 기반으로 토론하는 구조. SearXNG + Trafilatura 웹 그라운딩, SSE 스트리밍, 프롬프트 캐싱. 클라이언트 대상 MVP 데모 완료.</p>
+          <p class="desc" data-l="en">CTO · CCO/CMO · Decision Manager agents debate in rounds. SearXNG + Trafilatura web grounding, SSE streaming, prompt caching. MVP demoed to a client.</p>
+          <p class="tags mono"><span>Ktor</span><span>Exposed</span><span>SvelteKit</span><span>SSE</span></p>
+        </li>
+        <li class="prow bracket" data-p="hanriv" tabindex="0">
+          <span class="idx mono">03</span>
+          <h3 class="wide">지금 한강은｡<span class="arr">→</span><small data-l="ko">한강 수온을 실시간으로</small><small data-l="en">Real-time Han River temperature</small></h3>
+          <p class="yr mono">2018 —<span>Android · Live</span></p>
+          <p class="desc" data-l="ko">현대적인 한국어 UI/UX의 수온 모니터링 앱. Ktor 백엔드, Redis 캐싱, Traefik 로드 밸런싱으로 안정적으로 운영 중. 현재 Jetpack Compose 마이그레이션과 Baseline Profile 적용, HorizontalPager 끊김 개선 등 성능 최적화 진행.</p>
+          <p class="desc" data-l="en">Modern Korean UI/UX temperature monitor. Ktor backend, Redis caching, Traefik LB — steady in production. Currently migrating to Jetpack Compose: Baseline Profiles and HorizontalPager jank fixes.</p>
+          <p class="tags mono"><span class="sig">★ 4.85 (273)</span><span class="sig">46.3K+ DL</span><span>Kotlin</span><span>Ktor</span><span>Redis</span></p>
+        </li>
+        <li class="prow bracket" data-p="starlight" tabindex="0">
+          <span class="idx mono">04</span>
+          <h3 class="wide">Project StarLight<span class="arr">→</span><small data-l="ko">스크립터블 메신저 자동응답 프레임워크</small><small data-l="en">Scriptable messenger auto-reply framework</small></h3>
+          <p class="yr mono">2022 —<span>Open Source</span></p>
+          <p class="desc" data-l="ko">Kotlin으로 작성된 플러그인 기반 안드로이드 자동응답 플랫폼. 확장 가능한 자동화 기능과 크로스-메신저 통합을 지원합니다.</p>
+          <p class="desc" data-l="en">Kotlin-based Android auto-reply platform with plugin architecture, extensible automation, and cross-messenger integration.</p>
+          <p class="tags mono"><span class="sig">★ 46</span><span class="sig">1.5K+ DL</span><span>Kotlin</span><span>Plugin</span></p>
+        </li>
+        <li class="prow bracket" data-p="site" tabindex="0">
+          <span class="idx mono">05</span>
+          <h3 class="wide">mooner.dev<span class="arr">→</span><small data-l="ko">개인 웹사이트 / 포트폴리오</small><small data-l="en">Personal site &amp; portfolio</small></h3>
+          <p class="yr mono">2024<span>Personal</span></p>
+          <p class="desc" data-l="ko">Svelte + TypeScript로 직접 만든 개인 웹사이트. About, Projects, Home 섹션을 손수 큐레이션했습니다.</p>
+          <p class="desc" data-l="en">Personal site hand-built with Svelte + TypeScript. About / Projects / Home, curated by hand.</p>
+          <p class="tags mono"><span>Svelte</span><span>TypeScript</span><span>CloudFlare</span></p>
+        </li>
+      </ol>
+
+      <aside class="preview" aria-live="polite">
+        <span class="corners" aria-hidden="true"></span>
+        <p class="head mono"><span class="lc">$ cat <span id="pv-name">amoa</span>/spec</span><span id="pv-idx">01 / 05</span></p>
+
+        <div class="card show" data-p="amoa">
+          <div class="thumb" aria-hidden="true"><svg viewBox="0 0 200 110" id="th-amoa"></svg></div>
+          <h4><span data-l="ko">하이브리드 검색 백엔드</span><span data-l="en">Hybrid-search backend</span></h4>
+          <dl>
+            <dt class="mono">Arch</dt><dd><span data-l="ko">헥사고날 · Kotlin/Ktor</span><span data-l="en">Hexagonal · Kotlin/Ktor</span></dd>
+            <dt class="mono">Search</dt><dd><span data-l="ko">pgvector ANN + 키워드 CTE, RRF 재랭킹</span><span data-l="en">pgvector ANN + keyword CTE, RRF rerank</span></dd>
+            <dt class="mono">Pipeline</dt><dd><span data-l="ko">outbox 패턴 임베딩 인덱싱</span><span data-l="en">Outbox-pattern embedding indexing</span></dd>
+            <dt class="mono">Infra</dt><dd>AWS EC2 · Terraform · SSM</dd>
+            <dt class="mono">Team</dt><dd><span data-l="ko">4인 · PM · FE · BE 2</span><span data-l="en">4 · PM · FE · BE ×2</span></dd>
+          </dl>
+        </div>
+
+        <div class="card" data-p="agora">
+          <div class="thumb" aria-hidden="true">
+            <svg viewBox="0 0 200 110">
+              <circle class="o" cx="100" cy="18" r="11"/><circle class="o" cx="40" cy="88" r="11"/><circle class="o" cx="160" cy="88" r="11"/>
+              <text x="100" y="21" text-anchor="middle">CTO</text><text x="40" y="91" text-anchor="middle">CMO</text><text x="160" y="91" text-anchor="middle">DM</text>
+              <line class="d" x1="93" y1="28" x2="48" y2="78"/><line class="d" x1="107" y1="28" x2="152" y2="78"/><line class="d" x1="52" y1="88" x2="148" y2="88"/>
+              <rect class="s" x="95" y="60" width="10" height="10" transform="rotate(45 100 65)"/>
+              <text x="100" y="52" text-anchor="middle">ROUND 3</text>
+            </svg>
+          </div>
+          <h4><span data-l="ko">멀티에이전트 의사결정 시스템</span><span data-l="en">Multi-agent decision system</span></h4>
+          <dl>
+            <dt class="mono">Agents</dt><dd>CTO · CCO/CMO · Decision Manager</dd>
+            <dt class="mono">Flow</dt><dd><span data-l="ko">라운드 기반 토론 · 합의 도출</span><span data-l="en">Round-based debate → consensus</span></dd>
+            <dt class="mono">Grounding</dt><dd>SearXNG + Trafilatura</dd>
+            <dt class="mono">Stack</dt><dd>Ktor · Exposed · SvelteKit</dd>
+            <dt class="mono">Status</dt><dd><span data-l="ko">클라이언트 MVP 데모 완료</span><span data-l="en">MVP demoed to a client</span></dd>
+          </dl>
+        </div>
+
+        <div class="card" data-p="hanriv">
+          <div class="thumb" aria-hidden="true">
+            <svg viewBox="0 0 200 110">
+              <text x="0" y="10">HAN RIVER · NOW</text>
+              <text x="0" y="46" class="big">17.4°</text>
+              <path class="o" d="M0 84 C 20 74, 36 74, 56 82 S 92 92, 112 80 S 150 68, 170 78 S 192 86, 200 82"/>
+              <path class="d" d="M0 96 C 24 90, 44 92, 64 96 S 104 102, 124 94 S 164 88, 200 94"/>
+              <circle class="s" cx="112" cy="80" r="3.5"/>
+              <text x="200" y="10" text-anchor="end">★ 4.85</text>
+            </svg>
+          </div>
+          <h4><span data-l="ko">한강 수온을 실시간으로</span><span data-l="en">Real-time Han River temperature</span></h4>
+          <dl>
+            <dt class="mono">Rating</dt><dd><span data-l="ko">★ 4.85 · 리뷰 273</span><span data-l="en">★ 4.85 · 273 reviews</span></dd>
+            <dt class="mono">Installs</dt><dd>46,300+</dd>
+            <dt class="mono">Stack</dt><dd>Kotlin · Ktor · Redis · Traefik</dd>
+            <dt class="mono">Now</dt><dd><span data-l="ko">Compose 마이그레이션 · Baseline Profile</span><span data-l="en">Compose migration · Baseline Profile</span></dd>
+          </dl>
+          <p class="go mono"><a href="https://play.google.com/store/apps/details?id=com.temp.hanriv.moonm">Google Play ↗</a></p>
+        </div>
+
+        <div class="card" data-p="starlight">
+          <div class="thumb" aria-hidden="true">
+            <svg viewBox="0 0 200 110">
+              <rect class="o" x="62" y="30" width="76" height="50" rx="4"/>
+              <text x="100" y="58" text-anchor="middle">CORE</text>
+              <rect class="f" x="20" y="18" width="26" height="16" rx="2"/><rect class="f" x="20" y="76" width="26" height="16" rx="2"/>
+              <rect class="s" x="154" y="18" width="26" height="16" rx="2"/><rect class="o" x="154" y="76" width="26" height="16" rx="2"/>
+              <line class="d" x1="46" y1="26" x2="62" y2="40"/><line class="d" x1="46" y1="84" x2="62" y2="70"/>
+              <line class="d" x1="154" y1="26" x2="138" y2="40"/><line class="d" x1="154" y1="84" x2="138" y2="70"/>
+            </svg>
+          </div>
+          <h4><span data-l="ko">스크립터블 메신저 자동응답</span><span data-l="en">Scriptable messenger auto-reply</span></h4>
+          <dl>
+            <dt class="mono">Arch</dt><dd><span data-l="ko">플러그인 기반 · 스크립팅 API</span><span data-l="en">Plugin-based · scripting API</span></dd>
+            <dt class="mono">Reach</dt><dd><span data-l="ko">★ 46 · 1,500+ 다운로드</span><span data-l="en">★ 46 · 1,500+ downloads</span></dd>
+            <dt class="mono">Stack</dt><dd>Kotlin · Android</dd>
+            <dt class="mono">Role</dt><dd><span data-l="ko">메인테이너 · 2022 —</span><span data-l="en">Maintainer · 2022 —</span></dd>
+          </dl>
+          <p class="go mono"><a href="https://starlight.mooner.dev/">Site ↗</a><a href="https://github.com/mooner1022/StarLight">Source ↗</a></p>
+        </div>
+
+        <div class="card" data-p="site">
+          <div class="thumb" aria-hidden="true">
+            <svg viewBox="0 0 200 110">
+              <rect class="o" x="20" y="8" width="160" height="96" rx="5"/>
+              <line class="o" x1="20" y1="24" x2="180" y2="24"/>
+              <circle class="g" cx="30" cy="16" r="2.5"/><circle class="g" cx="39" cy="16" r="2.5"/><circle class="g" cx="48" cy="16" r="2.5"/>
+              <circle class="s" cx="100" cy="46" r="9"/>
+              <line class="o" x1="72" y1="66" x2="128" y2="66"/><line class="d" x1="60" y1="78" x2="140" y2="78"/><line class="d" x1="70" y1="88" x2="130" y2="88"/>
+            </svg>
+          </div>
+          <h4><span data-l="ko">개인 웹사이트 / 포트폴리오</span><span data-l="en">Personal site &amp; portfolio</span></h4>
+          <dl>
+            <dt class="mono">Stack</dt><dd>Svelte · TypeScript</dd>
+            <dt class="mono">Host</dt><dd>CloudFlare Pages</dd>
+            <dt class="mono">Pages</dt><dd>home · about · projects</dd>
+          </dl>
+          <p class="go mono"><a href="https://mooner.dev">mooner.dev ↗</a></p>
+        </div>
+      </aside>
+    </div>
+
+    <div class="oss">
+      <h3 class="mono"><span>More on GitHub</span><span>6 repos · ★ 57</span></h3>
+      <ul>
+        <li><a href="https://github.com/mooner1022/PeekAlert"><b class="wide">PeekAlert</b><span class="star mono">★ 3</span><span data-l="ko">Java·Kotlin에서 쓰는 가볍고 커스터마이즈 가능한 Android 알림 라이브러리</span><span data-l="en">Lightweight, highly customizable alert library for Android (Java &amp; Kotlin)</span></a></li>
+        <li><a href="https://github.com/mooner1022/Laika"><b class="wide">Laika</b><span class="star mono">★ 3</span><span data-l="ko">Remote-Kakao 호환 코루틴 기반 Kotlin 클라이언트 (WIP)</span><span data-l="en">Remote-Kakao compatible, coroutine-based Kotlin client (WIP)</span></a></li>
+        <li><a href="https://github.com/mooner1022/Dotenv-KMP"><b class="wide">Dotenv-KMP</b><span class="star mono">★ 2</span><span data-l="ko">Kotlin Multiplatform용 dotenv 리더/파서</span><span data-l="en">Kotlin Multiplatform dotenv reader / parser</span></a></li>
+        <li><a href="https://github.com/mooner1022/ChatBot-Benchmark"><b class="wide">ChatBot-Benchmark</b><span class="star mono">★ 2</span><span data-l="ko">메신저봇·StarLight 등 자동응답 봇 벤치마크</span><span data-l="en">Benchmarks for messenger auto-reply bots incl. StarLight</span></a></li>
+        <li><a href="https://github.com/mooner1022/K-akaoLink"><b class="wide">K-akaoLink</b><span class="star mono">★ 2</span><span data-l="ko">Java/Kotlin용 KakaoLink 모듈</span><span data-l="en">KakaoLink module for Java / Kotlin</span></a></li>
+        <li><a href="https://github.com/mooner1022/NeoResume"><b class="wide">NeoResume</b><span class="star mono">new</span><span data-l="ko">지금 보고 있는 이 이력서</span><span data-l="en">The résumé you're reading right now</span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 04 toolkit -->
+  <section class="sec container reveal" id="toolkit">
+    <p class="cmd mono lc"><b>mooner</b>:~/resume $ ls -la ./skills</p>
+    <div class="sec-head">
+      <div><h2 class="wide">Toolkit<sup>34</sup></h2><span class="ko mono">기술</span></div>
+      <p class="meta mono">● = Daily driver</p>
+    </div>
+    <div class="toolkit">
+      <div><h3 class="mono"><span>Languages</span><span>06</span></h3><ul><li>Kotlin <span>●</span></li><li>Java <span>●</span></li><li>C / C++</li><li>JavaScript</li><li>TypeScript</li><li>Svelte</li></ul></div>
+      <div><h3 class="mono"><span>Backend</span><span>05</span></h3><ul><li>Ktor <span>●</span></li><li>Exposed DSL <span>●</span></li><li>Spring Boot</li><li>Node.js</li><li>Express.js</li></ul></div>
+      <div><h3 class="mono"><span>Android</span><span>04</span></h3><ul><li>Jetpack Compose <span>●</span></li><li>Android SDK</li><li>Room</li><li>SQLite</li></ul></div>
+      <div><h3 class="mono"><span>Data &amp; Storage</span><span>05</span></h3><ul><li>PostgreSQL <span>●</span></li><li>pgvector</li><li>pg_bigm</li><li>Redis</li><li>MongoDB</li></ul></div>
+      <div><h3 class="mono"><span>Tools</span><span>05</span></h3><ul><li>Git</li><li>Docker</li><li>Gradle</li><li>GitHub Actions</li><li>IntelliJ IDEA</li></ul></div>
+      <div><h3 class="mono"><span>Cloud</span><span>04</span></h3><ul><li>AWS</li><li>Terraform</li><li>CloudFlare</li><li>Traefik</li></ul></div>
+      <div><h3 class="mono"><span>Making</span><span>04</span></h3><ul><li>Fusion 360</li><li>Bambu Lab X2D</li><li data-l="ko">자작 프린터 설계</li><li data-l="en">DIY printer design</li><li data-l="ko">회로 자작</li><li data-l="en">DIY electronics</li></ul></div>
+    </div>
+  </section>
+
+  <!-- 05 education -->
+  <section class="sec container reveal" id="education">
+    <p class="cmd mono lc"><b>mooner</b>:~/resume $ cat ./edu.txt</p>
+    <div class="sec-head">
+      <div><h2 class="wide">Education<sup>03</sup></h2><span class="ko mono">학력</span></div>
+      <p class="meta mono">B.S. Computer Engineering</p>
+    </div>
+    <ul class="rows">
+      <li>
+        <time class="mono">2023 — Now</time>
+        <div>
+          <p><b data-l="ko">한양대학교 ERICA</b><b data-l="en">Hanyang University · ERICA</b> <span class="muted" data-l="ko">컴퓨터공학 학사 (편입)</span><span class="muted" data-l="en">B.S. Computer Engineering (transferred)</span></p>
+          <p class="note" data-l="ko">2024–2026 군 휴학 · 2026년 2학기 복학 · 자료구조 · 알고리즘 · OOP · DB · SW공학 · OS · 네트워크</p>
+          <p class="note" data-l="en">Military leave 2024–2026, returned fall 2026 · data structures, algorithms, OOP, databases, SE, OS, networks</p>
+        </div>
+      </li>
+      <li>
+        <time class="mono">2021 — 2023</time>
+        <div>
+          <p><b data-l="ko">호서대학교</b><b data-l="en">Hoseo University</b> <span class="muted" data-l="ko">컴퓨터공학 전공 · 편입으로 중퇴</span><span class="muted" data-l="en">Computer Science · transferred out</span></p>
+          <p class="note" data-l="ko">2023년 한양대 ERICA로 편입</p>
+          <p class="note" data-l="en">Transferred to Hanyang ERICA in 2023</p>
+        </div>
+      </li>
+      <li>
+        <time class="mono">2016 —</time>
+        <div>
+          <p><b data-l="ko">독학</b><b data-l="en">Self-taught</b> <span class="muted" data-l="ko">8년차 · 정식 교육 없이 시작</span><span class="muted" data-l="en">8 years in — no formal training</span></p>
+          <ol class="journey">
+            <li><span class="y mono">2016</span><p data-l="ko">JS 첫 코드</p><p data-l="en">First line of JS</p></li>
+            <li><span class="y mono">2017</span><p data-l="ko">Android (Java)</p><p data-l="en">Android (Java)</p></li>
+            <li><span class="y mono">2018</span><p data-l="ko">첫 앱 출시</p><p data-l="en">First app shipped</p></li>
+            <li><span class="y mono">2019</span><p data-l="ko">Kotlin 전환 · 풀스택</p><p data-l="en">Kotlin &amp; full-stack</p></li>
+          </ol>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 06 now -->
+  <section class="sec container reveal" id="now">
+    <p class="cmd mono lc"><b>mooner</b>:~/resume $ tail -f ./now.log</p>
+    <div class="sec-head">
+      <div><h2 class="wide">Now<sup>04</sup></h2><span class="ko mono">지금</span></div>
+      <p class="meta mono"><span class="pulse"></span>Updated 2026.09.26</p>
+    </div>
+    <ul class="log">
+      <li><p class="k mono"><i>#1</i>School</p><div><p data-l="ko">한양대학교 ERICA 컴퓨터공학과 복학 · 2026년 2학기 수강 중</p><p data-l="en">Back at Hanyang ERICA, Computer Engineering — 2026 fall semester</p></div></li>
+      <li><p class="k mono"><i>#2</i>AMOA</p><div><p data-l="ko">AMOA 백엔드 개발 · 검색어 자동완성, 하이브리드 검색 고도화</p><p data-l="en">Building the AMOA backend — search autocomplete &amp; hybrid retrieval</p></div></li>
+      <li><p class="k mono"><i>#3</i>AGORA</p><div><p data-l="ko">AGORA 멀티에이전트 시스템을 사이드 프로젝트로 개발 중</p><p data-l="en">Developing AGORA, a multi-agent decision system, on the side</p></div></li>
+      <li><p class="k mono"><i>#4</i>지금 한강은｡</p><div><p data-l="ko">유지보수 · Compose 마이그레이션 및 성능 최적화</p><p data-l="en">Maintenance — Compose migration &amp; performance work</p></div></li>
+    </ul>
+  </section>
+</main>
+
+<section class="panel reveal" id="contact">
+  <div class="container">
+    <p class="status mono"><span class="on"><i></i>Accepting requests</span><span>Avg. response &lt; 24h</span><span>Ansan <span id="clock" class="num">--:--</span> KST</span></p>
+    <div class="panel-body">
+      <div>
+        <p class="cmd mono lc">mooner:~/resume $ ./contact.sh</p>
+        <h2 class="wide">Contact<sup>→</sup></h2>
+        <dl class="kv mono">
+          <dt>Name</dt><dd>문민기 / Minki Moon</dd>
+          <dt>Handle</dt><dd>@mooner</dd>
+          <dt>Base</dt><dd>Ansan, KR</dd>
+        </dl>
+      </div>
+      <div>
+        <p class="say" data-l="ko">느긋하게 커피 한 잔 어떠세요?</p>
+        <p class="say" data-l="en">Happy to trade coffee for conversation.</p>
+        <p data-l="ko">요청은 언제든 — 응답은 하루 안에.</p>
+        <p data-l="en">Send a request anytime — responses within a day.</p>
+        <div class="mailrow">
+          <a class="mail wide" href="mailto:mooner@mooner.dev">mooner@mooner.dev<span>↗</span></a>
+          <button type="button" class="copy mono" data-copy="mooner@mooner.dev"><span data-l="ko">복사</span><span data-l="en">Copy</span></button>
+        </div>
+        <nav class="alt mono">
+          <a href="https://github.com/mooner1022"><span>Code</span><i>─▸</i><span>github.com/mooner1022</span></a>
+          <a href="https://mooner.dev"><span>Work</span><i>─▸</i><span>mooner.dev</span></a>
+          <a href="https://mooner.dev/about"><span>Blog</span><i>─▸</i><span>mooner.dev/about</span></a>
+        </nav>
+        <p class="ps mono lc">// ping me anytime — i read all.</p>
+      </div>
+    </div>
+    <footer class="mono"><span>© 2026 Minki Moon</span><span class="lc">crafted with monospace affection · rev 2026.09.26</span></footer>
+  </div>
+</section>
+
+<script>
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const root = document.documentElement;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* theme toggle */
+  const syncTheme = () => $$('[data-theme]').forEach(b => b.setAttribute('aria-pressed', String(root.classList.contains('dark') === (b.dataset.theme === 'dark'))));
+  $$('[data-theme]').forEach(b => b.addEventListener('click', () => {
+    root.classList.toggle('dark', b.dataset.theme === 'dark');
+    localStorage.setItem('theme', b.dataset.theme); syncTheme();
+  }));
+  syncTheme();
+
+  /* typewriter — plays once per language */
+  const typed = new Map();
+  const type = () => {
+    const el = $(`.typed[data-l="${root.dataset.lang}"]`);
+    if (reduce || typed.has(el)) return;
+    const text = el.textContent; typed.set(el, text); let i = 0; el.textContent = '';
+    const step = () => { el.textContent = text.slice(0, ++i); if (i < text.length) setTimeout(step, 45 + Math.random() * 40); };
+    setTimeout(step, 350);
+  };
+
+  /* language toggle */
+  const syncLang = () => $$('[data-set-lang]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.setLang === root.dataset.lang)));
+  $$('[data-set-lang]').forEach(b => b.addEventListener('click', () => {
+    root.dataset.lang = root.lang = b.dataset.setLang;
+    localStorage.setItem('lang', b.dataset.setLang); syncLang(); type();
+  }));
+  syncLang(); type();
+
+  /* reveal on scroll */
+  const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.04 });
+  $$('.reveal').forEach(el => io.observe(el));
+
+  /* live clock */
+  const fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Seoul', hour: '2-digit', minute: '2-digit', hour12: false });
+  const tick = () => $('#clock').textContent = fmt.format(new Date());
+  tick(); setInterval(tick, 10000);
+
+  /* copy email */
+  $$('[data-copy]').forEach(b => b.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(b.dataset.copy); } catch { return; }
+    const html = b.innerHTML; b.classList.add('done'); b.innerHTML = '<span>Copied ✓</span>';
+    setTimeout(() => { b.classList.remove('done'); b.innerHTML = html; }, 1600);
+  }));
+
+  /* project list → spec preview */
+  (() => {
+    const rows = $$('.prow');
+    const activate = (row) => {
+      if ($('.card.show')?.dataset.p === row.dataset.p) return;
+      rows.forEach(r => r.classList.toggle('active', r === row));
+      $$('.card').forEach(c => { const on = c.dataset.p === row.dataset.p; c.classList.toggle('show', on); c.classList.toggle('anim', on); });
+      $('#pv-name').textContent = row.dataset.p;
+      $('#pv-idx').textContent = `${$('.idx', row).textContent} / ${String(rows.length).padStart(2, '0')}`;
+    };
+    rows.forEach(r => { r.addEventListener('mouseenter', () => activate(r)); r.addEventListener('focus', () => activate(r)); });
+
+    // AMOA thumbnail: vector space, query point and its nearest neighbours
+    const svg = $('#th-amoa'), NS = 'http://www.w3.org/2000/svg';
+    const add = (tag, attrs) => { const e = document.createElementNS(NS, tag); Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v)); svg.appendChild(e); return e; };
+    let seed = 7; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+    const q = { x: 118, y: 52 };
+    const pts = Array.from({ length: 46 }, () => ({ x: 8 + rnd() * 184, y: 8 + rnd() * 94 }));
+    const near = [...pts].sort((a, b) => Math.hypot(a.x - q.x, a.y - q.y) - Math.hypot(b.x - q.x, b.y - q.y)).slice(0, 4);
+    add('circle', { class: 'd', cx: q.x, cy: q.y, r: Math.hypot(near[3].x - q.x, near[3].y - q.y) + 4 });
+    near.forEach(p => add('line', { class: 'd', x1: q.x, y1: q.y, x2: p.x, y2: p.y }));
+    pts.forEach(p => add('circle', { class: near.includes(p) ? 'f' : 'g', cx: p.x, cy: p.y, r: near.includes(p) ? 2.6 : 2 }));
+    add('rect', { class: 's', x: q.x - 4, y: q.y - 4, width: 8, height: 8, transform: `rotate(45 ${q.x} ${q.y})` });
+    add('text', { x: 0, y: 8 }).textContent = 'ANN · k=4 · RRF';
+  })();
+
+  /* request flow instrument */
+  (() => {
+    const NS = 'http://www.w3.org/2000/svg';
+    const route = $('#route'), pkts = $('#pkts'), flow = $('#flow');
+    const L = route.getTotalLength();
+    const CACHE_AT = (268 - 100) / 350;           // where the cache node sits on the route
+    const PROTO = {
+      rest:  { to: 1,        dur: 900, lat: [118, 164], replies: 1 },
+      sse:   { to: 1,        dur: 700, lat: [38, 72],   replies: 4 },   // one request, streamed events back
+      cache: { to: CACHE_AT, dur: 420, lat: [2, 7],     replies: 1 },   // turns around at Redis
+    };
+    let mode = 'rest', ok = 0, sent = 0, hits = 0; const live = new Set();
+    const jitter = ([a, b]) => a + Math.random() * (b - a);
+    const hist = Array.from({ length: 24 }, () => jitter(PROTO.rest.lat));
+    const leds = ['#led-s0', '#led-s1', '#led-s2'].map(s => $(s)); const ledC = $('#led-c'), cache = $('#cache');
+
+    const flash = (el, cls = 'on') => { el.classList.add(cls); setTimeout(() => el.classList.remove(cls), 170); };
+    const setLoad = () => { $('#load').style.width = Math.min(100, 10 + live.size * 12) + '%'; $('#wire-hot').style.opacity = live.size ? .6 : 0; };
+    const record = (v, count = true) => {
+      hist.push(v); hist.shift();
+      $('#lat').textContent = Math.round([...hist].sort((a, b) => a - b)[Math.floor(hist.length * .99) - 1]);
+      const max = Math.max(...hist) * 1.1, min = Math.min(...hist) * .9;
+      $('#spark').setAttribute('points', hist.map((h, i) => `${(i / (hist.length - 1) * 84).toFixed(1)},${(16 - (h - min) / (max - min || 1) * 14 - 1).toFixed(1)}`).join(' '));
+      if (count) $('#ok').textContent = String(++ok).padStart(3, '0');
+    };
+
+    const shoot = (from, to, kind, dur, done) => {
+      const el = document.createElementNS(NS, kind === 'evt' ? 'circle' : 'rect');
+      if (kind === 'evt') el.setAttribute('r', 2.6); else { el.setAttribute('width', 7); el.setAttribute('height', 7); }
+      el.setAttribute('class', 'pkt ' + kind); pkts.appendChild(el); live.add(el); setLoad();
+      const span = Math.abs(to - from), d = dur * Math.max(span, .35), t0 = performance.now();
+      const frame = (now) => {
+        const t = Math.min(1, (now - t0) / d);
+        const e = t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+        const p = route.getPointAtLength((from + (to - from) * e) * L);
+        if (kind === 'evt') { el.setAttribute('cx', p.x); el.setAttribute('cy', p.y); }
+        else { el.setAttribute('x', p.x - 3.5); el.setAttribute('y', p.y - 3.5); }
+        if (t < 1) requestAnimationFrame(frame); else { el.remove(); live.delete(el); setLoad(); done && done(); }
+      };
+      requestAnimationFrame(frame);
+    };
+
+    const send = () => {
+      const m = mode, P = PROTO[m]; flash(ledC); sent++;
+      shoot(0, P.to, 'req', P.dur, () => {
+        if (m === 'cache') { flash(cache, 'hit'); hits++; } else flash(leds[Math.floor(Math.random() * 3)]);
+        $('#hit').textContent = Math.round(hits / sent * 100) + '%';
+        const lat = jitter(P.lat);
+        for (let i = 0; i < P.replies; i++) setTimeout(() => {
+          shoot(P.to, 0, m === 'sse' ? 'evt' : 'res', P.dur, () => { flash(ledC); if (i === P.replies - 1) record(lat); });
+        }, i * 150);
+      });
+    };
+
+    const setMode = (m) => {
+      mode = m;
+      $$('#proto button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.p === m)));
+      hist.forEach((_, i) => hist[i] = jitter(PROTO[m].lat)); record(jitter(PROTO[m].lat), false);
+    };
+    $$('#proto button').forEach(b => b.addEventListener('click', () => setMode(b.dataset.p)));
+    addEventListener('keydown', (e) => {
+      if (e.metaKey || e.ctrlKey || e.altKey || /input|textarea/i.test(e.target.tagName)) return;
+      const m = { 1: 'rest', 2: 'sse', 3: 'cache' }[e.key]; if (m) setMode(m);
+    });
+    flow.addEventListener('click', send);
+
+    record(140, false);
+    if (!reduce) { send(); setInterval(() => { if (!document.hidden) send(); }, 2200); }
+  })();
+</script>
+</body>
+</html>

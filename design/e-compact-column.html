@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>홍길동 — Backend & Android Engineer · E. Compact Column</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root {
+    --bg: #FBFBFA;
+    --text: #161616;
+    --text-2: #6A6A6A;
+    --line: #EAEAE8;
+    --accent: #0A7CFF;
+    --sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body {
+    background: var(--bg); color: var(--text);
+    font: 400 15px/1.7 var(--sans);
+    letter-spacing: -0.012em;
+    word-break: keep-all; overflow-wrap: break-word;
+    font-variant-numeric: tabular-nums;
+  }
+  ::selection { background: var(--text); color: var(--bg); }
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+  ul { list-style: none; }
+  .muted { color: var(--text-2); }
+
+  /* link: hairline underline that grows on hover */
+  .u {
+    padding-bottom: 1px;
+    background:
+      linear-gradient(var(--text), var(--text)) 0 100% / 0 1px no-repeat,
+      linear-gradient(#D6D6D3, #D6D6D3) 0 100% / 100% 1px no-repeat;
+    transition: background-size .4s cubic-bezier(.2,.7,.3,1);
+  }
+  .u:hover { background-size: 100% 1px, 100% 1px; }
+  .u .arr { display: inline-block; font-size: .85em; color: var(--text-2); margin-left: 1px; transition: transform .25s cubic-bezier(.2,.7,.3,1), color .2s; }
+  .u:hover .arr { transform: translate(1.5px, -1.5px); color: var(--text); }
+
+  .col { max-width: 680px; margin: 0 auto; padding: 112px 24px 80px; }
+
+  /* staggered entrance */
+  .rise { animation: rise .7s cubic-bezier(.2,.7,.3,1) both; animation-delay: calc(var(--i, 0) * 70ms); }
+  @keyframes rise { from { opacity: 0; transform: translateY(6px); filter: blur(2px); } }
+  @media (prefers-reduced-motion: reduce) { .rise { animation: none; } }
+
+  /* ── Header ─────────────────────────────── */
+  header .top { display: flex; justify-content: space-between; align-items: flex-start; }
+  header h1 { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.5; }
+  header h1 + p { color: var(--text-2); }
+  .clock { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: var(--text-2); padding-top: 2px; }
+  .clock .dot { width: 6px; height: 6px; border-radius: 50%; background: #22C55E; }
+  .clock .colon { animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: .25; } }
+
+  .intro { margin-top: 40px; text-wrap: pretty; }
+  .intro p + p { margin-top: 12px; }
+  .links { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 20px; }
+
+  /* ── Sections ───────────────────────────── */
+  .sec { display: grid; grid-template-columns: 132px 1fr; gap: 0 24px; margin-top: 72px; }
+  .sec > h2 { font-size: 15px; font-weight: 400; color: var(--text-2); line-height: 1.7; }
+
+  /* dim siblings while hovering one item */
+  .list > * { transition: opacity .25s; }
+  @media (hover: hover) { .list:hover > *:not(:hover) { opacity: .42; } }
+
+  .item + .item { margin-top: 32px; }
+  .item .row { display: flex; justify-content: space-between; gap: 16px; }
+  .item h3 { font-size: 15px; font-weight: 500; }
+  .item h3 .muted { font-weight: 400; }
+  .item h3 .muted::before { content: "·"; margin: 0 6px; color: #BDBDBD; }
+  .item time { color: var(--text-2); white-space: nowrap; font-size: 14px; }
+  .item time .now { color: var(--text); position: relative; padding-left: 12px; }
+  .item time .now::before { content: ""; position: absolute; left: 0; top: .52em; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+  .item ul { margin-top: 8px; }
+  .item li { position: relative; padding-left: 14px; color: var(--text-2); text-wrap: pretty; }
+  .item li::before { content: ""; position: absolute; left: 1px; top: .82em; width: 6px; height: 1px; background: #B5B5B5; }
+  .item li + li { margin-top: 3px; }
+  .item li b { color: var(--text); font-weight: 500; }
+  .item .stack { margin-top: 10px; font-size: 13px; color: var(--text-2); }
+
+  .proj { display: block; }
+  .proj + .proj { margin-top: 20px; }
+  .proj h3 { font-size: 15px; font-weight: 500; display: flex; justify-content: space-between; gap: 16px; }
+  .proj h3 span:last-child { font-weight: 400; color: var(--text-2); font-size: 14px; white-space: nowrap; }
+  .proj p { color: var(--text-2); text-wrap: pretty; }
+  .proj:hover h3 span:first-child { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
+  .kv > div { display: flex; gap: 16px; }
+  .kv > div + div { margin-top: 6px; }
+  .kv dt { width: 96px; flex: none; color: var(--text-2); }
+
+  .rows li { display: flex; justify-content: space-between; gap: 16px; }
+  .rows li + li { margin-top: 8px; }
+  .rows time { color: var(--text-2); font-size: 14px; white-space: nowrap; }
+
+  footer { margin-top: 96px; padding-top: 20px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; font-size: 13px; color: var(--text-2); }
+
+  @media (max-width: 640px) {
+    .col { padding: 56px 20px 56px; }
+    .sec { grid-template-columns: 1fr; gap: 12px; margin-top: 56px; }
+    .item .row, .rows li { flex-direction: column; gap: 0; }
+    .item h3 .muted { display: block; }
+    .item h3 .muted::before { display: none; }
+    .proj h3 { flex-direction: column; gap: 0; }
+    .kv > div { flex-direction: column; gap: 0; }
+    footer { flex-direction: column; gap: 4px; }
+  }
+
+  @media print {
+    @page { size: A4; margin: 16mm 18mm; }
+    body { background: #fff; font-size: 10pt; }
+    .col { padding: 0; max-width: none; }
+    .rise { animation: none; }
+    .clock { display: none; }
+    .sec { margin-top: 28px; }
+    .item, .proj { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="col">
+
+  <header>
+    <div class="top rise" style="--i:0">
+      <div>
+        <h1>홍길동</h1>
+        <p>Backend &amp; Android Engineer</p>
+      </div>
+      <p class="clock" title="현재 서울 시각"><span class="dot"></span>Seoul <span id="clock">14<span class="colon">:</span>32</span></p>
+    </div>
+    <div class="intro rise" style="--i:1">
+      <p>사용자가 느끼는 속도와 서버가 버티는 무게를 함께 고민하는 엔지니어입니다. Kotlin을 공용어 삼아 Spring 기반 백엔드와 Android 클라이언트를 넘나들며, 측정 가능한 개선을 만드는 일을 좋아합니다.</p>
+      <p class="muted">지금은 예시 테크 결제플랫폼팀에서 결제 이벤트 파이프라인을 만들고 있고, 2026년 10월부터 새로운 팀에 합류할 수 있습니다.</p>
+    </div>
+    <nav class="links rise" style="--i:2">
+      <a class="u" href="mailto:hello@example.com">hello@example.com</a>
+      <a class="u" href="https://github.com/gildong">GitHub<span class="arr">↗</span></a>
+      <a class="u" href="https://gildong.dev">Blog<span class="arr">↗</span></a>
+      <a class="u" href="tel:+821000000000">010-0000-0000</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="sec rise" style="--i:3">
+      <h2>경력</h2>
+      <div class="list">
+        <article class="item">
+          <div class="row">
+            <h3>예시 테크<span class="muted">Backend Engineer</span></h3>
+            <time><span class="now">2023.03 — 현재</span></time>
+          </div>
+          <ul>
+            <li>모놀리식 결제 시스템의 MSA 전환을 주도하여 주문 API p99 레이턴시를 <b>820ms → 180ms</b>로 단축</li>
+            <li>Kafka 기반 이벤트 파이프라인을 설계·운영, 일 <b>1,200만 건</b>의 결제 이벤트를 유실 없이 처리</li>
+            <li>SLO와 장애 대응 런북을 도입해 월간 장애 시간 <b>63%</b> 감소</li>
+          </ul>
+          <p class="stack">Kotlin, Spring Boot, Kafka, PostgreSQL, Redis, AWS</p>
+        </article>
+        <article class="item">
+          <div class="row">
+            <h3>샘플 모빌리티<span class="muted">Android Engineer</span></h3>
+            <time>2021.01 — 2023.02</time>
+          </div>
+          <ul>
+            <li>XML 뷰를 Jetpack Compose로 점진 전환하여 신규 화면 개발 리드타임 약 <b>40%</b> 단축</li>
+            <li>단일 모듈을 기능별 멀티 모듈로 재구성해 클린 빌드 시간 <b>6분 → 2분</b></li>
+            <li>ANR·크래시 추적 체계를 정비해 크래시 프리 세션 <b>99.2% → 99.8%</b></li>
+          </ul>
+          <p class="stack">Kotlin, Jetpack Compose, Coroutines, Hilt, Room</p>
+        </article>
+        <article class="item">
+          <div class="row">
+            <h3>플레이스홀더 랩<span class="muted">SWE Intern</span></h3>
+            <time>2020.07 — 2020.12</time>
+          </div>
+          <ul>
+            <li>Spring Boot·React 기반 사내 운영 백오피스를 개발해 수작업 정산 업무 주 <b>8시간</b> 절감</li>
+          </ul>
+          <p class="stack">Java, Spring Boot, MySQL, React</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="sec rise" style="--i:4">
+      <h2>프로젝트</h2>
+      <div class="list">
+        <a class="proj" href="#">
+          <h3><span>kotlin-ratelimit</span><span>★ 1.2k</span></h3>
+          <p>Redis와 Lua 스크립트 기반의 분산 레이트 리미터. Spring Boot Starter로 한 줄 설정을 지원합니다.</p>
+        </a>
+        <a class="proj" href="#">
+          <h3><span>Driftnote</span><span>10k+ installs</span></h3>
+          <p>오프라인 우선 마크다운 노트 앱. Room과 WorkManager로 충돌 없는 동기화를 구현했습니다.</p>
+        </a>
+        <a class="proj" href="#">
+          <h3><span>deploy-lens</span><span>Internal</span></h3>
+          <p>흩어진 사내 배포 현황을 한 화면에 모은 경량 대시보드입니다.</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="sec rise" style="--i:5">
+      <h2>기술</h2>
+      <dl class="kv">
+        <div><dt>Backend</dt><dd>Kotlin, Java, Spring Boot, JPA, gRPC, Kafka, Redis</dd></div>
+        <div><dt>Android</dt><dd>Jetpack Compose, Coroutines·Flow, Hilt, Room, WorkManager</dd></div>
+        <div><dt>Infra</dt><dd>PostgreSQL, MySQL, AWS, Docker, Kubernetes, GitHub Actions</dd></div>
+      </dl>
+    </section>
+
+    <section class="sec rise" style="--i:6">
+      <h2>학력</h2>
+      <ul class="rows">
+        <li><span>예시대학교 <span class="muted">컴퓨터공학과 학사</span></span><time>2014 — 2020</time></li>
+      </ul>
+    </section>
+
+    <section class="sec rise" style="--i:7">
+      <h2>활동 · 자격</h2>
+      <ul class="rows list">
+        <li><span>“Compose 마이그레이션, 1년의 회고” <span class="muted">예시 안드로이드 밋업</span></span><time>2022.11</time></li>
+        <li><span>Spring 공식 문서 한국어 번역 <span class="muted">기여자</span></span><time>2021 —</time></li>
+        <li><span>정보처리기사 <span class="muted">한국산업인력공단</span></span><time>2019.08</time></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="rise" style="--i:8">
+    <span>© 2026 홍길동</span>
+    <span>Last updated 2026.09.26</span>
+  </footer>
+</div>
+
+<script>
+  // live Seoul time with a blinking colon
+  const el = document.getElementById('clock');
+  const fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Seoul', hour: '2-digit', minute: '2-digit', hour12: false });
+  const tick = () => { const [h, m] = fmt.format(new Date()).split(':'); el.innerHTML = `${h}<span class="colon">:</span>${m}`; };
+  tick(); setInterval(tick, 10_000);
+</script>
+</body>
+</html>

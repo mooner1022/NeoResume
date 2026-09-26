@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>홍길동 — Backend & Android Engineer · D. Soft Bento</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root {
+    --bg: #F3F4F6;
+    --card: #FFFFFF;
+    --border: rgba(15, 23, 42, .07);
+    --shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 0 0 1px var(--border);
+    --shadow-hover: 0 8px 24px -8px rgba(15, 23, 42, .12), 0 0 0 1px rgba(15, 23, 42, .09);
+    --text: #0F172A;
+    --text-2: #475569;
+    --text-3: #64748B;
+    --fill: #F1F5F9;
+    --accent: #2F5BEA;
+    --accent-soft: rgba(47, 91, 234, .08);
+    --ok: #16A34A;
+    --radius: 20px;
+    --sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0B0C0E;
+      --card: #15171B;
+      --border: rgba(255, 255, 255, .06);
+      --shadow: 0 0 0 1px var(--border);
+      --shadow-hover: 0 8px 24px -8px rgba(0, 0, 0, .6), 0 0 0 1px rgba(255, 255, 255, .1);
+      --text: #F1F5F9;
+      --text-2: #A8B3C2;
+      --text-3: #8391A3;
+      --fill: #1D2026;
+      --accent: #7C9CFF;
+      --accent-soft: rgba(124, 156, 255, .12);
+      --ok: #4ADE80;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body {
+    background: var(--bg); color: var(--text);
+    font: 400 15px/1.65 var(--sans);
+    letter-spacing: -0.01em;
+    word-break: keep-all; overflow-wrap: break-word;
+  }
+  ::selection { background: var(--accent); color: #fff; }
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
+  ul { list-style: none; }
+  .num, time { font-variant-numeric: tabular-nums; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 56px 40px 64px; }
+  .card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 28px; }
+
+  /* ── Bento header ───────────────────────── */
+  .bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(0, auto); gap: 12px; }
+  .profile { grid-column: span 2; grid-row: span 2; display: flex; flex-direction: column; }
+  .avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: 24px; font-weight: 700; color: var(--accent);
+    background: var(--accent-soft);
+    box-shadow: inset 0 0 0 1px var(--border);
+  }
+  .profile h1 { margin-top: 22px; font-size: 30px; font-weight: 700; letter-spacing: -0.035em; line-height: 1.25; }
+  .profile h1 span { font-size: 15px; font-weight: 500; color: var(--text-3); letter-spacing: -0.01em; margin-left: 8px; }
+  .profile .role { color: var(--text-2); font-weight: 500; }
+  .profile .intro { margin-top: 18px; color: var(--text-2); text-wrap: pretty; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; margin-top: auto; padding: 6px 12px; border-radius: 999px; background: var(--fill); font-size: 13px; font-weight: 500; color: var(--text-2); }
+  .profile .pill { margin-top: 28px; }
+  .pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 18%, transparent); }
+
+  .contact { grid-column: span 2; padding: 10px; }
+  .contact a { display: flex; align-items: center; gap: 14px; padding: 11px 14px; border-radius: 12px; transition: background .2s; }
+  .contact a:hover { background: var(--fill); }
+  .contact svg { width: 18px; height: 18px; flex: none; stroke: var(--text-3); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .contact .k { width: 64px; flex: none; font-size: 13px; color: var(--text-3); }
+  .contact .v { flex: 1; font-weight: 500; }
+  .contact .go { color: var(--text-3); transition: transform .25s cubic-bezier(.2,.7,.3,1), color .2s; }
+  .contact a:hover .go { transform: translateX(3px); color: var(--accent); }
+
+  .stat { display: flex; flex-direction: column; justify-content: space-between; min-height: 150px; }
+  .stat .k { font-size: 13px; color: var(--text-3); font-weight: 500; }
+  .stat .v { font-size: 40px; font-weight: 700; letter-spacing: -0.05em; line-height: 1; }
+  .stat .v small { font-size: 16px; font-weight: 600; letter-spacing: -0.02em; margin-left: 2px; color: var(--text-2); }
+  .split { display: flex; gap: 3px; margin-top: 14px; height: 6px; }
+  .split i { border-radius: 3px; background: var(--accent); }
+  .split i + i { background: color-mix(in srgb, var(--accent) 35%, var(--fill)); }
+  .split-legend { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: var(--text-3); }
+
+  /* ── Sections ───────────────────────────── */
+  .sec { margin-top: 48px; }
+  .sec-title { display: flex; align-items: center; gap: 8px; margin: 0 4px 14px; font-size: 15px; font-weight: 700; letter-spacing: -0.02em; }
+  .sec-title .count { font-size: 12px; font-weight: 600; color: var(--text-3); background: var(--card); box-shadow: var(--shadow); padding: 1px 8px; border-radius: 999px; }
+
+  .jobs { padding: 8px 28px; }
+  .job { display: grid; grid-template-columns: 44px 1fr auto; column-gap: 18px; padding: 24px 0; }
+  .job + .job { border-top: 1px solid var(--border); }
+  .logo { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; font-weight: 700; font-size: 15px; box-shadow: inset 0 0 0 1px var(--border); }
+  .logo.l1 { background: #EEF2FF; color: #3949AB; }
+  .logo.l2 { background: #ECFDF5; color: #047857; }
+  .logo.l3 { background: #FFF7ED; color: #C2410C; }
+  @media (prefers-color-scheme: dark) {
+    .logo.l1 { background: rgba(99,102,241,.14); color: #A5B4FC; }
+    .logo.l2 { background: rgba(16,185,129,.14); color: #6EE7B7; }
+    .logo.l3 { background: rgba(249,115,22,.14); color: #FDBA74; }
+  }
+  .job h3 { font-size: 17px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.4; }
+  .job .role { color: var(--text-2); font-size: 14px; }
+  .job .period { align-self: start; font-size: 12.5px; font-weight: 500; color: var(--text-2); background: var(--fill); padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+  .job .period.now { color: var(--accent); background: var(--accent-soft); }
+  .job .body { grid-column: 2 / -1; margin-top: 14px; }
+  .job li { position: relative; padding-left: 16px; color: var(--text-2); text-wrap: pretty; }
+  .job li + li { margin-top: 6px; }
+  .job li::before { content: ""; position: absolute; left: 2px; top: .7em; width: 4px; height: 4px; border-radius: 50%; background: var(--text-3); }
+  .job li b { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+  .chips li { padding: 3px 10px !important; border-radius: 8px; background: var(--fill); font-size: 12.5px; font-weight: 500; color: var(--text-2); }
+  .chips li::before { display: none; }
+  .chips li + li { margin-top: 0; }
+
+  .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .project { display: flex; flex-direction: column; transition: box-shadow .25s, transform .25s cubic-bezier(.2,.7,.3,1); }
+  .project:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+  .project .head { display: flex; justify-content: space-between; align-items: center; }
+  .project .type { font-size: 12px; font-weight: 600; color: var(--text-3); }
+  .project .go { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--fill); color: var(--text-3); font-size: 13px; transition: background .2s, color .2s, transform .25s; }
+  .project:hover .go { background: var(--accent); color: #fff; transform: rotate(-45deg); }
+  .project h3 { margin-top: 18px; font-size: 18px; font-weight: 700; letter-spacing: -0.03em; }
+  .project p { margin-top: 6px; color: var(--text-2); font-size: 14px; text-wrap: pretty; }
+  .project .meta { margin-top: auto; padding-top: 18px; font-size: 12.5px; color: var(--text-3); font-weight: 500; }
+
+  .skills { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .skills h3 { font-size: 13px; font-weight: 600; color: var(--text-3); margin-bottom: 12px; }
+  .skills .chips { margin-top: 0; }
+
+  .duo { display: grid; grid-template-columns: 1fr 1.4fr; gap: 12px; }
+  .list li { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; }
+  .list li + li { border-top: 1px solid var(--border); }
+  .list li:first-child { padding-top: 0; }
+  .list li:last-child { padding-bottom: 0; }
+  .list b { display: block; font-weight: 600; letter-spacing: -0.02em; }
+  .list span { color: var(--text-2); font-size: 14px; }
+  .list time { font-size: 12.5px; color: var(--text-3); white-space: nowrap; padding-top: 2px; }
+  .card > .label { font-size: 13px; font-weight: 600; color: var(--text-3); margin-bottom: 16px; }
+
+  footer { margin-top: 56px; text-align: center; font-size: 12.5px; color: var(--text-3); }
+
+  @media (max-width: 880px) {
+    .wrap { padding: 24px 16px 48px; }
+    .card { padding: 22px; border-radius: 18px; }
+    .bento { grid-template-columns: 1fr 1fr; }
+    .profile, .contact { grid-column: span 2; grid-row: auto; }
+    .stat { min-height: 128px; }
+    .stat .v { font-size: 32px; }
+    .jobs { padding: 4px 20px; }
+    .job { grid-template-columns: 40px 1fr; column-gap: 14px; }
+    .logo { width: 40px; height: 40px; }
+    .job .period { grid-column: 2; justify-self: start; margin-top: 8px; }
+    .job .body { grid-column: 1 / -1; }
+    .projects, .skills, .duo { grid-template-columns: 1fr; }
+    .skills { gap: 20px; }
+  }
+
+  @media print {
+    @page { size: A4; margin: 12mm; }
+    :root { --bg: #fff; --shadow: 0 0 0 1px #e5e7eb; }
+    body { font-size: 9.5pt; }
+    .wrap { padding: 0; max-width: none; }
+    .card, .job, .project { break-inside: avoid; }
+    .sec { margin-top: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="bento">
+    <section class="card profile">
+      <div class="avatar">홍</div>
+      <h1>홍길동<span>Gildong Hong</span></h1>
+      <p class="role">Backend &amp; Android Engineer</p>
+      <p class="intro">사용자가 느끼는 속도와 서버가 버티는 무게를 함께 고민하는 엔지니어입니다. Kotlin을 공용어 삼아 Spring 기반 백엔드와 Android 클라이언트를 넘나들며, 측정 가능한 개선을 만드는 일을 좋아합니다.</p>
+      <p class="pill"><span class="dot"></span>구직 중 · 2026년 10월부터 합류 가능</p>
+    </section>
+
+    <nav class="card contact" aria-label="연락처">
+      <a href="mailto:hello@example.com">
+        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg>
+        <span class="k">Email</span><span class="v">hello@example.com</span><span class="go">→</span>
+      </a>
+      <a href="https://github.com/gildong">
+        <svg viewBox="0 0 24 24"><path d="M9 19c-4 1.3-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+        <span class="k">GitHub</span><span class="v">github.com/gildong</span><span class="go">→</span>
+      </a>
+      <a href="https://gildong.dev">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+        <span class="k">Blog</span><span class="v">gildong.dev</span><span class="go">→</span>
+      </a>
+      <a href="tel:+821000000000">
+        <svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18h2"/></svg>
+        <span class="k">Phone</span><span class="v num">010-0000-0000</span><span class="go">→</span>
+      </a>
+    </nav>
+
+    <div class="card stat">
+      <p class="k">총 경력</p>
+      <div>
+        <p class="v num">5.8<small>년</small></p>
+        <div class="split" aria-hidden="true"><i style="flex:3.6"></i><i style="flex:2.2"></i></div>
+        <p class="split-legend"><span>Backend 3.6</span><span>Android 2.2</span></p>
+      </div>
+    </div>
+    <div class="card stat">
+      <p class="k">일 처리 이벤트</p>
+      <div>
+        <p class="v num">12M<small>+</small></p>
+        <p class="split-legend" style="margin-top:10px"><span>Kafka 결제 파이프라인</span></p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="sec">
+      <h2 class="sec-title">경력 <span class="count num">3</span></h2>
+      <div class="card jobs">
+        <article class="job">
+          <div class="logo l1">예</div>
+          <div><h3>예시 테크</h3><p class="role">Backend Engineer · 결제플랫폼팀</p></div>
+          <time class="period now">2023.03 — 현재</time>
+          <div class="body">
+            <ul>
+              <li>모놀리식 결제 시스템의 MSA 전환을 주도하여 주문 API p99 레이턴시를 <b>820ms → 180ms</b>로 단축</li>
+              <li>Kafka 기반 이벤트 파이프라인을 설계·운영, 일 <b>1,200만 건</b>의 결제 이벤트를 유실 없이 처리</li>
+              <li>SLO와 장애 대응 런북을 도입해 월간 장애 시간 <b>63%</b> 감소</li>
+            </ul>
+            <ul class="chips"><li>Kotlin</li><li>Spring Boot</li><li>Kafka</li><li>PostgreSQL</li><li>Redis</li><li>AWS</li></ul>
+          </div>
+        </article>
+        <article class="job">
+          <div class="logo l2">샘</div>
+          <div><h3>샘플 모빌리티</h3><p class="role">Android Engineer · 드라이버앱팀</p></div>
+          <time class="period">2021.01 — 2023.02</time>
+          <div class="body">
+            <ul>
+              <li>XML 뷰를 Jetpack Compose로 점진 전환하여 신규 화면 개발 리드타임 약 <b>40%</b> 단축</li>
+              <li>단일 모듈을 기능별 멀티 모듈로 재구성해 클린 빌드 시간 <b>6분 → 2분</b></li>
+              <li>ANR·크래시 추적 체계를 정비해 크래시 프리 세션 <b>99.2% → 99.8%</b></li>
+            </ul>
+            <ul class="chips"><li>Kotlin</li><li>Jetpack Compose</li><li>Coroutines</li><li>Hilt</li><li>Room</li></ul>
+          </div>
+        </article>
+        <article class="job">
+          <div class="logo l3">플</div>
+          <div><h3>플레이스홀더 랩</h3><p class="role">Software Engineer Intern</p></div>
+          <time class="period">2020.07 — 2020.12</time>
+          <div class="body">
+            <ul>
+              <li>Spring Boot·React 기반 사내 운영 백오피스를 개발해 수작업 정산 업무 주 <b>8시간</b> 절감</li>
+            </ul>
+            <ul class="chips"><li>Java</li><li>Spring Boot</li><li>MySQL</li><li>React</li></ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2 class="sec-title">프로젝트 <span class="count num">3</span></h2>
+      <div class="projects">
+        <a class="card project" href="#">
+          <div class="head"><span class="type">Open Source</span><span class="go">→</span></div>
+          <h3>kotlin-ratelimit</h3>
+          <p>Redis와 Lua 스크립트 기반의 분산 레이트 리미터. Spring Boot Starter로 한 줄 설정을 지원합니다.</p>
+          <p class="meta">★ 1.2k · Kotlin · Redis</p>
+        </a>
+        <a class="card project" href="#">
+          <div class="head"><span class="type">Side Project</span><span class="go">→</span></div>
+          <h3>Driftnote</h3>
+          <p>오프라인 우선 마크다운 노트 앱. Room과 WorkManager로 충돌 없는 동기화를 구현했습니다.</p>
+          <p class="meta">10k+ installs · Compose</p>
+        </a>
+        <a class="card project" href="#">
+          <div class="head"><span class="type">Internal Tool</span><span class="go">→</span></div>
+          <h3>deploy-lens</h3>
+          <p>흩어진 사내 배포 현황을 한 화면에 모은 경량 대시보드입니다.</p>
+          <p class="meta">Ktor · PostgreSQL</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2 class="sec-title">기술</h2>
+      <div class="card skills">
+        <div><h3>Backend</h3><ul class="chips"><li>Kotlin</li><li>Java</li><li>Spring Boot</li><li>JPA</li><li>gRPC</li><li>Kafka</li><li>Redis</li></ul></div>
+        <div><h3>Android</h3><ul class="chips"><li>Jetpack Compose</li><li>Coroutines·Flow</li><li>Hilt</li><li>Room</li><li>WorkManager</li></ul></div>
+        <div><h3>Infra &amp; Data</h3><ul class="chips"><li>PostgreSQL</li><li>MySQL</li><li>AWS</li><li>Docker</li><li>Kubernetes</li><li>GitHub Actions</li></ul></div>
+      </div>
+    </section>
+
+    <section class="sec duo">
+      <div class="card">
+        <h2 class="label">학력</h2>
+        <ul class="list">
+          <li><div><b>예시대학교</b><span>컴퓨터공학과 학사</span></div><time>2014.03 — 2020.02</time></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2 class="label">활동 · 자격</h2>
+        <ul class="list">
+          <li><div><b>“Compose 마이그레이션, 1년의 회고”</b><span>발표 · 예시 안드로이드 밋업</span></div><time>2022.11</time></li>
+          <li><div><b>Spring 공식 문서 한국어 번역</b><span>오픈소스 기여</span></div><time>2021 —</time></li>
+          <li><div><b>정보처리기사</b><span>한국산업인력공단</span></div><time>2019.08</time></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2026 홍길동 · 2026년 9월 업데이트</footer>
+</div>
+</body>
+</html>
