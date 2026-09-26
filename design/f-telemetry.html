@@ -117,28 +117,30 @@
 
   /* ── Hero ───────────────────────────────── */
   .hero { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 72px; align-items: center; min-height: min(72vh, 700px); padding: 24px 0 88px; }
-  .who .label { display: flex; justify-content: space-between; color: var(--ink-3); margin-bottom: 22px; }
+  .id { display: flex; align-items: center; gap: 14px; margin-bottom: 26px; color: var(--ink-3); }
+  /* transparent PNG: light tile on paper, inverted tile in dark so the outline stays legible */
+  .avatar { flex: none; display: grid; place-items: center; width: 60px; height: 60px; border-radius: 16px; border: 1px solid var(--rule); background: rgba(255, 255, 255, .72); transition: transform .5s var(--ease); }
+  .avatar img { display: block; width: 76%; height: auto; }
+  .avatar:hover { transform: rotate(-6deg); }
+  .dark .avatar { background: var(--ink); border-color: transparent; }
   .name { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; line-height: 1; }
   .name .ko { font-size: 68px; font-weight: 800; letter-spacing: -0.045em; }
   .name .en { font-size: 30px; font-weight: 500; color: var(--ink-4); }
-  .name .handle { font-size: 11px; color: var(--ink-3); }
   .tagline { margin-top: 26px; font-size: 22px; font-weight: 600; letter-spacing: -0.03em; min-height: 1.5em; }
   .caret { display: inline-block; width: .5em; height: 1.05em; margin-left: 3px; vertical-align: -0.16em; background: var(--signal); animation: blink 1.05s steps(1) infinite; }
   @keyframes blink { 50% { opacity: 0; } }
-  .intro { margin-top: 14px; color: var(--ink-2); max-width: 31em; text-wrap: pretty; }
-  .intro b { color: var(--ink); font-weight: 600; }
+  .intro { margin-top: 12px; color: var(--ink-2); text-wrap: pretty; }
+  .intro span { display: block; }   /* one sentence per line */
 
-  .spec { margin-top: 30px; display: grid; grid-template-columns: 92px 1fr; row-gap: 7px; border-top: 1px solid var(--rule); padding-top: 18px; }
-  .spec dt { color: var(--ink-3); }
-  .spec dd { color: var(--ink); text-transform: none; letter-spacing: 0.02em; }
-  .spec .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--signal); margin-right: 8px; vertical-align: 1px; }
-  .spec dd i { font-style: normal; color: var(--ink-4); margin: 0 6px; }
-
-  .links { display: flex; gap: 22px; margin-top: 26px; flex-wrap: wrap; }
-  .links a { position: relative; color: var(--ink-2); padding-bottom: 3px; transition: color .2s; }
-  .links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform: scaleX(.25); transform-origin: left; opacity: .5; transition: transform .35s var(--ease), opacity .2s; }
-  .links a:hover { color: var(--ink); }
-  .links a:hover::after { transform: none; opacity: 1; }
+  .links { display: flex; gap: 22px; margin-top: 34px; flex-wrap: wrap; }
+  .links a, .links button { position: relative; color: var(--ink-2); padding-bottom: 3px; letter-spacing: inherit; text-transform: inherit; transition: color .2s; }
+  .links a::after, .links button::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform: scaleX(.25); transform-origin: left; opacity: .5; transition: transform .35s var(--ease), opacity .2s; }
+  .links a:hover, .links button:hover { color: var(--ink); }
+  .links a:hover::after, .links button:hover::after { transform: none; opacity: 1; }
+  /* Discord ID peeks out under the label on hover */
+  .links button::before { content: attr(data-copy); position: absolute; left: 0; top: calc(100% + 8px); color: var(--ink-3); text-transform: none; letter-spacing: .02em; white-space: nowrap; opacity: 0; transform: translateY(-3px); transition: opacity .2s, transform .3s var(--ease); pointer-events: none; }
+  .links button:hover::before, .links button:focus-visible::before { opacity: 1; transform: none; }
+  .links button.done { color: var(--signal); }
 
   /* instrument panel */
   .instrument { position: relative; padding: 22px 24px 20px; color: var(--ink-3); }
@@ -166,16 +168,11 @@
   .readouts > div:nth-child(odd) { padding-right: 20px; border-right: 1px solid var(--rule); }
   .readouts > div:nth-child(even) { padding-left: 20px; }
   .readouts .v { color: var(--ink); font-weight: 600; }
-  .readouts .v.sig { color: var(--signal); }
   .seg { display: inline-flex; gap: 12px; }
   .seg button { font: inherit; letter-spacing: inherit; text-transform: inherit; color: var(--ink-4); transition: color .2s; }
   .seg button:hover { color: var(--ink-3); }
   .seg button[aria-pressed="true"] { color: var(--ink); font-weight: 600; }
-  .loadbar { width: 84px; height: 3px; background: var(--rule); position: relative; overflow: hidden; }
-  .loadbar i { position: absolute; inset: 0 auto 0 0; width: 10%; background: var(--ink); transition: width .3s; }
-  .spark { width: 84px; height: 16px; }
-  .spark polyline { fill: none; stroke: var(--ink); stroke-width: 1; }
-  .hint { display: flex; justify-content: space-between; gap: 16px; margin-top: 12px; color: var(--ink-4); font-size: 9.5px; }
+  .hint { margin-top: 12px; color: var(--ink-4); font-size: 9.5px; }
 
   /* ── Sections ───────────────────────────── */
   /* hairline aligned to the content edge, not the padded box */
@@ -329,16 +326,18 @@
   .copy:hover { opacity: 1; }
   .copy.done { opacity: 1; color: var(--signal); }
   .alt { margin-top: 32px; display: grid; gap: 8px; }
-  .alt a { display: grid; grid-template-columns: 56px 36px 1fr; align-items: center; opacity: .6; transition: opacity .2s; }
-  .alt a:hover { opacity: 1; }
-  .alt a i { font-style: normal; opacity: .6; }
-  .alt a span:last-child { text-transform: none; letter-spacing: .02em; }
+  .alt a, .alt button { display: grid; grid-template-columns: 56px 36px 1fr; align-items: center; text-align: left; letter-spacing: inherit; text-transform: inherit; opacity: .6; transition: opacity .2s; }
+  .alt a:hover, .alt button:hover { opacity: 1; }
+  .alt i { font-style: normal; opacity: .6; }
+  .alt span:last-child { text-transform: none; letter-spacing: .02em; }
+  .alt em { font-style: normal; margin-left: 12px; opacity: .55; }
+  .alt button.done { opacity: 1; }
+  .alt button.done em { color: var(--signal); opacity: 1; }
   .panel .ps { margin-top: 28px; opacity: .45; }
   .panel footer { display: flex; justify-content: space-between; gap: 16px; opacity: .4; }
 
   @media (max-width: 960px) {
     .container { padding: 0 20px; }
-    .topbar .build .rev { display: none; }
     .switches { gap: 16px; }
     .hero { grid-template-columns: 1fr; gap: 48px; min-height: 0; padding: 16px 0 64px; }
     .name .ko { font-size: 52px; }
@@ -348,8 +347,6 @@
     .readouts { grid-template-columns: 1fr; }
     .readouts > div:nth-child(odd) { padding-right: 0; border-right: 0; }
     .readouts > div:nth-child(even) { padding-left: 0; }
-    .hint span:last-child { display: none; }
-    .inst-head > span:last-child { display: none; }
     .sec { padding-block: 64px 24px; background-size: calc(100% - 40px) 1px; }
     .sec-head { flex-direction: column; align-items: flex-start; margin-bottom: 36px; gap: 10px; }
     .sec-head h2 { font-size: 30px; }
@@ -378,7 +375,6 @@
     .panel-body { grid-template-columns: 1fr; gap: 40px; padding: 64px 0 72px; }
     .panel h2 { font-size: 30px; }
     .panel .say { font-size: 23px; }
-    .status span:nth-child(2) { display: none; }
     .panel footer { flex-direction: column; gap: 4px; }
     .bracket::before { inset: -12px -10px; }
   }
@@ -386,12 +382,17 @@
     .caret, .inst-head .live i, .pulse, .flow .wire-hot { animation: none; }
     .js .reveal { opacity: 1; transform: none; transition: none; }
     .card.show.anim { animation: none; }
+    .avatar { transition: none; }
+    .avatar:hover { transform: none; }
   }
   @media print {
     @page { size: A4; margin: 14mm; }
     :root, .dark { --paper: #fff; --ink: #111; --ink-2: #333; --ink-3: #666; --ink-4: #bbb; --rule: #ddd; --signal: #17A35B; }
     body { font-size: 9.5pt; }
-    .field, .instrument, .switches, .caret, .hint, .preview, .copy, .cmd { display: none !important; }
+    .field, .instrument, .switches, .caret, .hint, .preview, .copy, .cmd, .alt em { display: none !important; }
+    .links button { display: inline-flex; flex-direction: row-reverse; gap: 8px; }   /* print "Discord mooner.dev" */
+    .links button::before { position: static; opacity: 1; transform: none; }
+    .links button::after { display: none; }
     .container { max-width: none; padding: 0; }
     .hero { display: block; min-height: 0; padding: 0 0 20px; }
     .sec { padding-block: 24px 8px; }
@@ -409,7 +410,7 @@
 
 <div class="container">
   <header class="topbar mono">
-    <span class="build">mooner / Resume <span class="rev">· Rev 9.0 · 2026.09</span> <span class="ticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span></span>
+    <span class="build">mooner / Resume <span class="ticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span></span>
     <span class="switches">
       <span class="toggle" role="group" aria-label="언어 / Language">
         <button type="button" data-set-lang="ko">KO</button><span>/</span><button type="button" data-set-lang="en">EN</button>
@@ -422,29 +423,23 @@
 
   <section class="hero">
     <div class="who">
-      <p class="label mono"><span>Profile — 01</span><span>Ansan · UTC+09</span></p>
-      <h1 class="name"><span class="ko">문민기</span><span class="en wide">Minki Moon</span><span class="handle mono lc">@mooner</span></h1>
+      <p class="id mono lc"><span class="avatar"><img src="assets/avatar.png" width="46" height="46" alt=""></span>@mooner</p>
+      <h1 class="name"><span class="ko">문민기</span><span class="en wide">Minki Moon</span></h1>
       <p class="tagline">
-        <span class="typed" data-l="ko" lang="ko">서버와 앱, 양 끝을 잇는 개발자.</span><span class="typed" data-l="en" lang="en">Bridging the server and the app, end to end.</span><span class="caret" aria-hidden="true"></span>
+        <span class="typed" data-l="ko" lang="ko">백엔드와 안드로이드 앱을 만듭니다.</span><span class="typed" data-l="en" lang="en">I build backends and Android apps.</span><span class="caret" aria-hidden="true"></span>
       </p>
-      <p class="intro" data-l="ko" lang="ko">한양대학교 ERICA 컴퓨터공학과에 재학 중인 <b>백엔드 · 안드로이드 개발자</b>입니다. 2016년 독학으로 시작해 Java와 Kotlin으로 백엔드 시스템을, Jetpack Compose로 안드로이드 앱을 만듭니다.</p>
-      <p class="intro" data-l="en" lang="en">A <b>backend &amp; Android developer</b> studying Computer Engineering at Hanyang University (ERICA). Self-taught since 2016 — building backend systems in Java / Kotlin and Android apps with Jetpack Compose.</p>
-      <dl class="spec mono">
-        <dt>Role</dt><dd>Backend · Android Developer</dd>
-        <dt>Stack</dt><dd>Kotlin · Ktor · Jetpack Compose</dd>
-        <dt>Track</dt><dd><span class="num">8+ yrs</span><i>/</i><span class="num">★ 57</span><i>/</i><span class="num">46.3K+ installs</span></dd>
-        <dt>Status</dt><dd><span class="dot"></span><span data-l="ko">배우고, 만들고, 기여하는 중</span><span data-l="en">learning · building · contributing</span></dd>
-      </dl>
+      <p class="intro" data-l="ko" lang="ko"><span>한양대학교 ERICA에서 컴퓨터공학을 공부합니다.</span> <span>2016년에 독학으로 프로그래밍을 시작했어요.</span></p>
+      <p class="intro" data-l="en" lang="en"><span>Computer Engineering student at Hanyang University (ERICA).</span> <span>Self-taught since 2016.</span></p>
       <nav class="links mono">
         <a href="mailto:mooner@mooner.dev">Email</a>
         <a href="https://github.com/mooner1022">GitHub ↗</a>
-        <a href="https://mooner.dev">mooner.dev ↗</a>
+        <button type="button" data-copy="mooner.dev" aria-label="Discord ID: mooner.dev (copy)"><span class="copy-label">Discord</span></button>
       </nav>
     </div>
 
     <figure class="instrument" aria-label="클라이언트와 서버 사이 요청 흐름을 보여주는 장식용 패널">
       <span class="corners" aria-hidden="true"></span>
-      <figcaption class="inst-head mono"><span class="live"><i></i>Trace / Live</span><span>37.2970N 126.8350E · ap-northeast-2</span></figcaption>
+      <figcaption class="inst-head mono"><span class="live"><i></i>Trace / Live</span></figcaption>
       <svg class="flow" id="flow" viewBox="0 0 560 250" role="img" aria-label="Android 클라이언트에서 Redis를 거쳐 Ktor 서버로 요청이 오가는 애니메이션">
         <g transform="translate(40 70)">
           <rect class="outline" x="0" y="0" width="54" height="96" rx="10"/>
@@ -471,12 +466,8 @@
       <div class="readouts mono">
         <div><span>Protocol</span><span class="seg" id="proto"><button type="button" aria-pressed="true" data-p="rest">REST</button><button type="button" aria-pressed="false" data-p="sse">SSE</button><button type="button" aria-pressed="false" data-p="cache">Cache</button></span></div>
         <div><span>Latency <span class="lc">p99</span></span><span class="v"><span id="lat" class="num">142</span><span class="lc">ms</span></span></div>
-        <div><span>Load</span><span class="loadbar"><i id="load"></i></span></div>
-        <div><span>Trend</span><svg class="spark" viewBox="0 0 84 16" preserveAspectRatio="none"><polyline id="spark" points="0,8 84,8"/></svg></div>
-        <div><span>Requests OK</span><span class="v sig num" id="ok">000</span></div>
-        <div><span>Cache hit</span><span class="v num" id="hit">0%</span></div>
       </div>
-      <p class="hint mono"><span data-l="ko">클릭 → 요청 전송 · 1–3 → 프로토콜</span><span data-l="en">Click → send · 1–3 → protocol</span><span>Decorative — not real data</span></p>
+      <p class="hint mono"><span data-l="ko">클릭하면 요청을 보냅니다 · 실제 데이터 아님</span><span data-l="en">Click to send a request · not real data</span></p>
     </figure>
   </section>
 </div>
@@ -492,6 +483,8 @@
     <div class="two">
       <dl class="aside-kv mono">
         <dt>Base</dt><dd>Ansan, KR</dd>
+        <dt>Stack</dt><dd>Kotlin · Ktor<br>Jetpack Compose</dd>
+        <dt>Track</dt><dd><span class="num">8+ yrs</span><br><span class="num">★ 57</span> GitHub<br><span class="num">46.3K+</span> installs</dd>
         <dt>Lang</dt><dd>ko, en</dd>
         <dt>Off</dt><dd data-l="ko">3D 프린팅 · 모델링</dd><dd data-l="en">3D printing · CAD</dd>
       </dl>
@@ -862,7 +855,7 @@
 
 <section class="panel reveal" id="contact">
   <div class="container">
-    <p class="status mono"><span class="on"><i></i>Accepting requests</span><span>Avg. response &lt; 24h</span><span>Ansan <span id="clock" class="num">--:--</span> KST</span></p>
+    <p class="status mono"><span class="on"><i></i>Accepting requests</span><span>Ansan <span id="clock" class="num">--:--</span> KST</span></p>
     <div class="panel-body">
       <div>
         <p class="cmd mono lc">mooner:~/resume $ ./contact.sh</p>
@@ -876,14 +869,15 @@
       <div>
         <p class="say" data-l="ko">느긋하게 커피 한 잔 어떠세요?</p>
         <p class="say" data-l="en">Happy to trade coffee for conversation.</p>
-        <p data-l="ko">요청은 언제든 — 응답은 하루 안에.</p>
-        <p data-l="en">Send a request anytime — responses within a day.</p>
+        <p data-l="ko">궁금한 점이 있다면 편하게 연락 주세요.</p>
+        <p data-l="en">If anything here catches your eye, feel free to reach out.</p>
         <div class="mailrow">
           <a class="mail wide" href="mailto:mooner@mooner.dev">mooner@mooner.dev<span>↗</span></a>
           <button type="button" class="copy mono" data-copy="mooner@mooner.dev"><span data-l="ko">복사</span><span data-l="en">Copy</span></button>
         </div>
         <nav class="alt mono">
           <a href="https://github.com/mooner1022"><span>Code</span><i>─▸</i><span>github.com/mooner1022</span></a>
+          <button type="button" data-copy="mooner.dev"><span>Chat</span><i>─▸</i><span>Discord · mooner.dev<em class="copy-label"><span data-l="ko">클릭해서 복사</span><span data-l="en">click to copy</span></em></span></button>
           <a href="https://mooner.dev"><span>Work</span><i>─▸</i><span>mooner.dev</span></a>
           <a href="https://mooner.dev/about"><span>Blog</span><i>─▸</i><span>mooner.dev/about</span></a>
         </nav>
@@ -935,11 +929,18 @@
   const tick = () => $('#clock').textContent = fmt.format(new Date());
   tick(); setInterval(tick, 10000);
 
-  /* copy email */
+  /* copy email / Discord ID — execCommand fallback for non-secure origins (LAN preview over http) */
+  const copyText = async (text) => {
+    try { await navigator.clipboard.writeText(text); return true; } catch {}
+    const ta = Object.assign(document.createElement('textarea'), { value: text, readOnly: true });
+    ta.style.cssText = 'position:fixed;opacity:0'; document.body.append(ta); ta.select();
+    const ok = document.execCommand('copy'); ta.remove(); return ok;
+  };
   $$('[data-copy]').forEach(b => b.addEventListener('click', async () => {
-    try { await navigator.clipboard.writeText(b.dataset.copy); } catch { return; }
-    const html = b.innerHTML; b.classList.add('done'); b.innerHTML = '<span>Copied ✓</span>';
-    setTimeout(() => { b.classList.remove('done'); b.innerHTML = html; }, 1600);
+    if (b.classList.contains('done') || !(await copyText(b.dataset.copy))) return;
+    const label = $('.copy-label', b) || b, html = label.innerHTML;
+    b.classList.add('done'); label.innerHTML = '<span>Copied ✓</span>';
+    setTimeout(() => { b.classList.remove('done'); label.innerHTML = html; }, 1600);
   }));
 
   /* project list → spec preview */
@@ -979,19 +980,16 @@
       sse:   { to: 1,        dur: 700, lat: [38, 72],   replies: 4 },   // one request, streamed events back
       cache: { to: CACHE_AT, dur: 420, lat: [2, 7],     replies: 1 },   // turns around at Redis
     };
-    let mode = 'rest', ok = 0, sent = 0, hits = 0; const live = new Set();
+    let mode = 'rest'; const live = new Set();
     const jitter = ([a, b]) => a + Math.random() * (b - a);
     const hist = Array.from({ length: 24 }, () => jitter(PROTO.rest.lat));
     const leds = ['#led-s0', '#led-s1', '#led-s2'].map(s => $(s)); const ledC = $('#led-c'), cache = $('#cache');
 
     const flash = (el, cls = 'on') => { el.classList.add(cls); setTimeout(() => el.classList.remove(cls), 170); };
-    const setLoad = () => { $('#load').style.width = Math.min(100, 10 + live.size * 12) + '%'; $('#wire-hot').style.opacity = live.size ? .6 : 0; };
-    const record = (v, count = true) => {
+    const setLoad = () => { $('#wire-hot').style.opacity = live.size ? .6 : 0; };
+    const record = (v) => {
       hist.push(v); hist.shift();
       $('#lat').textContent = Math.round([...hist].sort((a, b) => a - b)[Math.floor(hist.length * .99) - 1]);
-      const max = Math.max(...hist) * 1.1, min = Math.min(...hist) * .9;
-      $('#spark').setAttribute('points', hist.map((h, i) => `${(i / (hist.length - 1) * 84).toFixed(1)},${(16 - (h - min) / (max - min || 1) * 14 - 1).toFixed(1)}`).join(' '));
-      if (count) $('#ok').textContent = String(++ok).padStart(3, '0');
     };
 
     const shoot = (from, to, kind, dur, done) => {
@@ -1011,10 +1009,9 @@
     };
 
     const send = () => {
-      const m = mode, P = PROTO[m]; flash(ledC); sent++;
+      const m = mode, P = PROTO[m]; flash(ledC);
       shoot(0, P.to, 'req', P.dur, () => {
-        if (m === 'cache') { flash(cache, 'hit'); hits++; } else flash(leds[Math.floor(Math.random() * 3)]);
-        $('#hit').textContent = Math.round(hits / sent * 100) + '%';
+        if (m === 'cache') flash(cache, 'hit'); else flash(leds[Math.floor(Math.random() * 3)]);
         const lat = jitter(P.lat);
         for (let i = 0; i < P.replies; i++) setTimeout(() => {
           shoot(P.to, 0, m === 'sse' ? 'evt' : 'res', P.dur, () => { flash(ledC); if (i === P.replies - 1) record(lat); });
@@ -1025,7 +1022,7 @@
     const setMode = (m) => {
       mode = m;
       $$('#proto button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.p === m)));
-      hist.forEach((_, i) => hist[i] = jitter(PROTO[m].lat)); record(jitter(PROTO[m].lat), false);
+      hist.forEach((_, i) => hist[i] = jitter(PROTO[m].lat)); record(jitter(PROTO[m].lat));
     };
     $$('#proto button').forEach(b => b.addEventListener('click', () => setMode(b.dataset.p)));
     addEventListener('keydown', (e) => {
@@ -1034,8 +1031,9 @@
     });
     flow.addEventListener('click', send);
 
-    record(140, false);
-    if (!reduce) { send(); setInterval(() => { if (!document.hidden) send(); }, 2200); }
+    record(140);
+    // one calm heartbeat instead of constant traffic; clicks still send on demand
+    if (!reduce) { setTimeout(send, 900); setInterval(() => { if (!document.hidden) send(); }, 4200); }
   })();
 </script>
 </body>

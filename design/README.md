@@ -67,3 +67,29 @@ Playwright(캐시된 chromium-1148과 맞는 1.49.x)로 `document.fonts.ready` �
 | mooner.dev | GitHub 저장소 목록 | More on GitHub 6개 |
 | mooner.dev | Discord "click to copy" | 이메일 복사 버튼 |
 | (재해석) | 계기판 프로토콜 | REST / SSE / Cache — Redis 캐시(한강), SSE(AGORA) 등 실제 스택 반영 |
+
+## Round 4 — 첫 화면 덜어내기 (2026-09-26)
+
+피드백: 첫 화면의 정보량과 밀도가 높다. 문구는 거창하지 않고 수수하게.
+
+| 영역 | 전 | 후 |
+| --- | --- | --- |
+| 상단 바 | `mooner / Resume · Rev 9.0 · 2026.09` + 틱 | `mooner / Resume` + 틱 |
+| 히어로 왼쪽 | 라벨 줄(Profile — 01 · Ansan) · 이름 + 핸들 · 태그라인 · 소개 2줄 · ROLE/STACK/TRACK/STATUS 표 · 링크 | 아바타 + `@mooner` · 이름 · 태그라인 · 소개 두 문장(한 줄씩) · 링크 |
+| 태그라인 | 서버와 앱, 양 끝을 잇는 개발자. | 백엔드와 안드로이드 앱을 만듭니다. |
+| 링크 | Email · GitHub · mooner.dev | Email · GitHub · Discord(클릭 복사, 호버 시 ID 표시) |
+| 계기판 | 좌표/리전 헤더 · 판독값 6개 · 힌트 2개 · 2.2초마다 자동 전송 | 헤더 `Trace / Live`만 · Protocol + Latency 한 줄 · 힌트 1개 · 4.2초마다 한 번 |
+| TRACK 수치 | 히어로 표 | About 왼쪽 목록(Stack · Track) |
+| 연락처 | "요청은 언제든 — 응답은 하루 안에." · `Avg. response < 24h` | "궁금한 점이 있다면 편하게 연락 주세요." · 응답 시간 약속 제거 · Discord 복사 줄 추가 |
+
+- 아바타: mooner.dev의 캐릭터(`assets/avatar.png`, 192px로 축소). 배경이 투명이라 라이트에선 흰 타일, 다크에선 반전 타일로 외곽선이 보이게 했다. 호버 시 살짝 기울어진다.
+- 복사 버튼: `navigator.clipboard`가 없는 비보안 출처(LAN 미리보기 http)에서는 `execCommand('copy')`로 대체한다.
+
+## 개발 스택 결정
+
+**SvelteKit + `adapter-static`**, 콘텐츠는 타입이 있는 ko/en 데이터 파일로 분리하고 전 페이지를 프리렌더한다.
+
+- 이전 프로필(mooner.dev)이 Svelte라 익숙한 도구를 그대로 쓴다.
+- 이력 내용과 디자인이 분리돼, 항목을 고칠 때 마크업을 건드리지 않는다.
+- 결과물은 정적 파일이라 지금의 단일 HTML과 배포 방식이 같다.
+- 포팅 시 주의: 첫 페인트 전 테마·언어 스크립트는 `app.html`에, 타자 효과·스크롤 리빌·계기판은 `onMount`로 옮긴다.
