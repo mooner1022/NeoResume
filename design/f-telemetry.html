@@ -116,7 +116,16 @@
   .toggle span { opacity: .5; }
 
   /* ── Hero ───────────────────────────────── */
-  .hero { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 72px; align-items: center; min-height: min(72vh, 700px); padding: 24px 0 88px; }
+  /* first screen fills the viewport, so About starts below the fold */
+  .fold { display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh; }
+  .hero { position: relative; z-index: 1; flex: 1 0 auto; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 72px; align-items: center; padding: 24px 0 88px; }
+  /* scroll cue — a signal tick slides down a hairline; fades once the page moves */
+  .scroll-cue { position: absolute; left: 0; bottom: 30px; display: inline-flex; align-items: center; gap: 12px; color: var(--ink-3); transition: color .2s, opacity .5s var(--ease); }
+  .scroll-cue:hover { color: var(--ink); }
+  .scroll-cue .rail { position: relative; width: 1px; height: 36px; background: var(--rule); overflow: hidden; }
+  .scroll-cue .rail i { position: absolute; left: 0; top: 0; width: 1px; height: 12px; background: var(--signal); animation: drop 2.8s var(--ease) infinite; }
+  @keyframes drop { 0% { transform: translateY(-12px); } 55%, 100% { transform: translateY(36px); } }
+  .scroll-cue.gone { opacity: 0; visibility: hidden; transition: color .2s, opacity .5s var(--ease), visibility 0s .5s; }   /* hidden also drops it from tab order */
   .id { display: flex; align-items: center; gap: 14px; margin-bottom: 26px; color: var(--ink-3); }
   /* transparent PNG: light tile on paper, inverted tile in dark so the outline stays legible */
   .avatar { flex: none; display: grid; place-items: center; width: 60px; height: 60px; border-radius: 16px; border: 1px solid var(--rule); background: rgba(255, 255, 255, .72); transition: transform .5s var(--ease); }
@@ -339,7 +348,9 @@
   @media (max-width: 960px) {
     .container { padding: 0 20px; }
     .switches { gap: 16px; }
-    .hero { grid-template-columns: 1fr; gap: 48px; min-height: 0; padding: 16px 0 64px; }
+    .fold { min-height: 0; }
+    .hero { grid-template-columns: 1fr; gap: 48px; padding: 16px 0 64px; }
+    .scroll-cue { display: none; }
     .name .ko { font-size: 52px; }
     .name .en { font-size: 22px; }
     .tagline { font-size: 19px; }
@@ -379,7 +390,8 @@
     .bracket::before { inset: -12px -10px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .caret, .inst-head .live i, .pulse, .flow .wire-hot { animation: none; }
+    .caret, .inst-head .live i, .pulse, .flow .wire-hot, .scroll-cue .rail i { animation: none; }
+    .scroll-cue .rail i { transform: translateY(12px); }
     .js .reveal { opacity: 1; transform: none; transition: none; }
     .card.show.anim { animation: none; }
     .avatar { transition: none; }
@@ -389,12 +401,13 @@
     @page { size: A4; margin: 14mm; }
     :root, .dark { --paper: #fff; --ink: #111; --ink-2: #333; --ink-3: #666; --ink-4: #bbb; --rule: #ddd; --signal: #17A35B; }
     body { font-size: 9.5pt; }
-    .field, .instrument, .switches, .caret, .hint, .preview, .copy, .cmd, .alt em { display: none !important; }
+    .field, .instrument, .switches, .caret, .hint, .preview, .copy, .cmd, .alt em, .scroll-cue { display: none !important; }
     .links button { display: inline-flex; flex-direction: row-reverse; gap: 8px; }   /* print "Discord mooner.dev" */
     .links button::before { position: static; opacity: 1; transform: none; }
     .links button::after { display: none; }
     .container { max-width: none; padding: 0; }
-    .hero { display: block; min-height: 0; padding: 0 0 20px; }
+    .fold { display: block; min-height: 0; }
+    .hero { display: block; padding: 0 0 20px; }
     .sec { padding-block: 24px 8px; }
     .sec-head { margin-bottom: 18px; }
     .js .reveal { opacity: 1; transform: none; }
@@ -408,7 +421,7 @@
 <body>
 <div class="field" aria-hidden="true"></div>
 
-<div class="container">
+<div class="container fold">
   <header class="topbar mono">
     <span class="build">mooner / Resume <span class="ticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span></span>
     <span class="switches">
@@ -469,6 +482,8 @@
       </div>
       <p class="hint mono"><span data-l="ko">클릭하면 요청을 보냅니다 · 실제 데이터 아님</span><span data-l="en">Click to send a request · not real data</span></p>
     </figure>
+
+    <a class="scroll-cue mono" href="#about"><span class="rail" aria-hidden="true"><i></i></span>Scroll</a>
   </section>
 </div>
 
@@ -660,10 +675,10 @@
         </li>
         <li class="prow bracket" data-p="site" tabindex="0">
           <span class="idx mono">05</span>
-          <h3 class="wide">mooner.dev<span class="arr">→</span><small data-l="ko">개인 웹사이트 / 포트폴리오</small><small data-l="en">Personal site &amp; portfolio</small></h3>
-          <p class="yr mono">2024<span>Personal</span></p>
-          <p class="desc" data-l="ko">Svelte + TypeScript로 직접 만든 개인 웹사이트. About, Projects, Home 섹션을 손수 큐레이션했습니다.</p>
-          <p class="desc" data-l="en">Personal site hand-built with Svelte + TypeScript. About / Projects / Home, curated by hand.</p>
+          <h3 class="wide">mooner.dev<span class="arr">→</span><small data-l="ko">이전 개인 웹사이트</small><small data-l="en">Previous personal site</small></h3>
+          <p class="yr mono">2024<span>Personal · Retired</span></p>
+          <p class="desc" data-l="ko">Svelte + TypeScript로 직접 만든 개인 웹사이트. About, Projects, Home 섹션을 손수 큐레이션했습니다. 지금은 이 이력서로 바뀌었습니다.</p>
+          <p class="desc" data-l="en">Personal site hand-built with Svelte + TypeScript. About / Projects / Home, curated by hand. Now replaced by this résumé.</p>
           <p class="tags mono"><span>Svelte</span><span>TypeScript</span><span>CloudFlare</span></p>
         </li>
       </ol>
@@ -756,13 +771,12 @@
               <line class="o" x1="72" y1="66" x2="128" y2="66"/><line class="d" x1="60" y1="78" x2="140" y2="78"/><line class="d" x1="70" y1="88" x2="130" y2="88"/>
             </svg>
           </div>
-          <h4><span data-l="ko">개인 웹사이트 / 포트폴리오</span><span data-l="en">Personal site &amp; portfolio</span></h4>
+          <h4><span data-l="ko">이전 개인 웹사이트</span><span data-l="en">Previous personal site</span></h4>
           <dl>
             <dt class="mono">Stack</dt><dd>Svelte · TypeScript</dd>
             <dt class="mono">Host</dt><dd>CloudFlare Pages</dd>
             <dt class="mono">Pages</dt><dd>home · about · projects</dd>
           </dl>
-          <p class="go mono"><a href="https://mooner.dev">mooner.dev ↗</a></p>
         </div>
       </aside>
     </div>
@@ -878,8 +892,6 @@
         <nav class="alt mono">
           <a href="https://github.com/mooner1022"><span>Code</span><i>─▸</i><span>github.com/mooner1022</span></a>
           <button type="button" data-copy="mooner.dev"><span>Chat</span><i>─▸</i><span>Discord · mooner.dev<em class="copy-label"><span data-l="ko">클릭해서 복사</span><span data-l="en">click to copy</span></em></span></button>
-          <a href="https://mooner.dev"><span>Work</span><i>─▸</i><span>mooner.dev</span></a>
-          <a href="https://mooner.dev/about"><span>Blog</span><i>─▸</i><span>mooner.dev/about</span></a>
         </nav>
         <p class="ps mono lc">// ping me anytime — i read all.</p>
       </div>
@@ -919,6 +931,12 @@
     localStorage.setItem('lang', b.dataset.setLang); syncLang(); type();
   }));
   syncLang(); type();
+
+  /* scroll cue */
+  const cue = $('.scroll-cue');
+  cue.addEventListener('click', (e) => { e.preventDefault(); $('#about').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); });
+  const syncCue = () => cue.classList.toggle('gone', scrollY > 24);
+  addEventListener('scroll', syncCue, { passive: true }); syncCue();
 
   /* reveal on scroll */
   const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.04 });
