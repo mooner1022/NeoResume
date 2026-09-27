@@ -3,7 +3,7 @@
 
 	let { id, label }: { id: Project['id']; label: string } = $props();
 
-	const HEIGHT: Partial<Record<Project['id'], number>> = { hanriv: 350, starlight: 320, amoa: 340, agora: 320 };
+	const HEIGHT: Partial<Record<Project['id'], number>> = { hanriv: 380, starlight: 320, amoa: 340, agora: 320 };
 	const h = $derived(HEIGHT[id] ?? 300);
 </script>
 
@@ -69,8 +69,10 @@
 			{@render arrow(550, 206, 550, 272)}
 			{@render arrow(630, 306, 654, 306)}
 			{@render arrow(810, 306, 834, 306)}
-			<text x="24" y="296" class="lc">// green: what the app reads</text>
-			<text x="24" y="316" class="lc">// dashed: hourly jobs and the backup copy</text>
+			{@render route('M888 334 V362 H109 V212')}
+			<text x="480" y="354" class="lc">fallback read when the API fails</text>
+			<text x="130" y="296" class="lc">// green: what the app reads</text>
+			<text x="130" y="316" class="lc">// dashed: hourly jobs and the backup copy</text>
 		{:else if id === 'starlight'}
 			<!-- one notification in, one reply out -->
 			{@render node(24, 40, 140, 'MESSENGER', 'notification')}
