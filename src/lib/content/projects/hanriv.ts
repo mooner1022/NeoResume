@@ -66,7 +66,7 @@ export const hanriv: Record<Lang, ProjectDetail> = {
 			},
 			{
 				title: '매일 알림이 하루 이틀 뒤 멈췄다',
-				problem: 'V5는 매일 수온 알림을 반복 알람 하나(`setRepeating`)로 걸었습니다. 반복 알람은 기기가 절전 상태에 들어가면 계속 미뤄질 수 있고, 재부팅 뒤 알람을 다시 거는 수신기는 매니페스트에 등록돼 있지 않았습니다.',
+				problem: '매일 수온 알림이 하루 이틀 지나면 오지 않는다는 문제가 있었습니다. V5는 이 알림을 반복 알람 하나(`setRepeating`)로 걸었고, 재부팅 뒤 알람을 다시 거는 수신기는 만들어 두고도 매니페스트에 등록하지 않은 상태였습니다.',
 				approach: '한 번짜리 알람을 걸고, 알람이 울리면 **다음 알람부터 먼저 예약하는** 사슬로 바꿨습니다. 부팅, 앱 업데이트, 앱 시작 때마다 다시 걸고, 수신기는 비동기로 수온을 가져오되 알림을 올릴 시간을 남기도록 타임아웃을 나눴습니다.',
 				result: 'V7에서 이 문제를 고쳤고, 같은 구조를 새로 넣은 댐 방류 경보에도 그대로 썼습니다.'
 			},
@@ -141,7 +141,7 @@ export const hanriv: Record<Lang, ProjectDetail> = {
 			},
 			{
 				title: 'The daily alert stopped after a day or two',
-				problem: 'V5 set the daily temperature alert as one repeating alarm (`setRepeating`). Repeating alarms can keep slipping once the device dozes, and the receiver meant to re-arm it after a reboot was never registered in the manifest.',
+				problem: 'The daily temperature alert stopped arriving after a day or two. V5 set it as one repeating alarm (`setRepeating`), and the receiver written to re-arm it after a reboot was never registered in the manifest.',
 				approach: 'Now a one-shot alarm is set, and when it fires **the next one is booked first**. Alarms are re-armed on boot, app update and app start, and the receiver fetches the temperature asynchronously with split timeouts so there is always time left to post the notification.',
 				result: 'Fixed in V7, and the same structure now drives the new dam discharge alerts.'
 			},
