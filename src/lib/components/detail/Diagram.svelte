@@ -3,7 +3,7 @@
 
 	let { id, label }: { id: Project['id']; label: string } = $props();
 
-	const HEIGHT: Partial<Record<Project['id'], number>> = { hanriv: 350, starlight: 320 };
+	const HEIGHT: Partial<Record<Project['id'], number>> = { hanriv: 350, starlight: 320, amoa: 340, agora: 320 };
 	const h = $derived(HEIGHT[id] ?? 300);
 </script>
 
@@ -91,8 +91,55 @@
 			<text x="710" y="270" text-anchor="middle" class="lc">event.room.send()</text>
 			<text x="120" y="176" class="lc">// each project runs on its own thread pool;</text>
 			<text x="120" y="196" class="lc">// an error stops only that project</text>
-		{:else}
-			<text x="24" y="40">{id.toUpperCase()} · DIAGRAM</text>
+		{:else if id === 'amoa'}
+			<!-- query path -->
+			{@render node(24, 72, 120, 'QUERY', '/search')}
+			{@render node(166, 72, 210, 'UNIFIED SEARCH', 'synonyms · query cache')}
+			<rect class="f" x="404" y="12" width="366" height="176" rx="6" />
+			<text x="418" y="32">each provider · lecture · clip · recipe</text>
+			{@render node(420, 46, 160, 'VECTOR ARM', '512 → 768 halfvec')}
+			{@render node(420, 118, 160, 'KEYWORD ARM', 'pg_trgm')}
+			{@render node(612, 82, 140, 'RRF', 'k = 60')}
+			{@render node(792, 82, 144, 'RESULTS', 'RRF across types', true)}
+			{@render arrow(144, 100, 160, 100, true)}
+			{@render arrow(376, 100, 398, 100, true)}
+			{@render arrow(580, 74, 606, 98)}
+			{@render arrow(580, 146, 606, 124)}
+			{@render arrow(752, 110, 786, 110, true)}
+			<!-- indexing, off the request path -->
+			{@render node(24, 262, 170, 'CONTENT WRITE', 'same transaction')}
+			{@render node(220, 262, 180, 'EMBEDDING_JOB', 'outbox queue')}
+			{@render node(426, 262, 176, 'WORKER', 'SKIP LOCKED · lease')}
+			{@render node(628, 262, 150, 'EMBED SERVER', '768 dims')}
+			{@render node(804, 262, 132, 'PGVECTOR', 'HNSW · halfvec')}
+			{@render arrow(194, 290, 214, 290)}
+			{@render arrow(400, 290, 420, 290)}
+			{@render arrow(602, 290, 622, 290)}
+			{@render route('M514 318 V332 H870 V324')}
+			{@render route('M870 262 V210 H500 V194')}
+			<text x="690" y="204" class="lc">read by the vector arm</text>
+			<text x="24" y="218" class="lc">// no embedding server? keyword arm only,</text>
+			<text x="24" y="238" class="lc">// the response still comes back</text>
+		{:else if id === 'agora'}
+			{@render node(24, 132, 170, 'SVELTEKIT UI', 'agenda · live view')}
+			{@render node(250, 132, 200, 'KTOR', 'orchestrator · rounds', true)}
+			<rect class="f" x="500" y="16" width="220" height="276" rx="6" />
+			<text x="514" y="36">round n</text>
+			{@render node(520, 50, 180, 'CTO')}
+			{@render node(520, 132, 180, 'CCO / CMO')}
+			{@render node(520, 214, 180, 'DECISION MGR')}
+			{@render node(770, 90, 166, 'SEARXNG', 'web search tool')}
+			{@render node(770, 190, 166, 'EXTRACTOR', 'Trafilatura')}
+			{@render arrow(194, 150, 244, 150, true)}
+			{@render arrow(250, 172, 200, 172, true)}
+			<text x="222" y="142" text-anchor="middle">POST</text>
+			<text x="222" y="194" text-anchor="middle">SSE</text>
+			{@render arrow(450, 160, 494, 160)}
+			{@render arrow(720, 128, 764, 118)}
+			<text x="742" y="146" text-anchor="middle" class="lc">tool</text>
+			{@render arrow(853, 146, 853, 184)}
+			<text x="24" y="250" class="lc">// statements and tool calls stream</text>
+			<text x="24" y="270" class="lc">// to the page as they happen</text>
 		{/if}
 	</svg>
 </figure>
