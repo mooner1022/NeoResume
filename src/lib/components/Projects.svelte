@@ -1,10 +1,11 @@
 <script lang="ts">
-	import type { Project, Resume } from '$lib/content/types';
+	import type { Lang, Project, Resume } from '$lib/content/types';
 	import { pad } from '$lib/format';
 	import ProjectThumb from './ProjectThumb.svelte';
 	import Section from './Section.svelte';
 
-	let { projects }: { projects: Resume['projects'] } = $props();
+	let { lang, projects, details }: { lang: Lang; projects: Resume['projects']; details: string } = $props();
+	const base = $derived(lang === 'en' ? '/en/' : '/');
 
 	// hovering or focusing a row swaps the spec card; the swap animation only plays after the first change
 	let picked = $state<Project['id']>();
@@ -19,11 +20,11 @@
 	<div class="work">
 		<ol class="plist">
 			{#each projects.items as p, i (p.id)}
-				<!-- focusable so keyboard users can reach the spec preview -->
-				<!-- svelte-ignore a11y_no_noninteractive_tabindex, a11y_no_noninteractive_element_interactions -->
-				<li class="prow bracket" class:active={p.id === active} tabindex="0" onmouseenter={() => activate(p.id)} onfocus={() => activate(p.id)}>
+				<!-- the name links to the project page and covers the row; hover or focus still swaps the spec preview -->
+				<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+				<li class="prow bracket" class:active={p.id === active} onmouseenter={() => activate(p.id)} onfocusin={() => activate(p.id)}>
 					<span class="idx mono">{pad(i + 1)}</span>
-					<h3 class="wide">{p.name}<span class="arr">→</span><small>{p.subtitle}</small></h3>
+					<h3 class="wide"><a href="{base}projects/{p.id}/">{p.name}<span class="arr">→</span></a><small>{p.subtitle}</small></h3>
 					<p class="yr mono">{p.year}<span>{p.status}</span></p>
 					<p class="desc">{p.desc}</p>
 					<p class="tags mono">{#each p.tags as tag}<span class:sig={tag.signal}>{tag.label}</span>{/each}</p>
@@ -41,9 +42,7 @@
 					<dl>
 						{#each p.card.specs as [label, value] (label)}<dt class="mono">{label}</dt><dd>{value}</dd>{/each}
 					</dl>
-					{#if p.card.links}
-						<p class="go mono">{#each p.card.links as link (link.href)}<a href={link.href}>{link.label}</a>{/each}</p>
-					{/if}
+					<p class="go mono"><a href="{base}projects/{p.id}/">{details} →</a>{#each p.card.links ?? [] as link (link.href)}<a href={link.href}>{link.label}</a>{/each}</p>
 				</div>
 			{/each}
 		</aside>
@@ -63,7 +62,11 @@
 	/* list + spec preview */
 	.work { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 56px; align-items: start; }
 	.plist > li + li { border-top: 1px solid var(--rule); }
-	.prow { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; column-gap: 16px; padding: 22px 16px 22px 12px; cursor: default; transition: background .25s; outline-offset: -1px; }
+	.prow { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; column-gap: 16px; padding: 22px 16px 22px 12px; transition: background .25s; }
+	/* the whole row is the link; the focus ring goes on the row */
+	.prow h3 a::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+	.prow h3 a:focus-visible { outline: none; }
+	.prow:has(a:focus-visible) { outline: 1px solid var(--signal); outline-offset: -1px; }
 	.prow.active { background: var(--tint); }
 	.idx { color: var(--ink-3); padding-top: 7px; }
 	.prow h3 { font-size: 20px; font-weight: 650; line-height: 1.3; }

@@ -196,16 +196,16 @@ export const ko: Resume = {
 				id: 'site',
 				name: 'mooner.dev',
 				subtitle: '이전 개인 웹사이트',
-				year: '2024',
+				year: '2025',
 				status: 'Personal · Retired',
-				desc: 'Svelte + TypeScript로 직접 만든 개인 웹사이트. About, Projects, Home 섹션을 손수 큐레이션했습니다. 지금은 이 이력서로 바뀌었습니다.',
-				tags: [{ label: 'Svelte' }, { label: 'TypeScript' }, { label: 'CloudFlare' }],
+				desc: 'SvelteKit + TypeScript로 직접 만든 개인 웹사이트. Home, About, Experience, Projects, Skills 페이지를 손수 채웠습니다. 지금은 이 이력서로 바뀌었습니다.',
+				tags: [{ label: 'SvelteKit' }, { label: 'TypeScript' }, { label: 'Tailwind' }],
 				card: {
 					title: '이전 개인 웹사이트',
 					specs: [
-						['Stack', 'Svelte · TypeScript'],
-						['Host', 'CloudFlare Pages'],
-						['Pages', 'home · about · projects']
+						['Stack', 'SvelteKit · TypeScript · Tailwind'],
+						['Host', 'GitHub Pages'],
+						['Pages', 'home · about · experience · projects · skills']
 					]
 				}
 			}
@@ -267,6 +267,14 @@ export const ko: Resume = {
 			{ k: 'AGORA', text: 'AGORA 멀티에이전트 시스템을 사이드 프로젝트로 개발 중' },
 			{ k: '지금 한강은｡', text: '유지보수 · Compose 마이그레이션 및 성능 최적화' }
 		]
+	},
+
+	projectPage: {
+		back: '모든 프로젝트',
+		details: '자세히',
+		prev: '이전',
+		next: '다음',
+		pending: '정리 중입니다.'
 	},
 
 	contact: {

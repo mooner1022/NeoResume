@@ -1,6 +1,6 @@
 export type Lang = 'ko' | 'en';
 
-/** Inline text; wrap a phrase in **double asterisks** to bold it. */
+/** Inline text; wrap a phrase in **double asterisks** to bold it, or in `backticks` for code. */
 export type Rich = string;
 
 export interface Link {
@@ -39,6 +39,35 @@ export interface Project {
 		specs: [label: string, value: string][];
 		links?: Link[];
 	};
+}
+
+/** one "problem → approach → result" case on a project page */
+export interface Case {
+	title: string;
+	problem: Rich;
+	approach: Rich;
+	result: Rich;
+}
+
+export interface Shot {
+	/** under static/, e.g. /projects/hanriv/main.webp */
+	src: string;
+	width: number;
+	height: number;
+	alt: string;
+	caption: string;
+}
+
+/** the long-form page behind a project row */
+export interface ProjectDetail {
+	/** one or two sentences under the title */
+	lead: Rich;
+	facts: { k: string; v: string }[];
+	structure: { intro: Rich; items: { name: string; text: Rich }[] };
+	architecture: { intro: Rich; notes: Rich[] };
+	/** empty while the cases are still being written */
+	cases: Case[];
+	shots: Shot[];
 }
 
 export interface Repo {
@@ -86,6 +115,14 @@ export interface Resume {
 	};
 	education: { meta: string; rows: EducationRow[] };
 	now: { items: { k: string; text: string }[] };
+	/** words used on the project pages */
+	projectPage: {
+		back: string;
+		details: string;
+		prev: string;
+		next: string;
+		pending: string;
+	};
 	contact: {
 		say: string;
 		sub: string;

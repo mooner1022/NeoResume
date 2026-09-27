@@ -10,6 +10,7 @@
 		sub,
 		meta,
 		live = false,
+		cwd = 'resume',
 		children
 	}: {
 		id: string;
@@ -22,12 +23,14 @@
 		meta: string;
 		/** pulsing dot before the meta line */
 		live?: boolean;
+		/** working directory in the prompt */
+		cwd?: string;
 		children: Snippet;
 	} = $props();
 </script>
 
 <section class="sec container reveal" {id} {@attach reveal}>
-	<p class="cmd mono lc"><b>mooner</b>:~/resume $ {cmd}</p>
+	<p class="cmd mono lc"><b>mooner</b>:~/{cwd} $ {cmd}</p>
 	<div class="sec-head">
 		<div><h2 class="wide">{title}<sup>{count}</sup></h2><span class="ko mono">{sub}</span></div>
 		<p class="meta mono">{#if live}<span class="pulse"></span>{/if}{meta}</p>

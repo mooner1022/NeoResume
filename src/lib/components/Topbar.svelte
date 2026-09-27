@@ -2,7 +2,8 @@
 	import { onMount } from 'svelte';
 	import type { Lang } from '$lib/content/types';
 
-	let { lang }: { lang: Lang } = $props();
+	/** path after the language prefix, so KO/EN keeps the same page */
+	let { lang, path = '' }: { lang: Lang; path?: string } = $props();
 
 	// the theme is applied in app.html before paint; the pressed look comes from CSS so it is right before hydration too
 	let dark = $state<boolean>();
@@ -21,7 +22,7 @@
 	<span class="build">mooner / Resume <span class="ticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span></span>
 	<span class="switches">
 		<span class="toggle" role="group" aria-label="언어 / Language">
-			<a href="/" hreflang="ko" aria-current={lang === 'ko' ? 'page' : undefined} data-sveltekit-noscroll data-sveltekit-keepfocus>KO</a><span>/</span><a href="/en/" hreflang="en" aria-current={lang === 'en' ? 'page' : undefined} data-sveltekit-noscroll data-sveltekit-keepfocus>EN</a>
+			<a href="/{path}" hreflang="ko" aria-current={lang === 'ko' ? 'page' : undefined} data-sveltekit-noscroll data-sveltekit-keepfocus>KO</a><span>/</span><a href="/en/{path}" hreflang="en" aria-current={lang === 'en' ? 'page' : undefined} data-sveltekit-noscroll data-sveltekit-keepfocus>EN</a>
 		</span>
 		<span class="toggle" role="group" aria-label="테마 / Theme">
 			<button type="button" data-theme="light" aria-pressed={dark === undefined ? undefined : !dark} onclick={() => setTheme('light')}>Light</button><span>/</span><button type="button" data-theme="dark" aria-pressed={dark} onclick={() => setTheme('dark')}>Dark</button>

@@ -3,6 +3,7 @@
 	import Contact from '$lib/components/Contact.svelte';
 	import Education from '$lib/components/Education.svelte';
 	import Experience from '$lib/components/Experience.svelte';
+	import Field from '$lib/components/Field.svelte';
 	import Hero from '$lib/components/Hero.svelte';
 	import Now from '$lib/components/Now.svelte';
 	import Projects from '$lib/components/Projects.svelte';
@@ -32,7 +33,7 @@
 	<meta property="og:locale" content={c.meta.locale} />
 </svelte:head>
 
-<div class="field" aria-hidden="true"></div>
+<Field />
 
 <div class="container fold">
 	<Topbar lang={data.lang} />
@@ -42,7 +43,7 @@
 <main>
 	<About about={c.about} />
 	<Experience experience={c.experience} />
-	<Projects projects={c.projects} />
+	<Projects lang={data.lang} projects={c.projects} details={c.projectPage.details} />
 	<Toolkit toolkit={c.toolkit} />
 	<Education education={c.education} />
 	<Now now={c.now} />
@@ -51,14 +52,6 @@
 <Contact contact={c.contact} />
 
 <style>
-	/* dot field — fades out below the hero */
-	.field {
-		position: absolute; inset: 0 0 auto; height: 110vh; pointer-events: none; z-index: 0;
-		background-image: radial-gradient(var(--ink-4) 1px, transparent 1.2px);
-		background-size: 28px 28px; background-position: -14px -14px;
-		mask-image: linear-gradient(#000 30%, transparent 95%);
-		opacity: .55;
-	}
 	/* first screen fills the viewport, so About starts below the fold */
 	.fold { display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh; }
 
@@ -66,7 +59,6 @@
 		.fold { min-height: 0; }
 	}
 	@media print {
-		.field { display: none !important; }
 		.fold { display: block; min-height: 0; }
 	}
 </style>

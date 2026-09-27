@@ -6,8 +6,10 @@ const config = {
 	preprocess: vitePreprocess(),
 	kit: {
 		adapter: adapter(),
-		// ko at /, en at /en/ — listed explicitly so both are prerendered
-		prerender: { entries: ['/', '/en/'] }
+		// ko at /, en at /en/, one page per project under each — listed so a missing page fails the build
+		prerender: {
+			entries: ['/', '/en/', ...['amoa', 'agora', 'hanriv', 'starlight', 'site'].flatMap((id) => [`/projects/${id}/`, `/en/projects/${id}/`])]
+		}
 	}
 };
 
