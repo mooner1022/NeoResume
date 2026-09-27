@@ -19,6 +19,8 @@
 	const path = $derived(`projects/${p.id}/`);
 	const cwd = $derived(`resume/projects/${p.id}`);
 	const title = $derived(`${p.name} — ${data.lang === 'en' ? profile.name.en : profile.name.ko}`);
+	// the page's own lead, not the list card's line, so the summary matches what the page says
+	const description = $derived(d.lead ? d.lead.replace(/\*\*|`/g, '') : p.desc);
 
 	$effect(() => {
 		document.documentElement.lang = data.lang;
@@ -27,14 +29,14 @@
 
 <svelte:head>
 	<title>{title}</title>
-	<meta name="description" content={p.desc} />
+	<meta name="description" content={description} />
 	<link rel="canonical" href="{profile.site}{home}{path}" />
 	<link rel="alternate" hreflang="ko" href="{profile.site}/{path}" />
 	<link rel="alternate" hreflang="en" href="{profile.site}/en/{path}" />
 	<link rel="alternate" hreflang="x-default" href="{profile.site}/{path}" />
 	<meta property="og:type" content="article" />
 	<meta property="og:title" content={title} />
-	<meta property="og:description" content={p.desc} />
+	<meta property="og:description" content={description} />
 	<meta property="og:locale" content={c.meta.locale} />
 </svelte:head>
 

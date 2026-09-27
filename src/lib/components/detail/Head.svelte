@@ -12,7 +12,8 @@
 		home
 	}: { project: Project; detail: ProjectDetail; index: number; total: number; back: string; home: string } = $props();
 
-	// the spec card is the same one the list previews on hover, so the page reads as that card opened up
+	// the spec card echoes the one the list previews on hover; its facts come from the page content,
+	// so figures the list card carries are not repeated here unless the page states them
 	const facts = $derived(d.facts.length ? d.facts.map((f) => [f.k, f.v] as const) : p.card.specs);
 </script>
 
@@ -23,12 +24,11 @@
 		<h1 class="wide">{p.name}</h1>
 		<p class="subtitle">{p.subtitle}</p>
 		{#if d.lead}<p class="lead">{@html rich(d.lead)}</p>{/if}
-		<p class="tags mono">{#each p.tags as tag (tag.label)}<span class:sig={tag.signal}>{tag.label}</span>{/each}</p>
 		{#if p.card.links}<p class="go mono">{#each p.card.links as link (link.href)}<a href={link.href}>{link.label}</a>{/each}</p>{/if}
 	</div>
 	<aside class="spec">
 		<span class="corners" aria-hidden="true"></span>
-		<p class="spec-head mono"><span class="lc">$ cat {p.id}/spec</span><span>{p.year} · {p.status}</span></p>
+		<p class="spec-head mono"><span class="lc">$ cat {p.id}/spec</span></p>
 		<div class="thumb" aria-hidden="true"><ProjectThumb id={p.id} /></div>
 		<dl>
 			{#each facts as [k, v] (k)}<dt class="mono">{k}</dt><dd>{v}</dd>{/each}
@@ -45,9 +45,7 @@
 	.subtitle { margin-top: 14px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em; color: var(--ink-2); }
 	.lead { margin-top: 28px; font-size: 18px; line-height: 1.7; letter-spacing: -0.015em; color: var(--ink); text-wrap: pretty; max-width: 58ch; }
 	.lead :global(b) { font-weight: 650; }
-	.tags { margin-top: 28px; }
-	.sig { color: var(--signal); }
-	.go { display: flex; gap: 22px; margin-top: 22px; }
+	.go { display: flex; gap: 22px; margin-top: 28px; }
 	.go a { color: var(--ink); border-bottom: 1px solid var(--ink-4); padding-bottom: 2px; transition: border-color .2s; }
 	.go a:hover { border-color: var(--ink); }
 
