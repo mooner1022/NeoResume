@@ -13,7 +13,7 @@ const shots = (alt: [string, string, string, string], caption: [string, string, 
 
 export const hanriv: Record<Lang, ProjectDetail> = {
 	ko: {
-		lead: '한강 수온을 보여주는 안드로이드 앱입니다. 2018년 Google Play에 처음 올린 뒤 혼자 기획하고 만들고 운영해 왔고, 2026년 9월 V7에서 **앱과 서버를 처음부터 다시** 만들었습니다.',
+		lead: '한강 수온을 보여주는 안드로이드 앱입니다. 2018년 Google Play에 처음 올린 뒤 1인 프로젝트로 기획부터 운영까지 맡아 왔고, 2026년 9월 V7에서 **앱과 서버를 처음부터 다시** 만들었습니다.',
 		facts: [
 			{ k: 'Period', v: '2018.04 — 운영 중' },
 			{ k: 'Role', v: '1인 · 기획 · 앱 · 백엔드 · 운영' },
@@ -80,7 +80,7 @@ export const hanriv: Record<Lang, ProjectDetail> = {
 		)
 	},
 	en: {
-		lead: 'An Android app that shows the Han River’s water temperature. First published on Google Play in 2018 and planned, built and run solo ever since; in September 2026, V7 **rebuilt both the app and the server** from scratch.',
+		lead: 'An Android app that shows the Han River’s water temperature. First published on Google Play in 2018 and run as a one-person project, from planning to operations, ever since; in September 2026, V7 **rebuilt both the app and the server** from scratch.',
 		facts: [
 			{ k: 'Period', v: '2018.04 — live' },
 			{ k: 'Role', v: 'Solo · planning · app · backend · ops' },

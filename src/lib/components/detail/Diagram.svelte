@@ -82,7 +82,7 @@
 			{@render arrow(362, 68, 378, 68, true)}
 			{@render arrow(560, 68, 576, 68, true)}
 			{@render arrow(750, 68, 766, 68, true)}
-			{@render node(582, 170, 168, '.SLP PLUGINS', 'language · API')}
+			{@render node(582, 170, 168, '.SLP PLUGINS', 'Discord · V8 · API')}
 			{@render arrow(666, 170, 666, 102)}
 			<text x="676" y="142" class="lc">addLanguage · addApi</text>
 			{@render node(384, 250, 176, 'REMOTEINPUT', 'reply action')}

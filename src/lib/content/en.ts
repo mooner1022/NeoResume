@@ -59,7 +59,7 @@ export const en: Resume = {
 				]
 			},
 			{
-				when: '2022 — Now',
+				when: '2021 — Now',
 				place: 'Remote',
 				now: true,
 				org: 'Project StarLight',
@@ -113,16 +113,16 @@ export const en: Resume = {
 				subtitle: 'Hybrid-search backend',
 				year: '2026 —',
 				status: 'Backend · Ongoing',
-				desc: 'Kotlin + Ktor + PostgreSQL on a hexagonal architecture. pgvector hybrid search (ANN + keyword CTE, RRF reranking) with an outbox-pattern embedding pipeline.',
-				tags: [{ label: 'Ktor' }, { label: 'pgvector' }, { label: 'AWS EC2' }, { label: 'Terraform' }, { label: 'GitHub Actions' }],
+				desc: 'Kotlin + Ktor + PostgreSQL in feature-based vertical slices. pgvector hybrid search (ANN + pg_trgm, RRF) across lectures, clips and recipes, Hangul-aware suggestions, and an embedding pipeline driven by an outbox queue.',
+				tags: [{ label: 'Ktor' }, { label: 'pgvector' }, { label: 'pg_trgm' }, { label: 'AWS EC2' }, { label: 'Terraform' }],
 				card: {
 					title: 'Hybrid-search backend',
 					specs: [
-						['Arch', 'Hexagonal · Kotlin/Ktor'],
-						['Search', 'pgvector ANN + keyword CTE, RRF rerank'],
-						['Pipeline', 'Outbox-pattern embedding indexing'],
+						['Arch', 'Vertical slices · Kotlin/Ktor'],
+						['Search', 'pgvector ANN + pg_trgm, RRF rerank'],
+						['Pipeline', 'Outbox queue · SKIP LOCKED indexing'],
 						['Infra', 'AWS EC2 · Terraform · SSM'],
-						['Team', '4 · PM · FE · BE ×2']
+						['Team', 'PM · FE · solo backend']
 					]
 				}
 			},
@@ -174,7 +174,7 @@ export const en: Resume = {
 				id: 'starlight',
 				name: 'Project StarLight',
 				subtitle: 'Scriptable messenger auto-reply framework',
-				year: '2022 —',
+				year: '2021 —',
 				status: 'Open Source',
 				desc: 'Kotlin-based Android auto-reply platform with plugin architecture, extensible automation, and cross-messenger integration.',
 				tags: [{ label: '★ 46', signal: true }, { label: '1.5K+ DL', signal: true }, { label: 'Kotlin' }, { label: 'Plugin' }],
@@ -184,7 +184,7 @@ export const en: Resume = {
 						['Arch', 'Plugin-based · scripting API'],
 						['Reach', '★ 46 · 1,500+ downloads'],
 						['Stack', 'Kotlin · Android'],
-						['Role', 'Maintainer · 2022 —']
+						['Role', 'Maintainer · 2021 —']
 					],
 					links: [
 						{ label: 'Site ↗', href: 'https://starlight.mooner.dev/' },

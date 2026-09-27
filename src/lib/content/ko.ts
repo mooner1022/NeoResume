@@ -62,7 +62,7 @@ export const ko: Resume = {
 				]
 			},
 			{
-				when: '2022 — Now',
+				when: '2021 — Now',
 				place: 'Remote',
 				now: true,
 				org: 'Project StarLight',
@@ -113,16 +113,16 @@ export const ko: Resume = {
 				subtitle: '하이브리드 검색 백엔드',
 				year: '2026 —',
 				status: 'Backend · Ongoing',
-				desc: 'Kotlin + Ktor + PostgreSQL, 헥사고날 아키텍처. pgvector 기반 하이브리드 검색(ANN + 키워드 CTE, RRF 재랭킹)과 outbox 패턴 임베딩 인덱싱 파이프라인.',
-				tags: [{ label: 'Ktor' }, { label: 'pgvector' }, { label: 'AWS EC2' }, { label: 'Terraform' }, { label: 'GitHub Actions' }],
+				desc: 'Kotlin + Ktor + PostgreSQL, 기능 단위 수직 슬라이스 구조. 강의·클립·레시피를 한 번에 찾는 pgvector 하이브리드 검색(ANN + pg_trgm, RRF)과 한글 자동완성, 아웃박스 큐로 도는 임베딩 색인 파이프라인.',
+				tags: [{ label: 'Ktor' }, { label: 'pgvector' }, { label: 'pg_trgm' }, { label: 'AWS EC2' }, { label: 'Terraform' }],
 				card: {
 					title: '하이브리드 검색 백엔드',
 					specs: [
-						['Arch', '헥사고날 · Kotlin/Ktor'],
-						['Search', 'pgvector ANN + 키워드 CTE, RRF 재랭킹'],
-						['Pipeline', 'outbox 패턴 임베딩 인덱싱'],
+						['Arch', '수직 슬라이스 · Kotlin/Ktor'],
+						['Search', 'pgvector ANN + pg_trgm, RRF 재랭킹'],
+						['Pipeline', '아웃박스 큐 · SKIP LOCKED 색인'],
 						['Infra', 'AWS EC2 · Terraform · SSM'],
-						['Team', '4인 · PM · FE · BE 2']
+						['Team', 'PM · FE · 백엔드 1인']
 					]
 				}
 			},
@@ -174,7 +174,7 @@ export const ko: Resume = {
 				id: 'starlight',
 				name: 'Project StarLight',
 				subtitle: '스크립터블 메신저 자동응답 프레임워크',
-				year: '2022 —',
+				year: '2021 —',
 				status: 'Open Source',
 				desc: 'Kotlin으로 작성된 플러그인 기반 안드로이드 자동응답 플랫폼. 확장 가능한 자동화 기능과 크로스-메신저 통합을 지원합니다.',
 				tags: [{ label: '★ 46', signal: true }, { label: '1.5K+ DL', signal: true }, { label: 'Kotlin' }, { label: 'Plugin' }],
@@ -184,7 +184,7 @@ export const ko: Resume = {
 						['Arch', '플러그인 기반 · 스크립팅 API'],
 						['Reach', '★ 46 · 1,500+ 다운로드'],
 						['Stack', 'Kotlin · Android'],
-						['Role', '메인테이너 · 2022 —']
+						['Role', '메인테이너 · 2021 —']
 					],
 					links: [
 						{ label: 'Site ↗', href: 'https://starlight.mooner.dev/' },
