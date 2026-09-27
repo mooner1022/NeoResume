@@ -62,8 +62,10 @@ export interface Resume {
 		tagline: string;
 		/** one sentence per line */
 		intro: string[];
+		/** the 3D printer panel beside the name */
 		figureLabel: string;
 		flowLabel: string;
+		filaments: [string, string, string];
 		hint: string;
 	};
 	about: {

@@ -3,7 +3,7 @@
 	import type { Lang, Resume } from '$lib/content/types';
 	import { copier } from '$lib/copy.svelte';
 	import { reducedMotion } from '$lib/motion';
-	import Instrument from './Instrument.svelte';
+	import Printer from './Printer.svelte';
 	import ScrollCue from './ScrollCue.svelte';
 
 	let { lang, hero }: { lang: Lang; hero: Resume['hero'] } = $props();
@@ -48,7 +48,7 @@
 		</nav>
 	</div>
 
-	<Instrument {hero} />
+	<Printer {hero} />
 	<ScrollCue />
 </section>
 

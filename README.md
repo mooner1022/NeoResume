@@ -33,5 +33,6 @@ pnpm preview    # build/ 미리보기 (다시 빌드하면 재시작해야 새 �
 - `src/routes/[[lang=lang]]/` — 한 페이지. `src/params/lang.ts`가 `en`만 언어로 받는다.
 - `src/lib/components/` — 섹션별 컴포넌트, 스타일은 각 컴포넌트 안에 있다.
 - `src/lib/styles/global.css` — 색 토큰과 여러 컴포넌트가 함께 쓰는 유틸리티.
+- `src/lib/figures/octopus.ts` — 히어로 프린터가 출력하는 아바타 실루엣(층별 구간). `static/avatar.png`에서 뽑았으므로 아바타를 바꾸면 다시 만들어야 한다.
 - `src/app.html` — 첫 페인트 전 테마 적용 스크립트.
 - `design/` — 시안과 라운드별 기록. `design/f-telemetry.html`은 포팅 전 기준 템플릿으로 남겨 둔다.

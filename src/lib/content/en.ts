@@ -13,9 +13,10 @@ export const en: Resume = {
 	hero: {
 		tagline: 'I build backends and Android apps.',
 		intro: ['Computer Engineering student at Hanyang University (ERICA).', 'Self-taught since 2016.'],
-		figureLabel: 'Decorative panel showing requests between a client and a server',
-		flowLabel: 'Animation of requests travelling from an Android client through Redis to a Ktor server',
-		hint: 'Click to send a request · not real data'
+		figureLabel: 'Decorative panel of a 3D printer printing the octopus avatar layer by layer',
+		flowLabel: 'Filament unwinds from the spool, runs through the tube into the nozzle, and the nozzle sweeps left and right laying down the octopus one layer at a time. The bed drops a little after each layer.',
+		filaments: ['Pink', 'Green', 'Mono'],
+		hint: 'Click to print again · off-screen, I do 3D printing'
 	},
 
 	about: {
