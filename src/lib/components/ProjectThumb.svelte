@@ -31,7 +31,7 @@
 		<path class="o" d="M0 84 C 20 74, 36 74, 56 82 S 92 92, 112 80 S 150 68, 170 78 S 192 86, 200 82" />
 		<path class="d" d="M0 96 C 24 90, 44 92, 64 96 S 104 102, 124 94 S 164 88, 200 94" />
 		<circle class="s" cx="112" cy="80" r="3.5" />
-		<text x="200" y="10" text-anchor="end">★ 4.85</text>
+		<text x="200" y="10" text-anchor="end">★ 4.78</text>
 	{:else if id === 'starlight'}
 		<rect class="o" x="62" y="30" width="76" height="50" rx="4" />
 		<text x="100" y="58" text-anchor="middle">CORE</text>

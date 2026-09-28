@@ -29,7 +29,7 @@ export const ko: Resume = {
 			{ k: 'Off', v: ['3D 프린팅 · 모델링'] }
 		],
 		prose: [
-			'한양대학교 ERICA 컴퓨터공학과에 재학 중인 평범한(그런 척하는) 학부생. 프로그래밍은 2016년부터 독학으로 시작해 올해로 8년째입니다.',
+			`한양대학교 ERICA 컴퓨터공학과에 재학 중인 평범한(그런 척하는) 학부생. 프로그래밍은 2016년부터 독학으로 시작해 올해로 ${stats.years}년이 됐습니다.`,
 			'**Java와 Kotlin**을 주축으로 백엔드 시스템을, **Jetpack Compose**로 안드로이드 앱을 만듭니다. 깨끗하고 유지보수 가능한 코드와 확장 가능한 시스템 설계에 관심이 많아요.',
 			'군 복무를 마치고 2026년 2학기부터 한양대학교 ERICA로 복학해 학업을 이어가는 중입니다. 그 외 시간엔 백엔드/사이드 프로젝트를 건드립니다.',
 			'화면 밖에서는 3D 프린팅과 모델링을 합니다. 예전엔 프린터를 직접 설계해 만들고 고쳐 쓰다가, 지금은 Bambu Lab X2D에 맡기고 Fusion 360으로 그리는 쪽에 더 시간을 씁니다.'
@@ -37,7 +37,7 @@ export const ko: Resume = {
 	},
 
 	experience: {
-		meta: '8 yrs — Since 2016',
+		meta: `${stats.years} yrs — Since 2016`,
 		jobs: [
 			{
 				when: '2026 Fall — Now',
@@ -91,7 +91,7 @@ export const ko: Resume = {
 				points: [
 					'한강 수온을 실시간으로 보여주는 안드로이드 앱 기획·개발·배포',
 					'Ktor 백엔드 + Redis 캐싱으로 트래픽 급증에도 안정적인 응답 유지',
-					'Google Play **46,300+ 다운로드**, 평점 **4.85** (리뷰 273) 달성'
+					'Google Play **51,000+ 다운로드**, 평점 **4.78** (리뷰 289) 달성'
 				]
 			},
 			{
@@ -151,10 +151,10 @@ export const ko: Resume = {
 				subtitle: '한강 수온을 실시간으로',
 				year: '2018 —',
 				status: 'Android · Live',
-				desc: '현대적인 한국어 UI/UX의 수온 모니터링 앱. Ktor 백엔드, Redis 캐싱, Traefik 로드 밸런싱으로 안정적으로 운영 중. 현재 Jetpack Compose 마이그레이션과 Baseline Profile 적용, HorizontalPager 끊김 개선 등 성능 최적화 진행.',
+				desc: '현대적인 한국어 UI/UX의 수온 모니터링 앱. Ktor 백엔드, Redis 캐싱, Traefik 로드 밸런싱으로 안정적으로 운영 중. 현재 Jetpack Compose 마이그레이션 진행 중.',
 				tags: [
-					{ label: '★ 4.85 (273)', signal: true },
-					{ label: '46.3K+ DL', signal: true },
+					{ label: '★ 4.78 (289)', signal: true },
+					{ label: '51K+ DL', signal: true },
 					{ label: 'Kotlin' },
 					{ label: 'Ktor' },
 					{ label: 'Redis' }
@@ -162,10 +162,10 @@ export const ko: Resume = {
 				card: {
 					title: '한강 수온을 실시간으로',
 					specs: [
-						['Rating', '★ 4.85 · 리뷰 273'],
-						['Installs', '46,300+'],
+						['Rating', '★ 4.78 · 리뷰 289'],
+						['Installs', '51,000+'],
 						['Stack', 'Kotlin · Ktor · Redis · Traefik'],
-						['Now', 'Compose 마이그레이션 · Baseline Profile']
+						['Now', 'Compose 마이그레이션 진행 중']
 					],
 					links: [{ label: 'Google Play ↗', href: 'https://play.google.com/store/apps/details?id=com.temp.hanriv.moonm' }]
 				}
@@ -249,11 +249,11 @@ export const ko: Resume = {
 			{
 				when: '2016 —',
 				name: '독학',
-				detail: '8년차 · 정식 교육 없이 시작',
+				detail: `${stats.years}년 · 정식 교육 없이 시작`,
 				journey: [
 					{ year: '2016', text: 'JS 첫 코드' },
-					{ year: '2017', text: 'Android (Java)' },
-					{ year: '2018', text: '첫 앱 출시' },
+					{ year: '2017', text: 'Android 첫 앱 출시' },
+					{ year: '2018', text: '지금 한강은｡ 출시' },
 					{ year: '2019', text: 'Kotlin 전환 · 풀스택' }
 				]
 			}

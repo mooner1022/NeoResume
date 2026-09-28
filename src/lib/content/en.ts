@@ -29,7 +29,7 @@ export const en: Resume = {
 			{ k: 'Off', v: ['3D printing · CAD'] }
 		],
 		prose: [
-			'Ordinary undergrad at Hanyang University (ERICA), majoring in Computer Engineering. Self-taught since 2016 — 8 years in and still hungry.',
+			`Ordinary undergrad at Hanyang University (ERICA), majoring in Computer Engineering. Self-taught since 2016 — ${stats.years} years in and still hungry.`,
 			'Builds robust backend systems in **Java / Kotlin** and crafts Android apps with **Jetpack Compose**. Chasing clean, maintainable code and systems that actually scale.',
 			'Back at Hanyang ERICA since the second semester of 2026 after finishing military service — classes by day, backend and side projects the rest of the time.',
 			'Away from the screen: 3D printing and modeling. Used to design, build, and maintain a printer from scratch; these days a Bambu Lab X2D handles the printing and Fusion 360 gets most of the attention.'
@@ -37,7 +37,7 @@ export const en: Resume = {
 	},
 
 	experience: {
-		meta: '8 yrs — Since 2016',
+		meta: `${stats.years} yrs — Since 2016`,
 		jobs: [
 			{
 				when: '2026 Fall — Now',
@@ -91,7 +91,7 @@ export const en: Resume = {
 				points: [
 					'Designed, built, and shipped an Android app for real-time Han River water temperature',
 					'Ktor backend + Redis caching — stable responses under viral traffic spikes',
-					'**46,300+ downloads** and **4.85 ★** (273 reviews) on Google Play'
+					'**51,000+ downloads** and **4.78 ★** (289 reviews) on Google Play'
 				]
 			},
 			{
@@ -151,10 +151,10 @@ export const en: Resume = {
 				subtitle: 'Real-time Han River temperature',
 				year: '2018 —',
 				status: 'Android · Live',
-				desc: 'Modern Korean UI/UX temperature monitor. Ktor backend, Redis caching, Traefik LB — steady in production. Currently migrating to Jetpack Compose: Baseline Profiles and HorizontalPager jank fixes.',
+				desc: 'Modern Korean UI/UX temperature monitor. Ktor backend, Redis caching, Traefik LB — steady in production. Currently migrating to Jetpack Compose.',
 				tags: [
-					{ label: '★ 4.85 (273)', signal: true },
-					{ label: '46.3K+ DL', signal: true },
+					{ label: '★ 4.78 (289)', signal: true },
+					{ label: '51K+ DL', signal: true },
 					{ label: 'Kotlin' },
 					{ label: 'Ktor' },
 					{ label: 'Redis' }
@@ -162,10 +162,10 @@ export const en: Resume = {
 				card: {
 					title: 'Real-time Han River temperature',
 					specs: [
-						['Rating', '★ 4.85 · 273 reviews'],
-						['Installs', '46,300+'],
+						['Rating', '★ 4.78 · 289 reviews'],
+						['Installs', '51,000+'],
 						['Stack', 'Kotlin · Ktor · Redis · Traefik'],
-						['Now', 'Compose migration · Baseline Profile']
+						['Now', 'Compose migration in progress']
 					],
 					links: [{ label: 'Google Play ↗', href: 'https://play.google.com/store/apps/details?id=com.temp.hanriv.moonm' }]
 				}
@@ -249,11 +249,11 @@ export const en: Resume = {
 			{
 				when: '2016 —',
 				name: 'Self-taught',
-				detail: '8 years in — no formal training',
+				detail: `${stats.years} years in — no formal training`,
 				journey: [
 					{ year: '2016', text: 'First line of JS' },
-					{ year: '2017', text: 'Android (Java)' },
-					{ year: '2018', text: 'First app shipped' },
+					{ year: '2017', text: 'First Android app' },
+					{ year: '2018', text: '지금 한강은｡ launched' },
 					{ year: '2019', text: 'Kotlin & full-stack' }
 				]
 			}

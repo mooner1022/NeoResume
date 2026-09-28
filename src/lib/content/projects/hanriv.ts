@@ -42,7 +42,7 @@ export const hanriv: Record<Lang, ProjectDetail> = {
 				'응답에는 "최신 수집본이 아님"과 "관측이 오래됨"을 **따로** 표시합니다. 오래됨은 가져온 시각이 아니라 관측 시각으로 잽니다.',
 				'앱은 **API → GitHub 사본 → 예전 시트** 순서로 읽고, 사본을 쓴 화면에는 "예비 데이터"를 표시합니다. 점검(503) 중에도 사본을 먼저 시도합니다.',
 				'백업 경로는 요청 경로와 떨어져 있습니다. 서버는 Redis Stream에 넣기만 하고, 커밋과 재시도는 git-updater가 맡습니다.',
-				'상류 API는 사이트 이전, 측정소 순서, 필드 이름(`W_TEMP` → `WATT`)까지 여러 번 바뀌었습니다. 백엔드는 측정소를 이름으로 찾고 필드의 옛 이름과 새 이름을 함께 받아, 2026년 1월 변경 때도 그대로 돌았습니다.'
+				'상류 API는 사이트 이전, 측정소 순서, 필드 이름(`W_TEMP` → `WATT`)까지 여러 번 바뀌었습니다. 백엔드는 측정소를 이름으로 찾고, 2025년 10월부터 필드의 옛 이름과 새 이름을 함께 받게 해 두어 2026년 1월 이름 변경 때 백엔드 코드를 고칠 필요가 없었습니다.'
 			]
 		},
 		cases: [
@@ -117,7 +117,7 @@ export const hanriv: Record<Lang, ProjectDetail> = {
 				'Responses report "not the latest collection" and "observation is old" **separately**, and age is measured from the observation time, not the fetch time.',
 				'The app reads **API → GitHub copy → old sheet** in that order and marks screens that use the copy as backup data. It tries the copy first even during maintenance (503).',
 				'The backup path is kept off the request path: the server only appends to a Redis Stream, and git-updater handles commits and retries.',
-				'The upstream API has changed many times: the site moved, station order changed, fields were renamed (`W_TEMP` → `WATT`). The backend finds stations by name and accepts old and new field names, so it kept running through the January 2026 change.'
+				'The upstream API has changed many times: the site moved, station order changed, fields were renamed (`W_TEMP` → `WATT`). The backend finds stations by name, and since October 2025 it has accepted both the old and new field names, so the January 2026 rename needed no backend change.'
 			]
 		},
 		cases: [
