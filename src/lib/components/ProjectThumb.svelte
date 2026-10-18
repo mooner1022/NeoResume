@@ -19,6 +19,18 @@
 		{#each pts as p}<circle class={near.includes(p) ? 'f' : 'g'} cx={p.x} cy={p.y} r={near.includes(p) ? 2.6 : 2} />{/each}
 		<rect class="s" x={q.x - 4} y={q.y - 4} width="8" height="8" transform="rotate(45 {q.x} {q.y})" />
 		<text x="0" y="8">ANN · k=4 · RRF</text>
+	{:else if id === 'neonjs'}
+		<!-- calls climb to the threshold, then the function moves from the interpreter to JVM code (dex on Android) -->
+		<text x="0" y="8">TIER-UP · 1000 CALLS</text>
+		<rect class="o" x="6" y="36" width="44" height="26" rx="3" /><text x="28" y="52" text-anchor="middle">JS</text>
+		<rect class="o" x="72" y="36" width="56" height="26" rx="3" /><text x="100" y="52" text-anchor="middle">INTERP</text>
+		<rect class="o" x="150" y="36" width="44" height="26" rx="3" /><text x="172" y="52" text-anchor="middle">JIT</text>
+		<line class="d" x1="50" y1="49" x2="72" y2="49" /><line class="d" x1="128" y1="49" x2="150" y2="49" />
+		<rect class="s" x="135" y="45" width="8" height="8" transform="rotate(45 139 49)" />
+		{#each { length: 9 } as _, i}<rect class={i === 8 ? 's' : 'g'} x={80.5 + i * 4.6} y={96 - (4 + i * 2.2)} width="2.6" height={4 + i * 2.2} />{/each}
+		<line class="d" x1="164" y1="62" x2="157" y2="80" /><line class="d" x1="180" y1="62" x2="187" y2="80" />
+		<rect class="o" x="144" y="80" width="26" height="16" rx="2" /><text x="157" y="91" text-anchor="middle">JVM</text>
+		<rect class="o" x="174" y="80" width="26" height="16" rx="2" /><text x="187" y="91" text-anchor="middle">DEX</text>
 	{:else if id === 'agora'}
 		<circle class="o" cx="100" cy="18" r="11" /><circle class="o" cx="40" cy="88" r="11" /><circle class="o" cx="160" cy="88" r="11" />
 		<text x="100" y="21" text-anchor="middle">CTO</text><text x="40" y="91" text-anchor="middle">CMO</text><text x="160" y="91" text-anchor="middle">DM</text>

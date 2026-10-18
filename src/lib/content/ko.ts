@@ -127,6 +127,29 @@ export const ko: Resume = {
 				}
 			},
 			{
+				id: 'neonjs',
+				name: 'NeonJS',
+				subtitle: 'JVM용 JavaScript 엔진',
+				year: '2026 —',
+				status: 'Open Source',
+				desc: 'Kotlin으로 작성한 JVM용 JavaScript 엔진. 바이트코드 인터프리터와 JVM 바이트코드 JIT, 실행 제한 샌드박스, Java/Kotlin 상호 운용을 갖췄고, Android(API 26+)에서도 동작합니다. Maven Central로 배포합니다.',
+				tags: [{ label: 'Test262 48,747/48,747', signal: true }, { label: 'Kotlin' }, { label: 'JIT' }, { label: 'Android' }, { label: 'Maven Central' }],
+				card: {
+					title: 'JVM용 JavaScript 엔진',
+					specs: [
+						['Engine', '바이트코드 인터프리터 · JVM 바이트코드 JIT'],
+						['Tests', 'Test262 48,747 / 48,747 (CI)'],
+						['Android', 'API 26+ · JIT 코드를 dex로 변환'],
+						['Release', 'Maven Central 0.1.4 · 모듈 6개'],
+						['Role', '1인 · 설계 · 개발']
+					],
+					links: [
+						{ label: 'Source ↗', href: 'https://github.com/mooner1022/neon-js' },
+						{ label: 'Maven ↗', href: 'https://central.sonatype.com/artifact/dev.mooner.neonjs/neonjs-core' }
+					]
+				}
+			},
+			{
 				id: 'agora',
 				name: 'AGORA',
 				subtitle: '멀티에이전트 의사결정 시스템',
@@ -264,6 +287,7 @@ export const ko: Resume = {
 		items: [
 			{ k: 'School', text: '한양대학교 ERICA 컴퓨터공학과 복학 · 2026년 2학기 수강 중' },
 			{ k: 'AMOA', text: 'AMOA 백엔드 개발 · 검색어 자동완성, 하이브리드 검색 고도화' },
+			{ k: 'NeonJS', text: 'NeonJS 엔진 개발 · Maven Central 0.1.4 배포' },
 			{ k: 'AGORA', text: 'AGORA 멀티에이전트 시스템을 사이드 프로젝트로 개발 중' },
 			{ k: '지금 한강은｡', text: '유지보수 · Compose 마이그레이션 및 성능 최적화' }
 		]

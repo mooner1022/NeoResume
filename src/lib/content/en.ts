@@ -127,6 +127,29 @@ export const en: Resume = {
 				}
 			},
 			{
+				id: 'neonjs',
+				name: 'NeonJS',
+				subtitle: 'JavaScript engine for the JVM',
+				year: '2026 —',
+				status: 'Open Source',
+				desc: 'A JavaScript engine for the JVM, written in Kotlin: a bytecode interpreter, a JIT to JVM bytecode, a sandbox with execution limits and Java/Kotlin interop. It also runs on Android (API 26+) and ships on Maven Central.',
+				tags: [{ label: 'Test262 48,747/48,747', signal: true }, { label: 'Kotlin' }, { label: 'JIT' }, { label: 'Android' }, { label: 'Maven Central' }],
+				card: {
+					title: 'JavaScript engine for the JVM',
+					specs: [
+						['Engine', 'Bytecode interpreter · JIT to JVM bytecode'],
+						['Tests', 'Test262 48,747 / 48,747 (CI)'],
+						['Android', 'API 26+ · JIT code converted to dex'],
+						['Release', 'Maven Central 0.1.4 · 6 modules'],
+						['Role', 'Solo · design · build']
+					],
+					links: [
+						{ label: 'Source ↗', href: 'https://github.com/mooner1022/neon-js' },
+						{ label: 'Maven ↗', href: 'https://central.sonatype.com/artifact/dev.mooner.neonjs/neonjs-core' }
+					]
+				}
+			},
+			{
 				id: 'agora',
 				name: 'AGORA',
 				subtitle: 'Multi-agent decision system',
@@ -264,6 +287,7 @@ export const en: Resume = {
 		items: [
 			{ k: 'School', text: 'Back at Hanyang ERICA, Computer Engineering — 2026 fall semester' },
 			{ k: 'AMOA', text: 'Building the AMOA backend — search autocomplete & hybrid retrieval' },
+			{ k: 'NeonJS', text: 'Building the NeonJS engine — 0.1.4 on Maven Central' },
 			{ k: 'AGORA', text: 'Developing AGORA, a multi-agent decision system, on the side' },
 			{ k: '지금 한강은｡', text: 'Maintenance — Compose migration & performance work' }
 		]

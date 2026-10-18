@@ -27,7 +27,7 @@ export interface Job {
 
 export interface Project {
 	/** also picks the preview thumbnail */
-	id: 'amoa' | 'agora' | 'hanriv' | 'starlight' | 'site';
+	id: 'amoa' | 'neonjs' | 'agora' | 'hanriv' | 'starlight' | 'site';
 	name: string;
 	subtitle: string;
 	year: string;

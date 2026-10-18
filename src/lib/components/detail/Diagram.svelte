@@ -3,7 +3,7 @@
 
 	let { id, label }: { id: Project['id']; label: string } = $props();
 
-	const HEIGHT: Partial<Record<Project['id'], number>> = { hanriv: 380, starlight: 320, amoa: 340, agora: 320 };
+	const HEIGHT: Partial<Record<Project['id'], number>> = { hanriv: 380, starlight: 320, amoa: 340, neonjs: 380, agora: 320 };
 	const h = $derived(HEIGHT[id] ?? 300);
 </script>
 
@@ -122,6 +122,31 @@
 			<text x="690" y="204" class="lc">read by the vector arm</text>
 			<text x="24" y="218" class="lc">// no embedding server? keyword arm only,</text>
 			<text x="24" y="238" class="lc">// the response still comes back</text>
+		{:else if id === 'neonjs'}
+			<!-- every script takes the green path; hot functions also go round the JIT loop -->
+			{@render node(24, 20, 170, 'HOST APP', 'ctx.eval(source)')}
+			{@render node(244, 20, 200, 'PARSER · SCOPES', 'AST · registers')}
+			{@render node(494, 20, 200, 'BYTECODE', 'CodeBlock')}
+			{@render arrow(194, 48, 238, 48, true)}
+			{@render arrow(444, 48, 488, 48, true)}
+			{@render node(494, 150, 200, 'INTERPRETER', 'runs first', true)}
+			{@render arrow(594, 76, 594, 144, true)}
+			{@render node(244, 150, 200, 'SANDBOX', 'limits · host access')}
+			{@render arrow(444, 178, 488, 178)}
+			<text x="466" y="170" text-anchor="middle">check</text>
+			{@render node(744, 150, 192, 'JIT QUEUE', 'background · ×32')}
+			{@render arrow(694, 178, 738, 178)}
+			<text x="716" y="170" text-anchor="middle">hot</text>
+			{@render node(744, 280, 192, 'JVM COMPILER', 'ASM · unboxed · inline')}
+			{@render arrow(840, 206, 840, 274)}
+			{@render node(494, 280, 200, 'CODE DEFINER', 'one per platform')}
+			{@render arrow(744, 308, 700, 308)}
+			{@render node(244, 280, 200, 'HOTSPOT', 'hidden class')}
+			{@render arrow(494, 308, 450, 308)}
+			{@render node(24, 280, 170, 'ANDROID', 'dx / D8 → dex')}
+			{@render route('M594 336 V360 H109 V342')}
+			<text x="24" y="232" class="lc">// the interpreter keeps running</text>
+			<text x="24" y="252" class="lc">// until the compiled code is installed</text>
 		{:else if id === 'agora'}
 			{@render node(24, 132, 170, 'SVELTEKIT UI', 'agenda · live view')}
 			{@render node(250, 132, 200, 'KTOR', 'orchestrator · rounds', true)}

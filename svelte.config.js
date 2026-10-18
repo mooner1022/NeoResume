@@ -8,7 +8,7 @@ const config = {
 		adapter: adapter(),
 		// ko at /, en at /en/, one page per project under each — listed so a missing page fails the build
 		prerender: {
-			entries: ['/', '/en/', ...['amoa', 'agora', 'hanriv', 'starlight', 'site'].flatMap((id) => [`/projects/${id}/`, `/en/projects/${id}/`])]
+			entries: ['/', '/en/', ...['amoa', 'neonjs', 'agora', 'hanriv', 'starlight', 'site'].flatMap((id) => [`/projects/${id}/`, `/en/projects/${id}/`])]
 		}
 	}
 };
