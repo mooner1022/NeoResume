@@ -292,7 +292,10 @@ export const ko: Resume = {
 				award: '최우수상 · 2위',
 				detail: '개혁신당 주최 · 개인전 · 1,169명 참가',
 				note: '데이터베이스 덤프, 제출 검증 체계, 상태 감시 루프, 대시보드를 직접 만들고 에이전트 오케스트레이션과 웹 조사를 엮어 나라장터의 HDD 스토리지·LED 디스플레이 가격 차이를 최대치인 100건 제출 · 가격 차이 94.9억 원 입증',
-				links: [{ label: '연합뉴스 ↗', href: 'https://www.yna.co.kr/view/AKR20261109113200001' }]
+				links: [
+					{ label: '연합뉴스 ↗', href: 'https://www.yna.co.kr/view/AKR20261109113200001' },
+					{ label: '공식 결과 (보관본) ↗', href: 'https://web.archive.org/web/20261109103437/https://hackathon.savetax.now/close-notice/results.html' }
+				]
 			}
 		]
 	},
