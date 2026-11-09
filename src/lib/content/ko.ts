@@ -283,6 +283,20 @@ export const ko: Resume = {
 		]
 	},
 
+	awards: {
+		meta: 'Competitions',
+		rows: [
+			{
+				when: '2026.10',
+				name: '나랏돈 50조 찾기 해커톤',
+				award: '최우수상 · 2위',
+				detail: '개혁신당 주최 · 개인전 · 1,169명 참가',
+				note: '데이터베이스 덤프, 제출 검증 체계, 상태 감시 루프, 대시보드를 직접 만들고 에이전트 오케스트레이션과 웹 조사를 엮어 나라장터의 HDD 스토리지·LED 디스플레이 가격 차이를 최대치인 100건 제출 · 가격 차이 94.9억 원 입증',
+				links: [{ label: '연합뉴스 ↗', href: 'https://www.yna.co.kr/view/AKR20261109113200001' }]
+			}
+		]
+	},
+
 	now: {
 		items: [
 			{ k: 'School', text: '한양대학교 ERICA 컴퓨터공학과 복학 · 2026년 2학기 수강 중' },

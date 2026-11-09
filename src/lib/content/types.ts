@@ -85,6 +85,16 @@ export interface EducationRow {
 	journey?: { year: string; text: string }[];
 }
 
+export interface AwardRow {
+	when: string;
+	name: string;
+	/** award title and rank, set in the signal colour */
+	award: string;
+	detail: string;
+	note?: string;
+	links?: { label: string; href: string }[];
+}
+
 export interface Resume {
 	meta: { title: string; description: string; locale: string };
 	hero: {
@@ -114,6 +124,7 @@ export interface Resume {
 		groups: { name: string; items: { name: string; daily?: boolean }[] }[];
 	};
 	education: { meta: string; rows: EducationRow[] };
+	awards: { meta: string; rows: AwardRow[] };
 	now: { items: { k: string; text: string }[] };
 	/** words used on the project pages */
 	projectPage: {

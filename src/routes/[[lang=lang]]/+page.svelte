@@ -1,6 +1,7 @@
 <script lang="ts">
 	import About from '$lib/components/About.svelte';
 	import Contact from '$lib/components/Contact.svelte';
+	import Awards from '$lib/components/Awards.svelte';
 	import Education from '$lib/components/Education.svelte';
 	import Experience from '$lib/components/Experience.svelte';
 	import Field from '$lib/components/Field.svelte';
@@ -44,6 +45,7 @@
 	<About about={c.about} />
 	<Experience experience={c.experience} />
 	<Projects lang={data.lang} projects={c.projects} details={c.projectPage.details} />
+	<Awards awards={c.awards} />
 	<Toolkit toolkit={c.toolkit} />
 	<Education education={c.education} />
 	<Now now={c.now} />

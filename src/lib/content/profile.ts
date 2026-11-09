@@ -10,5 +10,5 @@ export const profile = {
 	// years: full years since starting in 2016, counted at build time
 	stats: { years: String(new Date().getFullYear() - 2016), stars: 65, installs: '51K+' },
 	/** shown as "Updated …" on Now and as the footer revision */
-	updated: '2026.10.18'
+	updated: '2026.11.09'
 };

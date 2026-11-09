@@ -283,6 +283,20 @@ export const en: Resume = {
 		]
 	},
 
+	awards: {
+		meta: 'Competitions',
+		rows: [
+			{
+				when: '2026.10',
+				name: 'SaveTax Hackathon',
+				award: '최우수상 · 2nd place',
+				detail: 'Hosted by 개혁신당 (Reform Party) · solo · 1,169 entrants',
+				note: 'Built my own database dump, submission checks, a status-watch loop and a dashboard, then combined agent orchestration with web research to submit the maximum 100 price gaps in 나라장터 (Korea’s public procurement store), mostly HDD storage and LED displays · ₩9.49B in price gaps proven',
+				links: [{ label: 'Yonhap News (Korean) ↗', href: 'https://www.yna.co.kr/view/AKR20261109113200001' }]
+			}
+		]
+	},
+
 	now: {
 		items: [
 			{ k: 'School', text: 'Back at Hanyang ERICA, Computer Engineering — 2026 fall semester' },
